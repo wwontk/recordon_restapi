@@ -4,7 +4,6 @@ import { useState } from "react";
 import { loginUser } from "../../api/login/loginUser";
 import { setCookie } from "../../utils/cookie";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import useAuthStore from "../../store/authStore";
 
 const Login = () => {
@@ -63,10 +62,6 @@ const Login = () => {
 };
 
 export default Login;
-
-Login.propTypes = {
-  setAuthenticated: PropTypes.func.isRequired,
-};
 
 const LoginContainer = styled.div`
   width: 360px;
