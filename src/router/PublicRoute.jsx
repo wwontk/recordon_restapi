@@ -1,15 +1,8 @@
-import PropTypes from "prop-types";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuthenticated } from "../store/store";
 
-const PublicRoute = ({ component: Component }) => {
-  return (
-    <>{useAuthenticated() ? <Navigate to="/" replace /> : <Component />}</>
-  );
+const PublicRoute = () => {
+  return <>{useAuthenticated() ? <Navigate to="/" replace /> : <Outlet />}</>;
 };
 
 export default PublicRoute;
-
-PublicRoute.propTypes = {
-  component: PropTypes.elementType.isRequired,
-};

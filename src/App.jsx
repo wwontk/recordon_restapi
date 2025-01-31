@@ -5,27 +5,21 @@ import Login from "./pages/Login";
 import GlobalStyle from "../GlobalStyle";
 import PrivateRoute from "./router/PrivateRoute";
 import PublicRoute from "./router/PublicRoute";
-import { useAuthenticated } from "./store/store";
 
 function App() {
-  const authenticated = useAuthenticated();
-
   return (
     <>
       <GlobalStyle />
       <Routes>
-        <Route
-          path="/login"
-          element={
-            <PublicRoute authenticated={authenticated} component={Login} />
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute authenticated={authenticated} component={Home} />
-          }
-        />
+        {/* PublicRoute */}
+        <Route path="/login" element={<PublicRoute />}>
+          <Route index element={<Login />} />
+        </Route>
+
+        {/* PrivateRoute */}
+        <Route path="/" element={<PrivateRoute />}>
+          <Route index element={<Home />} />
+        </Route>
       </Routes>
     </>
   );
