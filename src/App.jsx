@@ -5,10 +5,10 @@ import Login from "./pages/Login";
 import GlobalStyle from "../GlobalStyle";
 import PrivateRoute from "./router/PrivateRoute";
 import PublicRoute from "./router/PublicRoute";
-import useAuthStore from "./store/authStore";
+import { useAuthenticated } from "./store/store";
 
 function App() {
-  const authenticated = useAuthStore((state) => state.authenticated);
+  const authenticated = useAuthenticated();
 
   return (
     <>

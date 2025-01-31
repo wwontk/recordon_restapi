@@ -4,12 +4,12 @@ import { useState } from "react";
 import { loginUser } from "../../api/login/loginUser";
 import { setCookie } from "../../utils/cookie";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../store/authStore";
+import { useAuthAction } from "../../store/store";
 
 const Login = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
+  const { setAuthenticated } = useAuthAction();
 
   const navigate = useNavigate();
 

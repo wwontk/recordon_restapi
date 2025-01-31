@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../store/authStore";
+import { useAuthAction } from "../../store/store";
+import { removeCookie } from "../../utils/cookie";
 
 const Home = () => {
   const navigate = useNavigate();
 
-  const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
+  const { setAuthenticated } = useAuthAction();
 
   const handleLogout = () => {
+    removeCookie("access-token");
     setAuthenticated(false);
     navigate("/login");
   };
