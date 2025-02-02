@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import GlobalStyle from "../GlobalStyle";
 import PrivateRoute from "./router/PrivateRoute";
 import PublicRoute from "./router/PublicRoute";
+import RecordOn from "./pages/RecordOn";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         {/* PrivateRoute */}
         <Route path="/" element={<PrivateRoute />}>
           <Route index element={<Home />} />
+          <Route path="/recordon" element={<RecordOn />} />
         </Route>
       </Routes>
     </>
