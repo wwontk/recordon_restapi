@@ -44,6 +44,7 @@ const Login = () => {
             placeholder="아이디"
             value={id}
             onChange={(e) => setId(e.target.value)}
+            autoFocus
           />
           <label className="blind" htmlFor="password"></label>
           <UserPasswordInput

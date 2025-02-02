@@ -16,7 +16,8 @@ function MainLayout() {
 export default MainLayout;
 
 const ContentArea = styled.div`
-  width: calc(100% - 180px);
+  width: calc(100% - 220px);
   position: fixed;
-  left: 180px;
+  left: 220px;
+  padding: 20px;
 `;
