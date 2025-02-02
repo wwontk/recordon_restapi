@@ -1,9 +1,12 @@
 import styled from "styled-components";
+import Submenu from "./Submenu/Submenu";
 
 const Sidebar = () => {
   return (
     <>
-      <SidebarContainer></SidebarContainer>
+      <SidebarContainer>
+        <Submenu />
+      </SidebarContainer>
     </>
   );
 };
@@ -11,8 +14,9 @@ const Sidebar = () => {
 export default Sidebar;
 
 const SidebarContainer = styled.div`
-  width: 180px;
+  width: 220px;
   height: 100vh;
-  background-color: #ccc;
   position: fixed;
+  background-color: #f8f8f8;
+  border-right: 1px solid #ccc;
 `;
