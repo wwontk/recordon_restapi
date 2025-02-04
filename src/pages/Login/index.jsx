@@ -23,7 +23,7 @@ const Login = () => {
           setCookie("access-token", res.data.token, { path: "/" });
           setAuthenticated(true);
           setUserInfo({ userId: res.data.userId });
-          navigate("/");
+          navigate("/recordon/list", { state: { from: "/recordon/list" } });
         })
         .catch((error) => {
           console.log(error.status);
