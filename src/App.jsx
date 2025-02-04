@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import GlobalStyle from "../GlobalStyle";
 import PrivateRoute from "./router/PrivateRoute";
 import PublicRoute from "./router/PublicRoute";
-import RecordOn from "./pages/RecordOn";
+import List from "./pages/RecordON/List";
+import Register from "./pages/RecordON/Register";
 
 function App() {
   return (
@@ -18,9 +18,9 @@ function App() {
         </Route>
 
         {/* PrivateRoute */}
-        <Route path="/" element={<PrivateRoute />}>
-          <Route index element={<Home />} />
-          <Route path="/recordon" element={<RecordOn />} />
+        <Route path="/recordon" element={<PrivateRoute />}>
+          <Route path="list" element={<List />} />
+          <Route path="register" element={<Register />} />
         </Route>
       </Routes>
     </>

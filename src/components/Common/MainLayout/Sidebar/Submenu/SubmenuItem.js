@@ -1,12 +1,16 @@
-export const SubmenuItem = [
+export const MenuItem = [
   {
-    id: 1,
-    path: "/",
-    title: "홈페이지",
-  },
-  {
-    id: 2,
+    menuTitle: "Record ON",
     path: "/recordon",
-    title: "Record On",
+    subMenu: [
+      {
+        path: "/recordon/register",
+        title: "등록",
+      },
+      {
+        path: "/recordon/list",
+        title: "조회",
+      },
+    ],
   },
 ];
