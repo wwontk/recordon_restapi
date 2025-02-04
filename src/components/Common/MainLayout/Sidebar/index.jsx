@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ToggleMenu from "./ToggleMenu/ToggleMenu";
-import { MenuItem } from "./Submenu/SubmenuItem";
+import { MenuItem } from "./SubmenuItem";
 
 const Sidebar = () => {
   return (
