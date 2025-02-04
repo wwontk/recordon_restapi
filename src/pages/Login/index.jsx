@@ -9,7 +9,7 @@ import { useAuthAction } from "../../store/store";
 const Login = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const { setAuthenticated } = useAuthAction();
+  const { setAuthenticated, setUserInfo } = useAuthAction();
 
   const navigate = useNavigate();
 
@@ -22,6 +22,7 @@ const Login = () => {
         .then((res) => {
           setCookie("access-token", res.data.token, { path: "/" });
           setAuthenticated(true);
+          setUserInfo({ userId: res.data.userId });
           navigate("/");
         })
         .catch((error) => {

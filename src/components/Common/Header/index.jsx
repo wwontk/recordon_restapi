@@ -1,16 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useAuthAction } from "../../../store/store";
+import { useAuthAction, useUserInfo } from "../../../store/store";
 import { removeCookie } from "../../../utils/cookie";
 
 const Header = () => {
   const navigate = useNavigate();
 
-  const { setAuthenticated } = useAuthAction();
+  const userInfo = useUserInfo();
+  const { setAuthenticated, setUserInfo } = useAuthAction();
 
   const handleLogout = () => {
     removeCookie("access-token");
     setAuthenticated(false);
+    setUserInfo({});
     navigate("/login");
   };
 
@@ -18,7 +20,7 @@ const Header = () => {
     <>
       <HeaderContainer>
         <UserInfo>
-          <p>관리자 님</p>
+          <p>{userInfo.userId} 님</p>
           <button onClick={handleLogout}>로그아웃</button>
         </UserInfo>
       </HeaderContainer>
