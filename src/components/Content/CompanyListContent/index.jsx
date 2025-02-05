@@ -7,8 +7,8 @@ const CompanyListContent = () => {
         <table>
           <thead>
             <tr>
-              <th>회사이름</th>
               <th>회사번호</th>
+              <th>회사이름</th>
               <th>회사아이디</th>
               <th>사업자번호</th>
               <th>영업점</th>
@@ -16,43 +16,36 @@ const CompanyListContent = () => {
           </thead>
           <tbody>
             <tr>
-              <td>비플</td>
               <td>2</td>
+              <td>비플</td>
               <td>bptest</td>
               <td>111222333</td>
               <td>비플</td>
             </tr>
             <tr>
-              <td>비플</td>
               <td>2</td>
+              <td>비플</td>
               <td>bptest</td>
               <td>111222333</td>
               <td>비플</td>
             </tr>
             <tr>
-              <td>비플</td>
               <td>2</td>
+              <td>비플</td>
               <td>bptest</td>
               <td>111222333</td>
               <td>비플</td>
             </tr>
             <tr>
-              <td>비플</td>
               <td>2</td>
+              <td>비플</td>
               <td>bptest</td>
               <td>111222333</td>
               <td>비플</td>
             </tr>
             <tr>
-              <td>비플</td>
               <td>2</td>
-              <td>bptest</td>
-              <td>111222333</td>
               <td>비플</td>
-            </tr>
-            <tr>
-              <td>비플</td>
-              <td>2</td>
               <td>bptest</td>
               <td>111222333</td>
               <td>비플</td>
@@ -115,5 +108,35 @@ const ContentContainer = styled.div`
         }
       }
     }
+    tr th:first-child,
+    tr td:first-child {
+      width: 80px;
+    }
+    tr th:nth-child(2),
+    tr td:nth-child(2) {
+      width: 200px;
+    }
+    tr th:nth-child(3),
+    tr td:nth-child(3) {
+      width: 200px;
+    }
+    tr th:nth-child(4),
+    tr td:nth-child(4) {
+      width: 200px;
+    }
+    // tr th:last-child {
+    //   width: 125px;
+    // }
+    // tr td:last-child {
+    //   position: relative;
+    //   height: 100%;
+    //   display: flex;
+    //   justify-content: space-between;
+    //   align-items: center;
+    //   & > p:last-child {
+    //     width: 26px;
+    //     height: 26px;
+    //   }
+    // }
   }
 `;
