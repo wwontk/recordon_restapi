@@ -8,7 +8,7 @@ const SelectContainer = styled.div`
   display: inline-block;
 `;
 
-const SelectButton = styled.button`
+const SelectButton = styled.button.attrs({ type: "button" })`
   width: 120px;
   height: 32px;
   display: flex;
@@ -27,13 +27,14 @@ const SelectButton = styled.button`
     width: 16px;
     height: 16px;
     transition: transform 0.3s ease;
-    ${({ isOpen }) => isOpen && "transform: rotate(180deg);"}
+    ${({ $isOpen }) => $isOpen && "transform: rotate(180deg);"}
   }
 `;
 
 const DropdownMenu = styled.ul`
   position: absolute;
   left: 0;
+  margin-top: 4px;
   width: 100%;
   background-color: white;
   border: 1px solid #d1d5db;
@@ -49,8 +50,8 @@ const DropdownMenu = styled.ul`
   transform-origin: top;
   transition: opacity 0.2s ease, transform 0.2s ease;
 
-  ${({ isOpen }) =>
-    isOpen &&
+  ${({ $isOpen }) =>
+    $isOpen &&
     `
     opacity: 1;
     transform: scaleY(1);
@@ -98,15 +99,11 @@ const SelectBox = ({ options, onSelect }) => {
 
   return (
     <SelectContainer ref={dropdownRef}>
-      <SelectButton
-        onClick={() => setIsOpen((prev) => !prev)}
-        isOpen={isOpen}
-        type="button"
-      >
+      <SelectButton onClick={() => setIsOpen((prev) => !prev)} $isOpen={isOpen}>
         {selected}
         <img src={dropdownArrow} alt="dropdown" />
       </SelectButton>
-      <DropdownMenu isOpen={isOpen}>
+      <DropdownMenu $isOpen={isOpen}>
         {options.map((option, index) => (
           <DropdownItem key={index} onClick={() => handleSelect(option)}>
             {option}
