@@ -2,10 +2,32 @@ import styled from "styled-components";
 import { TextInput } from "../../../components/Common/Input/TextInput";
 import Refresh from "../../../assets/img/etc/refresh-ccw.svg";
 import SelectBox from "../../../components/Common/Input/SelectBox";
+import { useState } from "react";
 
 const List = () => {
+  const [searchInputs, setSearchInputs] = useState({
+    companyId: "",
+    companySort: 0,
+    companyName: "",
+    companyNumber: "",
+    businessNumber: "",
+    discd: 0,
+  });
+
+  const { companyId, companySort, companyName, companyNumber, businessNumber } =
+    searchInputs;
+
+  const handleInputs = (e) => {
+    let { name, value } = e.target;
+    setSearchInputs({
+      ...searchInputs,
+      [name]: value.replace(/\xA0/g, " "),
+    });
+  };
+
   const handleSumbit = (e) => {
     e.preventDefault();
+    console.log(searchInputs);
   };
 
   return (
@@ -18,46 +40,63 @@ const List = () => {
               <div>
                 <InputWrapper>
                   <label htmlFor="compSort">회사분류</label>
-                  <SelectBox options={["전체", "솔루션사", "고객사"]} />
+                  <SelectBox
+                    options={[
+                      { value: 0, label: "전체" },
+                      { value: 1, label: "솔루션사" },
+                      { value: 2, label: "고객사" },
+                    ]}
+                    selected={companySort}
+                    onSelect={(option) =>
+                      setSearchInputs((prev) => ({
+                        ...prev,
+                        companySort: option.value,
+                      }))
+                    }
+                  />
                 </InputWrapper>
               </div>
               <div>
                 <InputWrapper>
-                  <label htmlFor="compId">회사아이디</label>
+                  <label htmlFor="companyId">회사아이디</label>
                   <CompanyListInput
                     type="text"
-                    id="compId"
-                    name="compId"
+                    id="companyId"
+                    name="companyId"
                     placeholder="회사아이디를 입력하세요."
+                    onChange={handleInputs}
                   />
                 </InputWrapper>
                 <InputWrapper>
-                  <label htmlFor="compName">회사이름</label>
+                  <label htmlFor="companyName">회사이름</label>
                   <CompanyListInput
                     type="text"
-                    id="compName"
-                    name="compName"
+                    id="companyName"
+                    name="companyName"
                     placeholder="회사이름을 입력하세요."
+                    onChange={handleInputs}
                   />
                 </InputWrapper>
               </div>
               <div>
                 <InputWrapper>
-                  <label htmlFor="companyNo">회사번호</label>
+                  <label htmlFor="companyNumber">회사번호</label>
                   <CompanyListInput
                     type="text"
-                    id="companyNo"
-                    name="companyNo"
+                    id="companyNumber"
+                    name="companyNumber"
                     placeholder="회사번호를 입력하세요."
+                    onChange={handleInputs}
                   />
                 </InputWrapper>
                 <InputWrapper>
-                  <label htmlFor="businessNo">사업자번호</label>
+                  <label htmlFor="businessNumber">사업자번호</label>
                   <CompanyListInput
                     type="text"
-                    id="businessNo"
-                    name="businessNo"
+                    id="businessNumber"
+                    name="businessNumber"
                     placeholder="사업자번호를 입력하세요."
+                    onChange={handleInputs}
                   />
                 </InputWrapper>
                 <SearchBtnContainer>

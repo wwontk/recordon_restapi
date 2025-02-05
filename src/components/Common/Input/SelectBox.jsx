@@ -34,7 +34,6 @@ const SelectButton = styled.button.attrs({ type: "button" })`
 const DropdownMenu = styled.ul`
   position: absolute;
   left: 0;
-  margin-top: 4px;
   width: 100%;
   background-color: white;
   border: 1px solid #d1d5db;
@@ -68,15 +67,16 @@ const DropdownItem = styled.li`
   }
 `;
 
-const SelectBox = ({ options, onSelect }) => {
+const SelectBox = ({ options, selected, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(options[0]);
   const dropdownRef = useRef(null);
 
+  const selectedOption =
+    options.find((option) => option.value === selected) || options[0];
+
   const handleSelect = (option) => {
-    setSelected(option);
-    setIsOpen(false);
     if (onSelect) onSelect(option);
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -100,13 +100,13 @@ const SelectBox = ({ options, onSelect }) => {
   return (
     <SelectContainer ref={dropdownRef}>
       <SelectButton onClick={() => setIsOpen((prev) => !prev)} $isOpen={isOpen}>
-        {selected}
+        {selectedOption.label}
         <img src={dropdownArrow} alt="dropdown" />
       </SelectButton>
       <DropdownMenu $isOpen={isOpen}>
         {options.map((option, index) => (
           <DropdownItem key={index} onClick={() => handleSelect(option)}>
-            {option}
+            {option.label}
           </DropdownItem>
         ))}
       </DropdownMenu>
@@ -117,6 +117,12 @@ const SelectBox = ({ options, onSelect }) => {
 export default SelectBox;
 
 SelectBox.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onSelect: PropTypes.func,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.number.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  selected: PropTypes.number.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
