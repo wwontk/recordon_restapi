@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuthAction, useUserInfo } from "../../../store/store";
 import { removeCookie } from "../../../utils/cookie";
+import logoutIcon from "../../../assets/img/etc/log-out.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Header = () => {
       <HeaderContainer>
         <UserInfo>
           <p>{userInfo.userId} 님</p>
-          <button onClick={handleLogout}>로그아웃</button>
+          <img src={logoutIcon} alt="logout" onClick={handleLogout} />
         </UserInfo>
       </HeaderContainer>
     </>
@@ -45,4 +46,15 @@ const UserInfo = styled.div`
   align-items: center;
   gap: 20px;
   font-family: "42dot Sans", serif;
+
+  img {
+    border-radius: 4px;
+    padding: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #e9e9e9;
+    }
+  }
 `;
