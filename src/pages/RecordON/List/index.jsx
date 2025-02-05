@@ -3,16 +3,18 @@ import { TextInput } from "../../../components/Common/Input/TextInput";
 import Refresh from "../../../assets/img/etc/refresh-ccw.svg";
 import SelectBox from "../../../components/Common/Input/SelectBox";
 import { useState } from "react";
+import CompanyListContent from "../../../components/Content/CompanyListContent";
 
 const List = () => {
-  const [searchInputs, setSearchInputs] = useState({
+  const initialSearchInputs = {
     companyId: "",
     companySort: 0,
     companyName: "",
     companyNumber: "",
     businessNumber: "",
     discd: 0,
-  });
+  };
+  const [searchInputs, setSearchInputs] = useState(initialSearchInputs);
 
   const { companyId, companySort, companyName, companyNumber, businessNumber } =
     searchInputs;
@@ -23,6 +25,10 @@ const List = () => {
       ...searchInputs,
       [name]: value.replace(/\xA0/g, " "),
     });
+  };
+
+  const handleRefresh = () => {
+    setSearchInputs(initialSearchInputs);
   };
 
   const handleSumbit = (e) => {
@@ -63,6 +69,7 @@ const List = () => {
                     type="text"
                     id="companyId"
                     name="companyId"
+                    value={companyId}
                     placeholder="회사아이디를 입력하세요."
                     onChange={handleInputs}
                   />
@@ -73,6 +80,7 @@ const List = () => {
                     type="text"
                     id="companyName"
                     name="companyName"
+                    value={companyName}
                     placeholder="회사이름을 입력하세요."
                     onChange={handleInputs}
                   />
@@ -85,6 +93,7 @@ const List = () => {
                     type="text"
                     id="companyNumber"
                     name="companyNumber"
+                    value={companyNumber}
                     placeholder="회사번호를 입력하세요."
                     onChange={handleInputs}
                   />
@@ -95,12 +104,13 @@ const List = () => {
                     type="text"
                     id="businessNumber"
                     name="businessNumber"
+                    value={businessNumber}
                     placeholder="사업자번호를 입력하세요."
                     onChange={handleInputs}
                   />
                 </InputWrapper>
                 <SearchBtnContainer>
-                  <RefreshIcon>
+                  <RefreshIcon onClick={handleRefresh}>
                     <img src={Refresh} alt="refresh" />
                   </RefreshIcon>
                   <button>검색</button>
@@ -109,7 +119,7 @@ const List = () => {
             </div>
           </form>
         </CompanyListTop>
-        <CompanyListContent></CompanyListContent>
+        <CompanyListContent />
       </CompanyListContainer>
     </>
   );
@@ -206,10 +216,4 @@ const CompanyListTop = styled.div`
       }
     }
   }
-`;
-
-const CompanyListContent = styled.div`
-  width: 100%;
-  height: calc(100% - 240px);
-  background-color: #f8f8f8;
 `;
