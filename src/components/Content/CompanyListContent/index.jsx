@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoreIcon from "../../../assets/img/etc/more-vertical.png";
-import "react-sliding-side-panel/lib/index.css";
 import { CompanyList } from "./data";
 
 const CompanyListContent = () => {
-  const [selectedCompany, setSelectedCompany] = useState(""); // 선택된 회사 ID
+  const [selectedCompany, setSelectedCompany] = useState("");
+  const [selectedCompanyInfo, setSelectedCompanyInfo] = useState({});
   const menuRef = useRef(null);
 
-  // 바깥 클릭 감지 -> 메뉴 닫기
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -21,10 +20,9 @@ const CompanyListContent = () => {
     };
   }, []);
 
-  // 더보기 버튼 클릭 이벤트
-  const handleMoreClick = (companyId) => {
-    setSelectedCompany((prev) => (prev === companyId ? "" : companyId));
-  };
+  useEffect(() => {
+    console.log(selectedCompanyInfo);
+  }, [selectedCompanyInfo]);
 
   return (
     <ContentContainer>
@@ -47,21 +45,31 @@ const CompanyListContent = () => {
               <td>{list.businessNumber}</td>
               <td>
                 <p>{list.salesresp}</p>
-                <MoreButton
-                  ref={selectedCompany === list.companyId ? menuRef : null}
-                >
-                  <img
-                    src={MoreIcon}
-                    alt="more"
-                    onClick={() => handleMoreClick(list.companyId)}
-                  />
+                <div ref={selectedCompany === list.companyId ? menuRef : null}>
+                  <MoreBtn $isActive={selectedCompany === list.companyId}>
+                    <img
+                      src={MoreIcon}
+                      alt="more"
+                      onClick={() =>
+                        setSelectedCompany((prev) =>
+                          prev === list.companyId ? "" : list.companyId
+                        )
+                      }
+                    />
+                  </MoreBtn>
                   {selectedCompany === list.companyId && (
                     <DropdownMenu>
-                      <li>상세조회</li>
+                      <li
+                        onClick={() => {
+                          setSelectedCompanyInfo(list);
+                        }}
+                      >
+                        상세조회
+                      </li>
                       <li>삭제</li>
                     </DropdownMenu>
                   )}
-                </MoreButton>
+                </div>
               </td>
             </tr>
           ))}
@@ -73,7 +81,6 @@ const CompanyListContent = () => {
 
 export default CompanyListContent;
 
-// 스타일 정의
 const ContentContainer = styled.div`
   width: 100%;
   height: calc(100% - 240px);
@@ -170,28 +177,37 @@ const ContentContainer = styled.div`
           background-color: #e9e9e9;
         }
       }
+
+      & > div {
+        position: relative;
+      }
     }
   }
 `;
-const MoreButton = styled.div`
-  position: relative;
+
+const MoreBtn = styled.button`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  background-color: ${(props) => (props.$isActive ? "#e9e9e9" : "transparent")};
+  border: none;
 
   & > img {
     width: 28px;
     height: 28px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    padding: 2px;
+    padding: 4px;
     border-radius: 2px;
 
     &:hover {
       background-color: #e9e9e9;
     }
+    &:active {
+      background-color: #e9e9e9;
+    }
   }
 `;
+
 const DropdownMenu = styled.ul`
   position: absolute;
   top: 30px;
