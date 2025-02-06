@@ -27,8 +27,11 @@ const List = () => {
     });
   };
 
+  const [isRotating, setIsRotating] = useState(false);
   const handleRefresh = () => {
     setSearchInputs(initialSearchInputs);
+    setIsRotating(true);
+    setTimeout(() => setIsRotating(false), 500);
   };
 
   const handleSumbit = (e) => {
@@ -110,7 +113,7 @@ const List = () => {
                   />
                 </InputWrapper>
                 <SearchBtnContainer>
-                  <RefreshIcon onClick={handleRefresh}>
+                  <RefreshIcon onClick={handleRefresh} $isRotating={isRotating}>
                     <img src={Refresh} alt="refresh" />
                   </RefreshIcon>
                   <button>검색</button>
@@ -167,8 +170,20 @@ const RefreshIcon = styled.span`
   & > img {
     width: 16px;
     height: 16px;
+    transform: scaleX(-1);
     filter: invert(72%) sepia(1%) saturate(2410%) hue-rotate(19deg)
       brightness(92%) contrast(89%);
+    animation: ${({ $isRotating }) =>
+      $isRotating ? "rotate 0.5s linear" : "none"};
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 `;
 
