@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoreIcon from "../../../assets/img/etc/more-vertical.png";
 import { CompanyList } from "./data";
+import { useNavigate } from "react-router-dom";
 
 const CompanyListContent = () => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const [selectedCompanyInfo, setSelectedCompanyInfo] = useState({});
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -19,10 +21,6 @@ const CompanyListContent = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  useEffect(() => {
-    console.log(selectedCompanyInfo);
-  }, [selectedCompanyInfo]);
 
   return (
     <ContentContainer>
@@ -62,6 +60,7 @@ const CompanyListContent = () => {
                       <li
                         onClick={() => {
                           setSelectedCompanyInfo(list);
+                          navigate(`/recordon/list/${list.companyId}`);
                         }}
                       >
                         상세조회

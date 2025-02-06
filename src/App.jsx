@@ -6,6 +6,7 @@ import PrivateRoute from "./router/PrivateRoute";
 import PublicRoute from "./router/PublicRoute";
 import List from "./pages/RecordON/List";
 import Register from "./pages/RecordON/Register";
+import Info from "./pages/RecordON/List/Info";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/recordon" element={<PrivateRoute />}>
           <Route path="list" element={<List />} />
           <Route path="register" element={<Register />} />
+          <Route path="list/:compId" element={<Info />} />
         </Route>
       </Routes>
     </>

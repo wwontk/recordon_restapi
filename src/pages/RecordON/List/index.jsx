@@ -119,6 +119,7 @@ const List = () => {
             </div>
           </form>
         </CompanyListTop>
+
         <CompanyListContent />
       </CompanyListContainer>
     </>
@@ -126,6 +127,12 @@ const List = () => {
 };
 
 export default List;
+
+const CompanyListContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  font-family: "42dot Sans", serif;
+`;
 
 const SearchBtnContainer = styled.div`
   display: flex;
@@ -176,12 +183,6 @@ const CompanyListInput = styled(TextInput)`
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const CompanyListContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  font-family: "42dot Sans", serif;
 `;
 
 const CompanyListTop = styled.div`
