@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <>
       <LoginContainer>
-        <p>LOGIN</p>
+        <p>RecordON REST API</p>
         <LoginForm>
           <label className="blind" htmlFor="userId"></label>
           <UserIdInput
@@ -66,14 +66,14 @@ const Login = () => {
 export default Login;
 
 const LoginContainer = styled.div`
-  width: 360px;
+  width: 400px;
   margin: 0 auto;
   padding-top: 200px;
   & > p:first-child {
     text-align: center;
     font-size: 32px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
   }
 `;
 
@@ -83,14 +83,25 @@ const LoginForm = styled.form`
 
 const UserIdInput = styled(TextInput)`
   width: 100%;
-  height: 36px;
+  height: 40px;
+  border-color: #bcbcbc;
   border-radius: 4px;
   margin-bottom: 12px;
+  font-family: "42dot Sans", serif;
+  font-size: 16px;
 `;
 
 const UserPasswordInput = styled(UserIdInput).attrs({ type: "password" })``;
 
 const LoginBtn = styled.button`
   width: 100%;
-  height: 36px;
+  height: 44px;
+  background-color: #4e4e4e;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  font-family: "42dot Sans", serif;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 40px;
 `;
