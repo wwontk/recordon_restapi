@@ -85,7 +85,7 @@ const UserIdInput = styled(TextInput)`
   width: 100%;
   height: 40px;
   border-color: #bcbcbc;
-  border-radius: 4px;
+  border-radius: 2px;
   margin-bottom: 12px;
   font-family: "42dot Sans", serif;
   font-size: 16px;

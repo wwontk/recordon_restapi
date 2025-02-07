@@ -164,7 +164,7 @@ const RegisterContent = styled.div`
       width: 100px;
       height: 40px;
       margin-top: 80px;
-      background-color: #ce296f;
+      background-color: #4e4e4e;
       color: #fff;
       border: none;
       border-radius: 2px;
