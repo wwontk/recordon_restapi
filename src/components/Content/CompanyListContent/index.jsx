@@ -88,6 +88,7 @@ const ContentContainer = styled.div`
     height: 100%;
     display: grid;
     grid-template-rows: 32px;
+
     th {
       color: #8d8d8d;
       padding: 0 10px;
@@ -163,20 +164,7 @@ const ContentContainer = styled.div`
     tr td:nth-child(4) {
       width: 200px;
     }
-    // tr th:last-child {
-    //   width: 125px;
-    // }
     tr td:last-child {
-      // position: relative;
-      // height: 100%;
-      // display: flex;
-      // justify-content: space-between;
-      // align-items: center;
-      // & > p:last-child {
-      //   width: 26px;
-      //   height: 26px;
-      // }
-
       height: 100%;
       display: flex;
       align-items: center;

@@ -4,6 +4,7 @@ import Refresh from "../../../assets/img/etc/refresh-ccw.svg";
 import SelectBox from "../../../components/Common/Input/SelectBox";
 import { useState } from "react";
 import CompanyListContent from "../../../components/Content/CompanyListContent";
+import Tooltip from "../../../components/Common/Tooltip";
 
 const List = () => {
   const initialSearchInputs = {
@@ -113,9 +114,14 @@ const List = () => {
                   />
                 </InputWrapper>
                 <SearchBtnContainer>
-                  <RefreshIcon onClick={handleRefresh} $isRotating={isRotating}>
-                    <img src={Refresh} alt="refresh" />
-                  </RefreshIcon>
+                  <Tooltip text="조건 초기화" position="top">
+                    <RefreshIcon
+                      onClick={handleRefresh}
+                      $isRotating={isRotating}
+                    >
+                      <img src={Refresh} alt="refresh" />
+                    </RefreshIcon>
+                  </Tooltip>
                   <button>검색</button>
                 </SearchBtnContainer>
               </div>
