@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 const CompanyListContent = () => {
   const [selectedCompany, setSelectedCompany] = useState("");
-  const [selectedCompanyInfo, setSelectedCompanyInfo] = useState({});
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
@@ -59,7 +58,6 @@ const CompanyListContent = () => {
                     <DropdownMenu>
                       <li
                         onClick={() => {
-                          setSelectedCompanyInfo(list);
                           navigate(`/recordon/list/${list.companyId}`);
                         }}
                       >
@@ -111,9 +109,23 @@ const ContentContainer = styled.div`
       }
     }
     tbody {
+      &::-webkit-scrollbar {
+        width: 4px;
+        height: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #c0c0c0;
+        border-radius: 4px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #fff;
+      }
+
       position: relative;
       display: block;
-      width: 100%;
+      width: calc(100% + 4px);
       height: 100%;
       overflow-y: auto;
       background: #fff;
@@ -126,6 +138,12 @@ const ContentContainer = styled.div`
         width: 100%;
         & {
           border-bottom: 1px solid #d0d0d0;
+        }
+      }
+
+      .scrollBar {
+        &::-webkit-scrollbar {
+          width: 16px;
         }
       }
     }

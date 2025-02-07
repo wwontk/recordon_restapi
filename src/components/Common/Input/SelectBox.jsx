@@ -124,5 +124,5 @@ SelectBox.propTypes = {
     })
   ).isRequired,
   selected: PropTypes.number.isRequired,
-  onSelect: PropTypes.func.isRequired,
+  onSelect: PropTypes.func,
 };

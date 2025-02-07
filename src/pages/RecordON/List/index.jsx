@@ -48,7 +48,7 @@ const List = () => {
             <div>
               <div>
                 <InputWrapper>
-                  <label htmlFor="compSort">회사분류</label>
+                  <label>회사분류</label>
                   <SelectBox
                     options={[
                       { value: 0, label: "전체" },
