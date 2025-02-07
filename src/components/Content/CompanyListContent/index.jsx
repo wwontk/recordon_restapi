@@ -85,6 +85,7 @@ const ContentContainer = styled.div`
   padding: 20px 80px 0;
 
   & > table {
+    min-width: 900px;
     height: 100%;
     display: grid;
     grid-template-rows: 32px;
