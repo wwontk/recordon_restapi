@@ -92,7 +92,7 @@ const RegisterContent = styled.div`
 `;
 
 const IQ200CompanyList = styled.div`
-  width: 500px;
+  width: 1000px;
   height: 100%;
   background-color: #f8f8f8;
   padding: 40px 80px;
@@ -104,6 +104,7 @@ const IQ200CompanyList = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 360px;
     height: 150px;
 
     & > div {
@@ -140,15 +141,15 @@ const IQ200CompanyList = styled.div`
       background-color: #efefef;
     }
     td {
-      height: 50px;
+      max-height: 50px;
       color: #1e1e1e;
       padding: 0 10px;
       vertical-align: middle;
       line-height: 18px;
-      max-height: 40px;
-      overflow: hidden;
-      white-space: normal;
       font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     thead {
       user-select: none;
@@ -190,6 +191,10 @@ const IQ200CompanyList = styled.div`
           border-bottom: 1px solid #d0d0d0;
         }
       }
+    }
+    tr th:first-child,
+    tr td:first-child {
+      width: 280px;
     }
   }
 `;
