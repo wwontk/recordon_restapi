@@ -3,6 +3,9 @@ import styled from "styled-components";
 import MoreIcon from "../../../assets/img/etc/more-vertical.png";
 import { CompanyList } from "./data";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import "moment/locale/ko";
+moment.locale("ko");
 
 const CompanyListContent = () => {
   const [selectedCompany, setSelectedCompany] = useState("");
@@ -26,22 +29,24 @@ const CompanyListContent = () => {
       <table>
         <thead>
           <tr>
-            <th>회사번호</th>
+            <th>회사ID</th>
             <th>회사이름</th>
-            <th>회사아이디</th>
+            <th>회사번호</th>
             <th>사업자번호</th>
             <th>영업점</th>
+            <th>등록일</th>
           </tr>
         </thead>
         <tbody>
           {CompanyList.map((list) => (
             <tr key={list.companyId}>
-              <td>{list.companyNumber}</td>
-              <td>{list.companyName}</td>
               <td>{list.companyId}</td>
+              <td>{list.companyName}</td>
+              <td>{list.companyNumber}</td>
               <td>{list.businessNumber}</td>
+              <td>{list.salesresp}</td>
               <td>
-                <p>{list.salesresp}</p>
+                <p>{moment(list.regDate).format("YYYY.MM.DD")}</p>
                 <div ref={selectedCompany === list.companyId ? menuRef : null}>
                   <MoreBtn $isActive={selectedCompany === list.companyId}>
                     <img
@@ -85,7 +90,7 @@ const ContentContainer = styled.div`
   padding: 20px 80px 0;
 
   & > table {
-    min-width: 900px;
+    min-width: 1000px;
     height: 100%;
     display: grid;
     grid-template-rows: 32px;
@@ -151,19 +156,23 @@ const ContentContainer = styled.div`
     }
     tr th:first-child,
     tr td:first-child {
-      width: 80px;
+      width: 90px;
     }
     tr th:nth-child(2),
     tr td:nth-child(2) {
-      width: 200px;
+      width: 250px;
     }
     tr th:nth-child(3),
     tr td:nth-child(3) {
-      width: 200px;
+      width: 160px;
     }
     tr th:nth-child(4),
     tr td:nth-child(4) {
-      width: 200px;
+      width: 160px;
+    }
+    tr th:nth-child(5),
+    tr td:nth-child(5) {
+      width: 250px;
     }
     tr td:last-child {
       height: 100%;
