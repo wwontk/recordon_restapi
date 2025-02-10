@@ -9,7 +9,7 @@ const SelectContainer = styled.div`
 `;
 
 const SelectButton = styled.button.attrs({ type: "button" })`
-  width: 120px;
+  width: ${({ $width }) => $width || "120px"};
   height: 32px;
   display: flex;
   justify-content: space-between;
@@ -67,7 +67,7 @@ const DropdownItem = styled.li`
   }
 `;
 
-const SelectBox = ({ options, selected, onSelect }) => {
+const SelectBox = ({ options, selected, onSelect, width }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -99,7 +99,11 @@ const SelectBox = ({ options, selected, onSelect }) => {
 
   return (
     <SelectContainer ref={dropdownRef}>
-      <SelectButton onClick={() => setIsOpen((prev) => !prev)} $isOpen={isOpen}>
+      <SelectButton
+        onClick={() => setIsOpen((prev) => !prev)}
+        $isOpen={isOpen}
+        $width={width}
+      >
         {selectedOption.label}
         <img src={dropdownArrow} alt="dropdown" />
       </SelectButton>
@@ -119,10 +123,13 @@ export default SelectBox;
 SelectBox.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.number.isRequired,
+      value: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+        .isRequired,
       label: PropTypes.string.isRequired,
     })
   ).isRequired,
-  selected: PropTypes.number.isRequired,
+  selected: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
   onSelect: PropTypes.func,
+  width: PropTypes.string,
 };

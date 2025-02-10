@@ -1,6 +1,6 @@
 export const MenuItem = [
   {
-    menuTitle: "Record ON",
+    menuTitle: "RecordON",
     path: "/recordon",
     subMenu: [
       {

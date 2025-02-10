@@ -90,7 +90,7 @@ const ContentContainer = styled.div`
   padding: 20px 80px 0;
 
   & > table {
-    min-width: 1000px;
+    min-width: 1200px;
     height: 100%;
     display: grid;
     grid-template-rows: 32px;
@@ -164,11 +164,11 @@ const ContentContainer = styled.div`
     }
     tr th:nth-child(3),
     tr td:nth-child(3) {
-      width: 160px;
+      width: 200px;
     }
     tr th:nth-child(4),
     tr td:nth-child(4) {
-      width: 160px;
+      width: 200px;
     }
     tr th:nth-child(5),
     tr td:nth-child(5) {
