@@ -5,6 +5,10 @@ import { CompanyList } from "./data";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/ko";
+import {
+  formatbusinessNumber,
+  formatCompanyNumber,
+} from "../../../utils/formatNumber";
 moment.locale("ko");
 
 const CompanyListContent = () => {
@@ -42,8 +46,8 @@ const CompanyListContent = () => {
             <tr key={list.companyId}>
               <td>{list.companyId}</td>
               <td>{list.companyName}</td>
-              <td>{list.companyNumber}</td>
-              <td>{list.businessNumber}</td>
+              <td>{formatCompanyNumber(list.companyNumber)}</td>
+              <td>{formatbusinessNumber(list.businessNumber)}</td>
               <td>{list.salesresp}</td>
               <td>
                 <p>{moment(list.regDate).format("YYYY.MM.DD")}</p>
@@ -156,23 +160,25 @@ const ContentContainer = styled.div`
     }
     tr th:first-child,
     tr td:first-child {
-      width: 90px;
+      width: 100px;
     }
     tr th:nth-child(2),
     tr td:nth-child(2) {
       width: 250px;
+      overflow: hidden;
+      white-space: nowrap;
     }
     tr th:nth-child(3),
     tr td:nth-child(3) {
-      width: 200px;
+      width: 180px;
     }
     tr th:nth-child(4),
     tr td:nth-child(4) {
-      width: 200px;
+      width: 180px;
     }
     tr th:nth-child(5),
     tr td:nth-child(5) {
-      width: 250px;
+      width: 200px;
     }
     tr td:last-child {
       height: 100%;
