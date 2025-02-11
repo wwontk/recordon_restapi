@@ -52,7 +52,7 @@ const Register = () => {
                   <th>사업자번호</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="scrollBar">
                 <tr>
                   <td>(주)비플비플비플비플비플비플비플</td>
                   <td>1661-2010</td>
@@ -175,20 +175,6 @@ const IQ200CompanyList = styled.div`
       }
     }
     tbody {
-      &::-webkit-scrollbar {
-        width: 4px;
-        height: 8px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: #c0c0c0;
-        border-radius: 4px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background: #fff;
-      }
-
       position: relative;
       display: block;
       width: 100%;

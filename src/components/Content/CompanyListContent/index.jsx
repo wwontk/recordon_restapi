@@ -40,7 +40,7 @@ const CompanyListContent = () => {
             <th>등록일</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="scrollBar">
           {CompanyList.map((list) => (
             <tr key={list.companyId}>
               <td>{list.companyId}</td>
@@ -119,20 +119,6 @@ const ContentContainer = styled.div`
       }
     }
     tbody {
-      &::-webkit-scrollbar {
-        width: 4px;
-        height: 8px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: #c0c0c0;
-        border-radius: 4px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background: #fff;
-      }
-
       position: relative;
       display: block;
       width: calc(100% + 4px);
@@ -150,11 +136,6 @@ const ContentContainer = styled.div`
           border-bottom: 1px solid #d0d0d0;
         }
       }
-
-      .scrollBar {
-        &::-webkit-scrollbar {
-          width: 16px;
-        }
       }
     }
     tr th:first-child,

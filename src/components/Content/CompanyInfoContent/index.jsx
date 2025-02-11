@@ -54,7 +54,7 @@ export default CompanyInfoContent;
 
 const ContentContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 100px);
   background-color: #f8f8f8;
   padding: 64px 80px 0;
 

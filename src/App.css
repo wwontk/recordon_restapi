@@ -1,1 +1,15 @@
 @import "./reset.css";
+
+.scrollBar::-webkit-scrollbar {
+  width: 4px;
+  height: 8px;
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0;
+  border-radius: 4px;
+}
+
+.scrollBar::-webkit-scrollbar-track {
+  background: #fff;
+}
