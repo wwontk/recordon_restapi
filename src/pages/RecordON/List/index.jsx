@@ -5,6 +5,7 @@ import SelectBox from "../../../components/Common/Input/SelectBox";
 import { useState } from "react";
 import CompanyListContent from "../../../components/Content/CompanyListContent";
 import Tooltip from "../../../components/Common/Tooltip";
+import { searchCompany } from "../../../api/companyList/companyListInfo";
 
 const List = () => {
   const initialSearchInputs = {
@@ -37,7 +38,18 @@ const List = () => {
 
   const handleSumbit = (e) => {
     e.preventDefault();
-    console.log(searchInputs);
+
+    const result = searchCompany({
+      companyId: companyId,
+      companySort: companySort,
+      companyName: companyName,
+      companyNumber: companyNumber,
+      businessNumber: businessNumber,
+    });
+
+    result.then((res) => {
+      console.log(res);
+    });
   };
 
   return (

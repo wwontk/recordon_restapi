@@ -6,6 +6,13 @@ import RegisterInputContent from "../../../components/Content/RegisterInputConte
 
 const Register = () => {
   const [searchSort, setSearchSort] = useState("companyName");
+  const [searchInput, setSearchInput] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(searchInput);
+  };
+
   return (
     <>
       <RegisterContainer>
@@ -14,9 +21,9 @@ const Register = () => {
         </RegisterTop>
         <RegisterContent>
           <IQ200CompanyList>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="sort">검색구분</label>
+                <label>검색구분</label>
                 <SelectBox
                   options={[
                     { value: "companyName", label: "회사명" },
@@ -29,9 +36,13 @@ const Register = () => {
                 />
               </div>
               <div>
-                <IQ200SearchInput type="text" />
+                <IQ200SearchInput
+                  type="text"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                />
+                <button>조회</button>
               </div>
-              <button>조회</button>
             </form>
             <table>
               <thead>
@@ -43,18 +54,14 @@ const Register = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td>
-                    <div>(주)비플비플비플비플비플비플비플</div>
-                  </td>
-                  <td>16612010</td>
-                  <td>2208791940</td>
+                  <td>(주)비플비플비플비플비플비플비플</td>
+                  <td>1661-2010</td>
+                  <td>22-087-91940</td>
                 </tr>
                 <tr>
-                  <td>
-                    <div>(주)비플</div>
-                  </td>
-                  <td>16612010</td>
-                  <td>2208791940</td>
+                  <td>(주)비플</td>
+                  <td>1661-2010</td>
+                  <td>22-087-91940</td>
                 </tr>
               </tbody>
             </table>
@@ -92,43 +99,46 @@ const RegisterContent = styled.div`
 `;
 
 const IQ200CompanyList = styled.div`
-  width: 1000px;
+  width: 900px;
   height: 100%;
   background-color: #f8f8f8;
   padding: 40px 80px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 20px;
 
   & > form {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 360px;
-    height: 150px;
 
     & > div {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-    }
 
-    & > button {
-      height: 40px;
-      background-color: #484848;
-      color: white;
-      border: none;
-      margin-top: 8px;
-      font-family: "42dot Sans", serif;
-      font-size: 16px;
-      cursor: pointer;
+      & > label {
+        width: 80px;
+      }
+
+      & > button {
+        width: 60px;
+        height: 30px;
+        background-color: #484848;
+        color: white;
+        border: none;
+        border-radius: 2px;
+        font-family: "42dot Sans", serif;
+        font-size: 14px;
+        cursor: pointer;
+      }
     }
   }
 
   & > table {
+    flex: 1;
     height: calc(100% - 150px);
     background-color: #fff;
-    border: 1px solid #d0d0d0;
     text-align: center;
     table-layout: fixed;
 
@@ -139,6 +149,8 @@ const IQ200CompanyList = styled.div`
       height: 40px;
       vertical-align: middle;
       background-color: #efefef;
+      white-space: nowrap;
+      overflow: hidden;
     }
     td {
       max-height: 50px;
@@ -158,6 +170,8 @@ const IQ200CompanyList = styled.div`
         display: table;
         table-layout: fixed;
         width: 100%;
+        border-top: 1px solid #d0d0d0;
+        border-bottom: 1px solid #d0d0d0;
       }
     }
     tbody {
@@ -187,6 +201,7 @@ const IQ200CompanyList = styled.div`
         display: table;
         table-layout: fixed;
         width: 100%;
+        cursor: pointer;
         & {
           border-bottom: 1px solid #d0d0d0;
         }
@@ -194,13 +209,24 @@ const IQ200CompanyList = styled.div`
     }
     tr th:first-child,
     tr td:first-child {
-      width: 280px;
+      width: 240px;
+    }
+    tr th:nth-child(2),
+    tr td:nth-child(2) {
+      min-width: 120px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    tr th:last-child,
+    tr td:last-child {
+      min-width: 120px;
     }
   }
 `;
 
 const IQ200SearchInput = styled(TextInput)`
-  width: 100%;
+  width: 320px;
   height: 30px;
   border-radius: 0;
+  margin-right: 20px;
 `;

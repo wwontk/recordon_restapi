@@ -9,7 +9,6 @@ import {
   formatbusinessNumber,
   formatCompanyNumber,
 } from "../../../utils/formatNumber";
-moment.locale("ko");
 
 const CompanyListContent = () => {
   const [selectedCompany, setSelectedCompany] = useState("");
@@ -94,7 +93,7 @@ const ContentContainer = styled.div`
   padding: 20px 80px 0;
 
   & > table {
-    min-width: 1200px;
+    min-width: 1100px;
     height: 100%;
     display: grid;
     grid-template-rows: 32px;

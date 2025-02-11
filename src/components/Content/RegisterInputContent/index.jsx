@@ -7,27 +7,49 @@ const RegisterInputContent = () => {
       <RegisterInputContainer>
         <form>
           <div>
-            <label htmlFor="">회사ID</label>
-            <RegisterInput type="text" placeholder="회사ID를 입력해주세요." />
-          </div>
-          <div>
-            <label htmlFor="">회사명</label>
-            <RegisterInput type="text" placeholder="회사명을 입력해주세요." />
-          </div>
-          <div>
-            <label htmlFor="">회사번호</label>
-            <RegisterInput type="text" placeholder="회사번호를 입력해주세요." />
-          </div>
-          <div>
-            <label htmlFor="">사업자번호</label>
+            <label htmlFor="companyId">회사ID</label>
             <RegisterInput
               type="text"
-              placeholder="사업자번호를 입력해주세요."
+              placeholder="회사ID를 입력해주세요."
+              id="companyId"
+              name="companyId"
             />
           </div>
           <div>
-            <label htmlFor="">영업점</label>
-            <RegisterInput type="text" placeholder="영업점을 입력해주세요." />
+            <label htmlFor="companyName">회사명</label>
+            <RegisterInput
+              type="text"
+              placeholder="회사명을 입력해주세요."
+              id="companyName"
+              name="companyName"
+            />
+          </div>
+          <div>
+            <label htmlFor="companyNumber">회사번호</label>
+            <RegisterInput
+              type="text"
+              placeholder="회사번호를 입력해주세요."
+              id="companyNumber"
+              name="companyNumber"
+            />
+          </div>
+          <div>
+            <label htmlFor="businessNumber">사업자번호</label>
+            <RegisterInput
+              type="text"
+              placeholder="사업자번호를 입력해주세요."
+              id="businessNumber"
+              name="businessNumber"
+            />
+          </div>
+          <div>
+            <label htmlFor="salesresp">영업점</label>
+            <RegisterInput
+              type="text"
+              placeholder="영업점을 입력해주세요."
+              id="salesresp"
+              name="saleseresp"
+            />
           </div>
           <button>등록</button>
         </form>
