@@ -202,8 +202,14 @@ const IQ200CompanyList = styled.div`
         table-layout: fixed;
         width: 100%;
         cursor: pointer;
+        transition: background-color 0.3s ease;
+
         & {
           border-bottom: 1px solid #d0d0d0;
+        }
+
+        &:hover {
+          background-color: #f4f4f4;
         }
       }
     }
