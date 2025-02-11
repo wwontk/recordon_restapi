@@ -19,7 +19,9 @@ export default MainLayout;
 
 const ContentArea = styled.div`
   width: calc(100% - 220px);
+  min-width: 1280px;
   height: calc(100% - 60px);
   position: fixed;
   left: 220px;
+  overflow: auto;
 `;

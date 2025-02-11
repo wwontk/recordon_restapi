@@ -62,7 +62,7 @@ export default RegisterInputContent;
 
 const RegisterInputContainer = styled.div`
   width: calc(100% - 500px);
-  padding: 40px 0 0 80px;
+  padding: 40px 80px 0 80px;
 
   & > form {
     width: 360px;
