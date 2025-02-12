@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { TextInput } from "../../Common/Input/TextInput";
+import PropTypes from "prop-types";
 
-const CompanyInfoContent = () => {
+const CompanyInfoContent = ({ companyInfo }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -12,11 +13,21 @@ const CompanyInfoContent = () => {
           <div>
             <div>
               <label htmlFor="companyName">회사이름</label>
-              <InfoInput type="text" id="companyName" name="companyName" />
+              <InfoInput
+                type="text"
+                id="companyName"
+                name="companyName"
+                value={companyInfo.companyName}
+              />
             </div>
             <div>
               <label htmlFor="companyId">회사아이디</label>
-              <InfoInput type="text" id="companyId" name="companyId" />
+              <InfoInput
+                type="text"
+                id="companyId"
+                name="companyId"
+                value={companyInfo.companyId}
+              />
             </div>
             <div>
               <label htmlFor="companyPassword">비밀번호</label>
@@ -28,7 +39,12 @@ const CompanyInfoContent = () => {
             </div>
             <div>
               <label htmlFor="companyNumber">회사번호</label>
-              <InfoInput type="text" id="companyNumber" name="companyNumber" />
+              <InfoInput
+                type="text"
+                id="companyNumber"
+                name="companyNumber"
+                value={companyInfo.companyNumber}
+              />
             </div>
             <div>
               <label htmlFor="businessNumber">사업자번호</label>
@@ -36,6 +52,7 @@ const CompanyInfoContent = () => {
                 type="text"
                 id="businessNumber"
                 name="businessNumber"
+                value={companyInfo.businessNumber}
               />
             </div>
             <div>
@@ -51,6 +68,22 @@ const CompanyInfoContent = () => {
 };
 
 export default CompanyInfoContent;
+
+CompanyInfoContent.propTypes = {
+  companyInfo: PropTypes.shape({
+    businessNumber: PropTypes.string.isRequired,
+    companyId: PropTypes.number.isRequired,
+    companyName: PropTypes.string.isRequired,
+    companyNumber: PropTypes.string.isRequired,
+    companyPassword: PropTypes.string,
+    corpIdx: PropTypes.number.isRequired,
+    discd: PropTypes.number.isRequired,
+    regDate: PropTypes.string.isRequired,
+    sales: PropTypes.number.isRequired,
+    salesresp: PropTypes.number.isRequired,
+    updateDate: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 const ContentContainer = styled.div`
   width: 100%;

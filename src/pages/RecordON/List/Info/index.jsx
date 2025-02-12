@@ -1,10 +1,22 @@
 import styled from "styled-components";
 import BackIcon from "../../../../assets/img/etc/chevrons-left.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CompanyInfoContent from "../../../../components/Content/CompanyInfoContent";
+import { useEffect, useState } from "react";
+import { searchCompanyDetail } from "../../../../api/companyList/companyListInfo";
 
 const Info = () => {
   const navigate = useNavigate();
+
+  const { compIdx } = useParams();
+  const [companyInfo, setCompanyInfo] = useState({});
+
+  useEffect(() => {
+    const result = searchCompanyDetail(compIdx);
+    result.then((res) => {
+      setCompanyInfo(res.data);
+    });
+  }, [compIdx]);
 
   return (
     <>
@@ -15,7 +27,7 @@ const Info = () => {
           </div>
           <p>상세 조회</p>
         </CompanyInfoTop>
-        <CompanyInfoContent />
+        <CompanyInfoContent companyInfo={companyInfo} />
       </CompanyInfoContainer>
     </>
   );

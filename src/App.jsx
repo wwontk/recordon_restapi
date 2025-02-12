@@ -26,7 +26,7 @@ function App() {
         <Route path="/recordon" element={<PrivateRoute />}>
           <Route path="list" element={<List />} />
           <Route path="register" element={<Register />} />
-          <Route path="list/:compId" element={<Info />} />
+          <Route path="list/:compIdx" element={<Info />} />
         </Route>
       </Routes>
     </>

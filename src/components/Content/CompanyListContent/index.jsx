@@ -15,6 +15,9 @@ const CompanyListContent = ({ data }) => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
+  const scrollRef = useRef();
+  const [moreFuncTop, setMoreFuncTop] = useState(false);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -26,6 +29,11 @@ const CompanyListContent = ({ data }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (scrollRef.current.clientHeight < data.length * 40) setMoreFuncTop(true);
+    else setMoreFuncTop(false);
+  }, [data]);
 
   return (
     <ContentContainer>
@@ -40,8 +48,8 @@ const CompanyListContent = ({ data }) => {
             <th>등록일</th>
           </tr>
         </thead>
-        <tbody className="scrollBar">
-          {data.map((list) => (
+        <tbody className="scrollBar" ref={scrollRef}>
+          {data.map((list, idx) => (
             <tr key={list.companyId}>
               <td>{list.companyId}</td>
               <td>{list.companyName}</td>
@@ -63,10 +71,17 @@ const CompanyListContent = ({ data }) => {
                     />
                   </MoreBtn>
                   {selectedCompany === list.companyId && (
-                    <DropdownMenu>
+                    <DropdownMenu
+                      className={
+                        moreFuncTop &&
+                        (data.length - 1 === idx || data.length - 2 === idx)
+                          ? "top-data"
+                          : ""
+                      }
+                    >
                       <li
                         onClick={() => {
-                          navigate(`/recordon/list/${list.companyId}`);
+                          navigate(`/recordon/list/${list.corpIdx}`);
                         }}
                       >
                         상세조회
@@ -248,6 +263,10 @@ const DropdownMenu = styled.ul`
   z-index: 10;
   display: flex;
   flex-direction: column;
+
+  &.top-data {
+    top: -85px;
+  }
 
   li {
     height: 40px;
