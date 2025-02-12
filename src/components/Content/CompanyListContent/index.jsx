@@ -47,7 +47,7 @@ const CompanyListContent = () => {
               <td>{list.companyName}</td>
               <td>{formatCompanyNumber(list.companyNumber)}</td>
               <td>{formatbusinessNumber(list.businessNumber)}</td>
-              <td>{list.salesresp}</td>
+              <td>{list.salesCompanyName}</td>
               <td>
                 <p>{moment(list.regDate).format("YYYY.MM.DD")}</p>
                 <div ref={selectedCompany === list.companyId ? menuRef : null}>
@@ -150,11 +150,11 @@ const ContentContainer = styled.div`
     }
     tr th:nth-child(3),
     tr td:nth-child(3) {
-      width: 180px;
+      width: 200px;
     }
     tr th:nth-child(4),
     tr td:nth-child(4) {
-      width: 180px;
+      width: 200px;
     }
     tr th:nth-child(5),
     tr td:nth-child(5) {
