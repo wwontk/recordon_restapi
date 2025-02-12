@@ -6,22 +6,35 @@ import Header from "../Header";
 function MainLayout() {
   return (
     <>
-      <Header />
-      <Sidebar />
-      <ContentArea>
-        <Outlet />
-      </ContentArea>
+      <Container>
+        <Header />
+        <div>
+          <Sidebar />
+          <ContentArea>
+            <Outlet />
+          </ContentArea>
+        </div>
+      </Container>
     </>
   );
 }
 
 export default MainLayout;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  > div:nth-child(2) {
+    display: flex;
+    height: 100%;
+  }
+`;
+
 const ContentArea = styled.div`
   width: calc(100% - 220px);
   min-width: 1280px;
-  height: calc(100% - 60px);
-  position: fixed;
-  left: 220px;
+  height: 100%;
   overflow: auto;
 `;

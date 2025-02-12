@@ -36,6 +36,8 @@ const List = () => {
     setTimeout(() => setIsRotating(false), 500);
   };
 
+  const [companies, setCompanies] = useState([]);
+
   const handleSumbit = (e) => {
     e.preventDefault();
 
@@ -46,9 +48,8 @@ const List = () => {
       companyNumber: companyNumber,
       businessNumber: businessNumber,
     });
-
     result.then((res) => {
-      console.log(res);
+      setCompanies(res.data.content);
     });
   };
 
@@ -141,7 +142,7 @@ const List = () => {
           </form>
         </CompanyListTop>
 
-        <CompanyListContent />
+        <CompanyListContent data={companies} />
       </CompanyListContainer>
     </>
   );

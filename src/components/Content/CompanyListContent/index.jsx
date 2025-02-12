@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoreIcon from "../../../assets/img/etc/more-vertical.png";
-import { CompanyList } from "./data";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/ko";
@@ -9,8 +8,9 @@ import {
   formatbusinessNumber,
   formatCompanyNumber,
 } from "../../../utils/formatNumber";
+import PropTypes from "prop-types";
 
-const CompanyListContent = () => {
+const CompanyListContent = ({ data }) => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const menuRef = useRef(null);
   const navigate = useNavigate();
@@ -41,13 +41,13 @@ const CompanyListContent = () => {
           </tr>
         </thead>
         <tbody className="scrollBar">
-          {CompanyList.map((list) => (
+          {data.map((list) => (
             <tr key={list.companyId}>
               <td>{list.companyId}</td>
               <td>{list.companyName}</td>
               <td>{formatCompanyNumber(list.companyNumber)}</td>
               <td>{formatbusinessNumber(list.businessNumber)}</td>
-              <td>{list.salesresp}</td>
+              <td>{list.salesCompanyName}</td>
               <td>
                 <p>{moment(list.regDate).format("YYYY.MM.DD")}</p>
                 <div ref={selectedCompany === list.companyId ? menuRef : null}>
@@ -86,9 +86,34 @@ const CompanyListContent = () => {
 
 export default CompanyListContent;
 
+CompanyListContent.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      companyId: PropTypes.number.isRequired,
+      companyName: PropTypes.string.isRequired,
+      companyNumber: PropTypes.string.isRequired,
+      businessNumber: PropTypes.string.isRequired,
+      salesCompanyName: PropTypes.string,
+      corpIdx: PropTypes.number,
+      discd: PropTypes.number,
+      sales: PropTypes.number,
+      salesresp: PropTypes.number,
+      regDate: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.instanceOf(Date),
+      ]).isRequired,
+      updateDate: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.instanceOf(Date),
+      ]),
+    })
+  ).isRequired,
+};
+
 const ContentContainer = styled.div`
   width: 100%;
   height: calc(100% - 240px);
+  max-height: calc(100% - 240px);
   background-color: #f8f8f8;
   padding: 20px 80px 0;
 
@@ -122,11 +147,11 @@ const ContentContainer = styled.div`
       position: relative;
       display: block;
       width: calc(100% + 4px);
-      height: 100%;
+      height: 550px;
       overflow-y: auto;
       background: #fff;
       border: 1px solid #d0d0d0;
-      border-bottom: none;
+
       & > tr {
         height: 40px;
         display: table;
@@ -136,6 +161,8 @@ const ContentContainer = styled.div`
           border-bottom: 1px solid #d0d0d0;
         }
       }
+      & > tr:last-child {
+        border-bottom: none;
       }
     }
     tr th:first-child,
@@ -150,11 +177,11 @@ const ContentContainer = styled.div`
     }
     tr th:nth-child(3),
     tr td:nth-child(3) {
-      width: 180px;
+      width: 200px;
     }
     tr th:nth-child(4),
     tr td:nth-child(4) {
-      width: 180px;
+      width: 200px;
     }
     tr th:nth-child(5),
     tr td:nth-child(5) {

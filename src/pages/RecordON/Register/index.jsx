@@ -40,6 +40,7 @@ const Register = () => {
                   type="text"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
+                  autoFocus
                 />
                 <button>조회</button>
               </div>
@@ -47,6 +48,7 @@ const Register = () => {
             <table>
               <thead>
                 <tr>
+                  <th>NO</th>
                   <th>회사명</th>
                   <th>회사번호</th>
                   <th>사업자번호</th>
@@ -54,11 +56,13 @@ const Register = () => {
               </thead>
               <tbody className="scrollBar">
                 <tr>
-                  <td>(주)비플비플비플비플비플비플비플</td>
-                  <td>1661-2010</td>
-                  <td>22-087-91940</td>
+                  <td>1</td>
+                  <td>$(주)에스엘케이종합건축사사무소 필아</td>
+                  <td>070-1661-5959</td>
+                  <td>22-087-919401</td>
                 </tr>
                 <tr>
+                  <td>2</td>
                   <td>(주)비플</td>
                   <td>1661-2010</td>
                   <td>22-087-91940</td>
@@ -144,18 +148,19 @@ const IQ200CompanyList = styled.div`
 
     th {
       color: #8d8d8d;
-      padding: 0 10px;
+      padding: 0 8px;
       text-align: center;
-      height: 40px;
+      height: 30px;
       vertical-align: middle;
       background-color: #efefef;
       white-space: nowrap;
       overflow: hidden;
+      font-size: 14px;
     }
     td {
       max-height: 50px;
       color: #1e1e1e;
-      padding: 0 10px;
+      padding: 0 8px;
       vertical-align: middle;
       line-height: 18px;
       font-size: 14px;
@@ -183,7 +188,7 @@ const IQ200CompanyList = styled.div`
       background: #fff;
       border-bottom: none;
       & > tr {
-        height: 50px;
+        height: 40px;
         display: table;
         table-layout: fixed;
         width: 100%;
@@ -201,10 +206,15 @@ const IQ200CompanyList = styled.div`
     }
     tr th:first-child,
     tr td:first-child {
-      width: 240px;
+      width: 40px;
+      padding: 0 4px;
     }
     tr th:nth-child(2),
     tr td:nth-child(2) {
+      width: 220px;
+    }
+    tr th:nth-child(3),
+    tr td:nth-child(3) {
       min-width: 120px;
       overflow: hidden;
       white-space: nowrap;
