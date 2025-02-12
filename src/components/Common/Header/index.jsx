@@ -34,7 +34,7 @@ export default Header;
 const HeaderContainer = styled.div`
   width: 100%;
   min-width: 1500px;
-  height: 60px;
+  min-height: 60px;
   background-color: #f8f8f8;
   border-bottom: 1px solid #d3d3d3;
   display: flex;
