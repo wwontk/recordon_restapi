@@ -162,7 +162,7 @@ const ContentContainer = styled.div`
       position: relative;
       display: block;
       width: calc(100% + 4px);
-      height: 550px;
+      height: 580px;
       overflow-y: auto;
       background: #fff;
       border: 1px solid #d0d0d0;

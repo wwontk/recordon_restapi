@@ -3,14 +3,31 @@ import { TextInput } from "../../../components/Common/Input/TextInput";
 import SelectBox from "../../../components/Common/Input/SelectBox";
 import { useState } from "react";
 import RegisterInputContent from "../../../components/Content/RegisterInputContent";
+import { searchIQ200CompDetail } from "../../../api/companyList/registerCompany";
+import {
+  formatbusinessNumber,
+  formatCompanyNumber,
+} from "../../../utils/formatNumber";
 
 const Register = () => {
   const [searchSort, setSearchSort] = useState("companyName");
   const [searchInput, setSearchInput] = useState("");
+  // TODO: input 창 오른쪽에 x (input 초기화)
+
+  const [iq200CompList, setIq200CompList] = useState([]);
+  const [selected, setSeleceted] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(searchInput);
+    // TODO: 회사명에만 적용할 것 (2글자 이상)
+
+    // if (searchInput.length < 2) {
+    //   alert("검색은 2글자 이상부터 가능합니다.");
+    //   return;
+    // }
+    const param = { [searchSort]: searchInput };
+    const result = searchIQ200CompDetail(param);
+    result.then((res) => setIq200CompList(res.data.content));
   };
 
   return (
@@ -27,11 +44,15 @@ const Register = () => {
                 <SelectBox
                   options={[
                     { value: "companyName", label: "회사명" },
-                    { value: "companyNumber", label: "회사번호" },
+                    { value: "companyId", label: "회사ID" },
                     { value: "businessNumber", label: "사업자번호" },
+                    { value: "companyNumber", label: "대표번호" },
                   ]}
                   selected={searchSort}
-                  onSelect={(option) => setSearchSort(option.value)}
+                  onSelect={(option) => {
+                    setSearchSort(option.value);
+                    setSearchInput("");
+                  }}
                   width={"240px"}
                 />
               </div>
@@ -40,33 +61,35 @@ const Register = () => {
                   type="text"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
+                  autoFocus
                 />
                 <button>조회</button>
               </div>
             </form>
             <table>
               <thead>
+                {/* TODO: 회사ID 항목 추가 */}
                 <tr>
+                  <th>NO</th>
                   <th>회사명</th>
-                  <th>회사번호</th>
+                  <th>대표번호</th>
                   <th>사업자번호</th>
                 </tr>
               </thead>
               <tbody className="scrollBar">
-                <tr>
-                  <td>(주)비플비플비플비플비플비플비플</td>
-                  <td>1661-2010</td>
-                  <td>22-087-91940</td>
-                </tr>
-                <tr>
-                  <td>(주)비플</td>
-                  <td>1661-2010</td>
-                  <td>22-087-91940</td>
-                </tr>
+                {iq200CompList.map((comp, idx) => (
+                  <tr key={comp.companyId} onClick={() => setSeleceted(comp)}>
+                    <td>{idx + 1}</td>
+                    {/* TODO: hover시 풀네임 확인가능하도록 */}
+                    <td>{comp.companyName}</td>
+                    <td>{formatCompanyNumber(comp.companyNumber)}</td>
+                    <td>{formatbusinessNumber(comp.businessNumber)}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </IQ200CompanyList>
-          <RegisterInputContent />
+          <RegisterInputContent selected={selected} />
         </RegisterContent>
       </RegisterContainer>
     </>
@@ -144,18 +167,19 @@ const IQ200CompanyList = styled.div`
 
     th {
       color: #8d8d8d;
-      padding: 0 10px;
+      padding: 0 8px;
       text-align: center;
-      height: 40px;
+      height: 30px;
       vertical-align: middle;
       background-color: #efefef;
       white-space: nowrap;
       overflow: hidden;
+      font-size: 14px;
     }
     td {
       max-height: 50px;
       color: #1e1e1e;
-      padding: 0 10px;
+      padding: 0 8px;
       vertical-align: middle;
       line-height: 18px;
       font-size: 14px;
@@ -183,7 +207,7 @@ const IQ200CompanyList = styled.div`
       background: #fff;
       border-bottom: none;
       & > tr {
-        height: 50px;
+        height: 40px;
         display: table;
         table-layout: fixed;
         width: 100%;
@@ -201,7 +225,12 @@ const IQ200CompanyList = styled.div`
     }
     tr th:first-child,
     tr td:first-child {
-      width: 240px;
+      width: 40px;
+      padding: 0 2px;
+    }
+    tr th:nth-child(2),
+    tr td:nth-child(2) {
+      width: 220px;
     }
     tr th:nth-child(2),
     tr td:nth-child(2) {

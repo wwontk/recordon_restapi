@@ -17,5 +17,5 @@ export const searchIQ200CompanyListNoAuth = () => {
 
 // iq200 회사 상세 조회
 export const searchIQ200CompDetail = (option) => {
-  return axiosInstance.get(`/company-iq200`, { params: option });
+  return axiosInstance.get(`/iq200/company`, { params: option });
 };

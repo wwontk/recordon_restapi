@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { TextInput } from "../../Common/Input/TextInput";
+import PropTypes from "prop-types";
 
-const RegisterInputContent = () => {
+const RegisterInputContent = ({ selected }) => {
   return (
     <>
       <RegisterInputContainer>
@@ -13,6 +14,7 @@ const RegisterInputContent = () => {
               placeholder="회사ID를 입력해주세요."
               id="companyId"
               name="companyId"
+              value={selected.companyId}
             />
           </div>
           <div>
@@ -22,6 +24,7 @@ const RegisterInputContent = () => {
               placeholder="회사명을 입력해주세요."
               id="companyName"
               name="companyName"
+              value={selected.companyName}
             />
           </div>
           <div>
@@ -31,6 +34,7 @@ const RegisterInputContent = () => {
               placeholder="회사번호를 입력해주세요."
               id="companyNumber"
               name="companyNumber"
+              value={selected.companyNumber}
             />
           </div>
           <div>
@@ -40,6 +44,7 @@ const RegisterInputContent = () => {
               placeholder="사업자번호를 입력해주세요."
               id="businessNumber"
               name="businessNumber"
+              value={selected.businessNumber}
             />
           </div>
           <div>
@@ -49,6 +54,7 @@ const RegisterInputContent = () => {
               placeholder="영업점을 입력해주세요."
               id="salesresp"
               name="saleseresp"
+              value={selected.salesCompanyName}
             />
           </div>
           <button>등록</button>
@@ -59,6 +65,19 @@ const RegisterInputContent = () => {
 };
 
 export default RegisterInputContent;
+
+RegisterInputContent.propTypes = {
+  selected: PropTypes.shape({
+    bnCheck: PropTypes.string,
+    businessNumber: PropTypes.string.isRequired,
+    companyId: PropTypes.number.isRequired,
+    companyName: PropTypes.string.isRequired,
+    companyNumber: PropTypes.string.isRequired,
+    sales: PropTypes.number.isRequired,
+    salesCompanyName: PropTypes.string.isRequired,
+    salesresp: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 const RegisterInputContainer = styled.div`
   width: calc(100% - 500px);
