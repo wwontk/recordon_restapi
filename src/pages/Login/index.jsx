@@ -16,6 +16,8 @@ const Login = () => {
   const onSubmitLogin = (e) => {
     e.preventDefault();
 
+    // TODO: password sha256 암호화 시크릿키
+
     if (id !== "" && password !== "") {
       const result = loginUser({ admin_id: id, admin_pwd: password });
       result

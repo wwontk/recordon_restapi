@@ -2,40 +2,65 @@ import styled from "styled-components";
 import { TextInput } from "../../Common/Input/TextInput";
 import PropTypes from "prop-types";
 import { registerCompany } from "../../../api/companyList/registerCompany";
+import { useEffect, useState } from "react";
+import LoadingSpinnerBack from "../../Common/LoadingSpinner/LoadingSpinnerBack";
 
 // TODO: 모든 api 연동시 에러 캐치 필요
-// TODO: api 연동할때 loading 넣기
 
 const RegisterInputContent = ({ selected }) => {
-  // TODO: api 연동
+  // LoadingSpinner
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const [registerCheck, setRegisterCheck] = useState(false);
+
+  useEffect(() => {
+    if (
+      selected.businessNumber === null ||
+      selected.businessNumber === "" ||
+      selected.bnCheck === "FAIL"
+    )
+      setRegisterCheck(false);
+    else setRegisterCheck(true);
+  }, [selected]);
+
+  console.log(selected);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // const result = registerCompany({
-    //   companyId: 92929,
-    //   companyPassword: "",
-    //   salesresp: 9988,
-    //   companyName: "테스트Comp",
-    //   companyNumber: "07011112222",
-    //   businessNumber: "0001299999",
-    //   sales: 1,
-    //   discd: 0,
-    // });
 
-    // TODO: 확인 alert창 띄운 후 등록하기. 바로 등록하지 않기.
-    const result = registerCompany({
-      companyId: selected.companyId,
-      companyPassword: "",
-      salesresp: selected.salesresp,
-      companyName: selected.companyName,
-      companyNumber: selected.companyNumber,
-      businessNumber: selected.businessNumber,
-      sales: selected.sales,
-      discd: 0,
-    });
-    result.then((res) => {
-      console.log(res);
-    });
+    const isRegister = confirm("회사를 등록하시겠습니까?");
+    if (isRegister) {
+      setIsLoading(true);
+      try {
+        const result = await registerCompany({
+          companyId: 92281,
+          companyPassword: "",
+          salesresp: 9988,
+          companyName: "테스트Comp",
+          companyNumber: "07011112222",
+          businessNumber: "0001299709",
+          sales: 1,
+          discd: 0,
+        });
+
+        // TODO: 확인 alert창 띄운 후 등록하기. 바로 등록하지 않기.
+        // const result = await registerCompany({
+        //   companyId: selected.companyId,
+        //   companyPassword: "",
+        //   salesresp: selected.salesresp,
+        //   companyName: selected.companyName,
+        //   companyNumber: selected.companyNumber,
+        //   businessNumber: selected.businessNumber,
+        //   sales: selected.sales,
+        //   discd: 0,
+        // });
+
+        result.then((res) => console.log(res));
+      } catch (error) {
+        console.error("등록 실패:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else return;
   };
 
   const getPlaceholder = (selected) => {
@@ -113,8 +138,9 @@ const RegisterInputContent = ({ selected }) => {
               disabled
             />
           </div>
-          <button>등록</button>
+          <button disabled={!registerCheck}>등록</button>
         </form>
+        {isLoading && <LoadingSpinnerBack />}
       </RegisterInputContainer>
     </>
   );
@@ -141,6 +167,7 @@ RegisterInputContent.propTypes = {
 const RegisterInputContainer = styled.div`
   width: calc(100% - 500px);
   padding: 40px 80px 0 80px;
+  position: relative;
 
   & > form {
     width: 360px;
@@ -165,6 +192,11 @@ const RegisterInputContainer = styled.div`
       font-size: 14px;
       margin-top: 40px;
       cursor: pointer;
+
+      &:disabled {
+        background-color: rgba(78, 78, 78, 0.4);
+        cursor: not-allowed;
+      }
     }
   }
 `;

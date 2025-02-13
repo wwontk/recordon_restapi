@@ -42,7 +42,7 @@ const CompanyListContent = ({ data }) => {
           <tr>
             <th>회사ID</th>
             <th>회사이름</th>
-            <th>회사번호</th>
+            <th>대표번호</th>
             <th>사업자번호</th>
             <th>영업점</th>
             <th>등록일</th>

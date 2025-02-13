@@ -3,6 +3,7 @@ import { TextInput } from "../../Common/Input/TextInput";
 import PropTypes from "prop-types";
 
 const CompanyInfoContent = ({ companyInfo }) => {
+  // TODO: api 연동
   const handleSubmit = (e) => {
     e.preventDefault();
   };
