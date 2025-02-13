@@ -3,8 +3,24 @@ import { TextInput } from "../../Common/Input/TextInput";
 import PropTypes from "prop-types";
 
 const RegisterInputContent = ({ selected }) => {
-  // TODO: 사업자번호 없을 시 iq200에서 수정해야 하므로 placeholder 수정
+  // TODO: 사업자번호 없을 시 iq200에서 수정해야 하므로 placeholder 수정 -> 기본 사업자번호 placeholder 수정
   // TODO: api 연동
+
+  console.log("registerBN: ", selected.businessNumber);
+
+  const getPlaceholder = (selected) => {
+    if (Object.keys(selected).length === 0) return "사업자번호를 입력해주세요.";
+    if (selected.bnCheck === "OK") return "";
+    if (
+      (selected.bnCheck === "FAIL" && selected.businessNumber === "") ||
+      selected.businessNumber === null
+    )
+      return "IQ200에서 사업자번호를 등록해주세요.";
+    if (selected.bnCheck === "FAIL" && selected.businessNumber !== "")
+      return "국세청에 등록되지 않은 사업자번호 입니다.";
+    return "";
+  };
+
   return (
     <>
       <RegisterInputContainer>
@@ -46,17 +62,13 @@ const RegisterInputContent = ({ selected }) => {
             <label htmlFor="businessNumber">사업자번호</label>
             <RegisterInput
               type="text"
-              placeholder={
-                selected.businessNumber
-                  ? selected.bnCheck
-                    ? ""
-                    : "국세청에 등록되지 않은 사업자번호 입니다."
-                  : "IQ200에서 사업자번호를 등록해주세요."
-              }
+              placeholder={getPlaceholder(selected)}
               id="businessNumber"
               name="businessNumber"
-              className="businessNumber"
-              value={selected.businessNumber}
+              className={
+                Object.keys(selected).length === 0 ? "" : "businessNumber"
+              }
+              value={selected.businessNumber ? selected.businessNumber : ""}
               disabled
             />
           </div>

@@ -30,6 +30,8 @@ const Register = () => {
     result.then((res) => setIq200CompList(res.data.content));
   };
 
+  console.log(selected);
+
   return (
     <>
       <RegisterContainer>
