@@ -10,6 +10,8 @@ import {
 } from "../../../utils/formatNumber";
 import PropTypes from "prop-types";
 
+// TODO: 데이터 무한스크롤 구현
+
 const CompanyListContent = ({ data }) => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const menuRef = useRef(null);

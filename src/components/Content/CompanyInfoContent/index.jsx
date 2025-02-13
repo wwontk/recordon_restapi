@@ -1,12 +1,57 @@
 import styled from "styled-components";
 import { TextInput } from "../../Common/Input/TextInput";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { updateCompanyDetail } from "../../../api/companyList/companyListInfo";
+import LoadingSpinnerBack from "../../Common/LoadingSpinner/LoadingSpinnerBack";
 
 const CompanyInfoContent = ({ companyInfo }) => {
-  // TODO: api 연동
+  const { corpIdx } = companyInfo;
+  const [infoInputs, setInfoInputs] = useState({
+    companyName: companyInfo.companyName ? companyInfo.companyName : "",
+    companyId: companyInfo.companyId ? companyInfo.companyId : "",
+    companyNumber: companyInfo.companyNumber ? companyInfo.companyNumber : "",
+    businessNumber: companyInfo.businessNumber
+      ? companyInfo.businessNumber
+      : "",
+  });
+
+  const { companyName, companyId, companyNumber, businessNumber } = infoInputs;
+
+  useEffect(() => {
+    if (companyInfo) {
+      setInfoInputs({
+        companyName: companyInfo.companyName,
+        companyId: companyInfo.companyId,
+        companyNumber: companyInfo.companyNumber,
+        businessNumber: companyInfo.businessNumber,
+      });
+    }
+  }, [companyInfo]);
+
+  const handleInputs = (e) => {
+    const { name, value } = e.target;
+    setInfoInputs({
+      ...infoInputs,
+      [name]: value,
+    });
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    try {
+      const result = updateCompanyDetail(corpIdx, infoInputs);
+      result.then((res) => console.log(res));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <>
       <ContentContainer>
@@ -18,7 +63,8 @@ const CompanyInfoContent = ({ companyInfo }) => {
                 type="text"
                 id="companyName"
                 name="companyName"
-                value={companyInfo.companyName}
+                value={companyName || ""}
+                onChange={handleInputs}
               />
             </div>
             <div>
@@ -27,24 +73,27 @@ const CompanyInfoContent = ({ companyInfo }) => {
                 type="text"
                 id="companyId"
                 name="companyId"
-                value={companyInfo.companyId}
+                value={companyId || ""}
+                onChange={handleInputs}
+                disabled
               />
             </div>
-            <div>
+            {/* <div>
               <label htmlFor="companyPassword">비밀번호</label>
               <InfoInput
                 type="password"
                 id="companyPassword"
                 name="companyPassword"
               />
-            </div>
+            </div> */}
             <div>
               <label htmlFor="companyNumber">회사번호</label>
               <InfoInput
                 type="text"
                 id="companyNumber"
                 name="companyNumber"
-                value={companyInfo.companyNumber}
+                value={companyNumber || ""}
+                onChange={handleInputs}
               />
             </div>
             <div>
@@ -53,16 +102,18 @@ const CompanyInfoContent = ({ companyInfo }) => {
                 type="text"
                 id="businessNumber"
                 name="businessNumber"
-                value={companyInfo.businessNumber}
+                value={businessNumber || ""}
+                onChange={handleInputs}
               />
             </div>
-            <div>
+            {/* <div>
               <label htmlFor="salesresp">영업점</label>
               <InfoInput type="text" id="salesresp" name="salesresp" />
-            </div>
+            </div> */}
           </div>
           <button>수정</button>
         </form>
+        {isLoading && <LoadingSpinnerBack />}
       </ContentContainer>
     </>
   );
@@ -72,17 +123,17 @@ export default CompanyInfoContent;
 
 CompanyInfoContent.propTypes = {
   companyInfo: PropTypes.shape({
-    businessNumber: PropTypes.string.isRequired,
-    companyId: PropTypes.number.isRequired,
-    companyName: PropTypes.string.isRequired,
-    companyNumber: PropTypes.string.isRequired,
+    businessNumber: PropTypes.string,
+    companyId: PropTypes.number,
+    companyName: PropTypes.string,
+    companyNumber: PropTypes.string,
     companyPassword: PropTypes.string,
-    corpIdx: PropTypes.number.isRequired,
-    discd: PropTypes.number.isRequired,
-    regDate: PropTypes.string.isRequired,
-    sales: PropTypes.number.isRequired,
-    salesresp: PropTypes.number.isRequired,
-    updateDate: PropTypes.string.isRequired,
+    corpIdx: PropTypes.number,
+    discd: PropTypes.number,
+    regDate: PropTypes.string,
+    sales: PropTypes.number,
+    salesresp: PropTypes.number,
+    updateDate: PropTypes.string,
   }).isRequired,
 };
 
@@ -91,6 +142,7 @@ const ContentContainer = styled.div`
   height: calc(100% - 100px);
   background-color: #f8f8f8;
   padding: 64px 80px 0;
+  position: relative;
 
   & > form {
     & > div {

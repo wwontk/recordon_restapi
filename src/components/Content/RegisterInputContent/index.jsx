@@ -23,7 +23,6 @@ const RegisterInputContent = ({ selected }) => {
     else setRegisterCheck(true);
   }, [selected]);
 
-  console.log(selected);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,7 +41,6 @@ const RegisterInputContent = ({ selected }) => {
           discd: 0,
         });
 
-        // TODO: 확인 alert창 띄운 후 등록하기. 바로 등록하지 않기.
         // const result = await registerCompany({
         //   companyId: selected.companyId,
         //   companyPassword: "",
