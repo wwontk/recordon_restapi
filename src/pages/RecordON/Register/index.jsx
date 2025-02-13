@@ -19,18 +19,18 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: 회사명에만 적용할 것 (2글자 이상)
 
-    // if (searchInput.length < 2) {
-    //   alert("검색은 2글자 이상부터 가능합니다.");
-    //   return;
-    // }
+    if (searchSort === "companyName") {
+      if (searchInput.length == 1) {
+        alert("검색은 2글자 이상부터 가능합니다.");
+        return;
+      }
+    }
+
     const param = { discd: 0, [searchSort]: searchInput };
     const result = searchIQ200CompDetail(param);
     result.then((res) => setIq200CompList(res.data.content));
   };
-
-  console.log(selected);
 
   return (
     <>
