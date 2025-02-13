@@ -57,7 +57,11 @@ const CompanyListContent = ({ data }) => {
               <td>{list.companyName}</td>
               <td>{formatCompanyNumber(list.companyNumber)}</td>
               <td>{formatbusinessNumber(list.businessNumber)}</td>
-              <td>{list.salesCompanyName}</td>
+              <td>
+                {list.salesCompanyName === "없음" || list.salesresp === 0
+                  ? ""
+                  : list.salesCompanyName}
+              </td>
               <td>
                 <p>{moment(list.regDate).format("YYYY.MM.DD")}</p>
                 <div ref={selectedCompany === list.companyId ? menuRef : null}>
