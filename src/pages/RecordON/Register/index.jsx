@@ -59,6 +59,7 @@ const Register = () => {
                 <SearchInputDiv>
                   <IQ200SearchInput
                     type="text"
+                    placeholder="검색어를 입력해주세요."
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     autoFocus
@@ -74,19 +75,18 @@ const Register = () => {
             </form>
             <table>
               <thead>
-                {/* TODO: 회사ID 항목 추가 */}
                 {/* TODO: 사업자번호 진위 확인 여부 추가*/}
                 <tr>
-                  <th>NO</th>
+                  <th>회사ID</th>
                   <th>회사명</th>
                   <th>대표번호</th>
                   <th>사업자번호</th>
                 </tr>
               </thead>
               <tbody className="scrollBar">
-                {iq200CompList.map((comp, idx) => (
+                {iq200CompList.map((comp) => (
                   <tr key={comp.companyId} onClick={() => setSeleceted(comp)}>
-                    <td>{idx + 1}</td>
+                    <td>{comp.companyId}</td>
                     {/* TODO: hover시 풀네임 확인가능하도록 */}
                     <td>{comp.companyName}</td>
                     <td>{formatCompanyNumber(comp.companyNumber)}</td>
@@ -250,7 +250,7 @@ const IQ200CompanyList = styled.div`
     }
     tr th:first-child,
     tr td:first-child {
-      width: 40px;
+      width: 60px;
       padding: 0 2px;
     }
     tr th:nth-child(2),
