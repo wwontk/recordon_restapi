@@ -1,12 +1,42 @@
 import styled from "styled-components";
 import { TextInput } from "../../Common/Input/TextInput";
 import PropTypes from "prop-types";
+import { registerCompany } from "../../../api/companyList/registerCompany";
+
+// TODO: 모든 api 연동시 에러 캐치 필요
+// TODO: api 연동할때 loading 넣기
 
 const RegisterInputContent = ({ selected }) => {
-  // TODO: 사업자번호 없을 시 iq200에서 수정해야 하므로 placeholder 수정 -> 기본 사업자번호 placeholder 수정
   // TODO: api 연동
 
-  console.log("registerBN: ", selected.businessNumber);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // const result = registerCompany({
+    //   companyId: 92929,
+    //   companyPassword: "",
+    //   salesresp: 9988,
+    //   companyName: "테스트Comp",
+    //   companyNumber: "07011112222",
+    //   businessNumber: "0001299999",
+    //   sales: 1,
+    //   discd: 0,
+    // });
+
+    // TODO: 확인 alert창 띄운 후 등록하기. 바로 등록하지 않기.
+    const result = registerCompany({
+      companyId: selected.companyId,
+      companyPassword: "",
+      salesresp: selected.salesresp,
+      companyName: selected.companyName,
+      companyNumber: selected.companyNumber,
+      businessNumber: selected.businessNumber,
+      sales: selected.sales,
+      discd: 0,
+    });
+    result.then((res) => {
+      console.log(res);
+    });
+  };
 
   const getPlaceholder = (selected) => {
     if (Object.keys(selected).length === 0) return "사업자번호를 입력해주세요.";
@@ -24,7 +54,7 @@ const RegisterInputContent = ({ selected }) => {
   return (
     <>
       <RegisterInputContainer>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="companyId">회사ID</label>
             <RegisterInput
@@ -68,7 +98,7 @@ const RegisterInputContent = ({ selected }) => {
               className={
                 Object.keys(selected).length === 0 ? "" : "businessNumber"
               }
-              value={selected.businessNumber ? selected.businessNumber : ""}
+              value={selected.bnCheck === "OK" ? selected.businessNumber : ""}
               disabled
             />
           </div>
@@ -79,7 +109,7 @@ const RegisterInputContent = ({ selected }) => {
               placeholder="영업점을 입력해주세요."
               id="salesresp"
               name="saleseresp"
-              value={selected.salesCompanyName}
+              value={selected.salesCompanyName ? selected.salesCompanyName : ""}
               disabled
             />
           </div>
