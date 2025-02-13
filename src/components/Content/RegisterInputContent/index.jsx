@@ -3,6 +3,8 @@ import { TextInput } from "../../Common/Input/TextInput";
 import PropTypes from "prop-types";
 
 const RegisterInputContent = ({ selected }) => {
+  // TODO: 사업자번호 없을 시 iq200에서 수정해야 하므로 placeholder 수정
+  // TODO: api 연동
   return (
     <>
       <RegisterInputContainer>
@@ -15,6 +17,7 @@ const RegisterInputContent = ({ selected }) => {
               id="companyId"
               name="companyId"
               value={selected.companyId}
+              disabled
             />
           </div>
           <div>
@@ -25,6 +28,7 @@ const RegisterInputContent = ({ selected }) => {
               id="companyName"
               name="companyName"
               value={selected.companyName}
+              disabled
             />
           </div>
           <div>
@@ -35,16 +39,25 @@ const RegisterInputContent = ({ selected }) => {
               id="companyNumber"
               name="companyNumber"
               value={selected.companyNumber}
+              disabled
             />
           </div>
           <div>
             <label htmlFor="businessNumber">사업자번호</label>
             <RegisterInput
               type="text"
-              placeholder="사업자번호를 입력해주세요."
+              placeholder={
+                selected.businessNumber
+                  ? selected.bnCheck
+                    ? ""
+                    : "국세청에 등록되지 않은 사업자번호 입니다."
+                  : "IQ200에서 사업자번호를 등록해주세요."
+              }
               id="businessNumber"
               name="businessNumber"
+              className="businessNumber"
               value={selected.businessNumber}
+              disabled
             />
           </div>
           <div>
@@ -55,6 +68,7 @@ const RegisterInputContent = ({ selected }) => {
               id="salesresp"
               name="saleseresp"
               value={selected.salesCompanyName}
+              disabled
             />
           </div>
           <button>등록</button>
@@ -69,7 +83,10 @@ export default RegisterInputContent;
 RegisterInputContent.propTypes = {
   selected: PropTypes.shape({
     bnCheck: PropTypes.string,
-    businessNumber: PropTypes.string.isRequired,
+    businessNumber: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.oneOf([null]),
+    ]),
     companyId: PropTypes.number.isRequired,
     companyName: PropTypes.string.isRequired,
     companyNumber: PropTypes.string.isRequired,
@@ -114,4 +131,10 @@ const RegisterInput = styled(TextInput)`
   height: 36px;
   background-color: #f3fafa;
   padding-left: 8px;
+
+  &.businessNumber {
+    &::placeholder {
+      color: #e53030;
+    }
+  }
 `;

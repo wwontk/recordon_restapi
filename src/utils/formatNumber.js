@@ -1,5 +1,5 @@
 export const formatCompanyNumber = (number) => {
-  // const numStr = String(number); // 숫자를 문자열로 변환
+  if (!number) return "";
 
   switch (number.length) {
     case 7:

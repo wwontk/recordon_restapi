@@ -71,11 +71,11 @@ const Tooltip = ({ text, position = "top", children }) => {
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
     >
-      {children}
       <TooltipWrapper $isVisible={isVisible} $position={position}>
         <TooltipArrow $position={position} />
         <TooltipText>{text}</TooltipText>
       </TooltipWrapper>
+      {children}
     </TooltipContainer>
   );
 };

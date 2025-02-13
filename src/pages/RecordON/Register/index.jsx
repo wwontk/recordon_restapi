@@ -8,6 +8,7 @@ import {
   formatCompanyNumber,
 } from "../../../utils/formatNumber";
 import closeCircle from "../../../assets/img/etc/x-circle.png";
+import { Tooltip } from "react-tooltip";
 
 const Register = () => {
   const [searchSort, setSearchSort] = useState("companyName");
@@ -75,7 +76,6 @@ const Register = () => {
             </form>
             <table>
               <thead>
-                {/* TODO: 사업자번호 진위 확인 여부 추가*/}
                 <tr>
                   <th>회사ID</th>
                   <th>회사명</th>
@@ -91,12 +91,23 @@ const Register = () => {
                     <td>{comp.companyName}</td>
                     <td>{formatCompanyNumber(comp.companyNumber)}</td>
                     <td className={comp.bnCheck === "FAIL" ? "bnFAIL" : ""}>
-                      {formatbusinessNumber(comp.businessNumber)}
+                      <p
+                        className={comp.bnCheck === "FAIL" ? "businessNo" : ""}
+                      >
+                        {formatbusinessNumber(comp.businessNumber)}
+                      </p>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <Tooltip
+              anchorSelect=".businessNo"
+              place="top"
+              className="businessNoTooltip"
+            >
+              국세청에 등록되지 않은 사업자번호 입니다.
+            </Tooltip>
           </IQ200CompanyList>
           <RegisterInputContent selected={selected} />
         </RegisterContent>
@@ -273,6 +284,11 @@ const IQ200CompanyList = styled.div`
     tr td:last-child {
       min-width: 120px;
     }
+  }
+
+  .businessNoTooltip {
+    padding: 8px;
+    font-size: 12px;
   }
 `;
 
