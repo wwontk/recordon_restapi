@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { TextInput } from "../../../components/Common/Input/TextInput";
 import SelectBox from "../../../components/Common/Input/SelectBox";
 import { useState } from "react";
 import RegisterInputContent from "../../../components/Content/RegisterInputContent";
@@ -8,11 +7,11 @@ import {
   formatbusinessNumber,
   formatCompanyNumber,
 } from "../../../utils/formatNumber";
+import closeCircle from "../../../assets/img/etc/x-circle.png";
 
 const Register = () => {
   const [searchSort, setSearchSort] = useState("companyName");
   const [searchInput, setSearchInput] = useState("");
-  // TODO: input 창 오른쪽에 x (input 초기화)
 
   const [iq200CompList, setIq200CompList] = useState([]);
   const [selected, setSeleceted] = useState({});
@@ -25,7 +24,7 @@ const Register = () => {
     //   alert("검색은 2글자 이상부터 가능합니다.");
     //   return;
     // }
-    const param = { [searchSort]: searchInput };
+    const param = { discd: 0, [searchSort]: searchInput };
     const result = searchIQ200CompDetail(param);
     result.then((res) => setIq200CompList(res.data.content));
   };
@@ -57,18 +56,26 @@ const Register = () => {
                 />
               </div>
               <div>
-                <IQ200SearchInput
-                  type="text"
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  autoFocus
-                />
+                <SearchInputDiv>
+                  <IQ200SearchInput
+                    type="text"
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    autoFocus
+                  />
+                  <img
+                    src={closeCircle}
+                    alt="resetBtn"
+                    onClick={() => setSearchInput("")}
+                  />
+                </SearchInputDiv>
                 <button>조회</button>
               </div>
             </form>
             <table>
               <thead>
                 {/* TODO: 회사ID 항목 추가 */}
+                {/* TODO: 사업자번호 진위 확인 여부 추가*/}
                 <tr>
                   <th>NO</th>
                   <th>회사명</th>
@@ -97,6 +104,24 @@ const Register = () => {
 };
 
 export default Register;
+
+const SearchInputDiv = styled.div`
+  width: 320px;
+  height: 30px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  margin-right: 20px;
+
+  & > img {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+`;
 
 const RegisterContainer = styled.div`
   width: 100%;
@@ -245,9 +270,13 @@ const IQ200CompanyList = styled.div`
   }
 `;
 
-const IQ200SearchInput = styled(TextInput)`
-  width: 320px;
-  height: 30px;
-  border-radius: 0;
-  margin-right: 20px;
+const IQ200SearchInput = styled.input`
+  height: 100%;
+  border: none;
+  flex: 1;
+  font-family: "42dot Sans", serif;
+
+  &:focus {
+    outline: none;
+  }
 `;

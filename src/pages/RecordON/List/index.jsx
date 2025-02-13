@@ -12,8 +12,6 @@ const List = () => {
   const [searchSort, setSearchSort] = useState("companyName");
   const [keyword, setKeyword] = useState("");
 
-  // TODO: 검색구분으로 해서 한줄로 만들기
-
   const [isRotating, setIsRotating] = useState(false);
   const handleRefresh = () => {
     setCompanySort(0);
