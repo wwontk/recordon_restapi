@@ -90,7 +90,9 @@ const Register = () => {
                     {/* TODO: hover시 풀네임 확인가능하도록 */}
                     <td>{comp.companyName}</td>
                     <td>{formatCompanyNumber(comp.companyNumber)}</td>
-                    <td>{formatbusinessNumber(comp.businessNumber)}</td>
+                    <td className={comp.bnCheck === "FAIL" ? "bnFAIL" : ""}>
+                      {formatbusinessNumber(comp.businessNumber)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -245,6 +247,10 @@ const IQ200CompanyList = styled.div`
 
         &:hover {
           background-color: #f4f4f4;
+        }
+
+        &.bnFAIL {
+          color: #e53030;
         }
       }
     }
