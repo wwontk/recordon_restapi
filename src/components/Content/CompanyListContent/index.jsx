@@ -55,7 +55,7 @@ const CompanyListContent = ({ data }) => {
               <td>{list.companyName}</td>
               <td>{formatCompanyNumber(list.companyNumber)}</td>
               <td>{formatbusinessNumber(list.businessNumber)}</td>
-              <td>{list.salesresp}</td>
+              <td>{list.salesCompanyName}</td>
               <td>
                 <p>{moment(list.regDate).format("YYYY.MM.DD")}</p>
                 <div ref={selectedCompany === list.companyId ? menuRef : null}>
@@ -127,8 +127,8 @@ CompanyListContent.propTypes = {
 
 const ContentContainer = styled.div`
   width: 100%;
-  height: calc(100% - 240px);
-  max-height: calc(100% - 240px);
+  height: calc(100% - 200px);
+  max-height: calc(100% - 200px);
   background-color: #f8f8f8;
   padding: 20px 80px 0;
 

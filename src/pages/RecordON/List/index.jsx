@@ -8,30 +8,17 @@ import Tooltip from "../../../components/Common/Tooltip";
 import { searchCompany } from "../../../api/companyList/companyListInfo";
 
 const List = () => {
-  const initialSearchInputs = {
-    companyId: "",
-    companySort: 0,
-    companyName: "",
-    companyNumber: "",
-    businessNumber: "",
-    discd: 0,
-  };
-  const [searchInputs, setSearchInputs] = useState(initialSearchInputs);
+  const [companySort, setCompanySort] = useState(0);
+  const [searchSort, setSearchSort] = useState("companyName");
+  const [keyword, setKeyword] = useState("");
 
-  const { companyId, companySort, companyName, companyNumber, businessNumber } =
-    searchInputs;
-
-  const handleInputs = (e) => {
-    let { name, value } = e.target;
-    setSearchInputs({
-      ...searchInputs,
-      [name]: value.replace(/\xA0/g, " "),
-    });
-  };
+  // TODO: 검색구분으로 해서 한줄로 만들기
 
   const [isRotating, setIsRotating] = useState(false);
   const handleRefresh = () => {
-    setSearchInputs(initialSearchInputs);
+    setCompanySort(0);
+    setSearchSort("companyName");
+    setKeyword("");
     setIsRotating(true);
     setTimeout(() => setIsRotating(false), 500);
   };
@@ -42,11 +29,9 @@ const List = () => {
     e.preventDefault();
 
     const result = searchCompany({
-      companyId: companyId,
-      companySort: companySort,
-      companyName: companyName,
-      companyNumber: companyNumber,
-      businessNumber: businessNumber,
+      discd: 0,
+      [searchSort]: keyword,
+      sales: companySort,
     });
     result.then((res) => {
       setCompanies(res.data.content);
@@ -70,60 +55,27 @@ const List = () => {
                       { value: 2, label: "고객사" },
                     ]}
                     selected={companySort}
-                    onSelect={(option) =>
-                      setSearchInputs((prev) => ({
-                        ...prev,
-                        companySort: option.value,
-                      }))
-                    }
-                  />
-                </InputWrapper>
-              </div>
-              <div>
-                <InputWrapper>
-                  <label htmlFor="companyId">회사아이디</label>
-                  <CompanyListInput
-                    type="text"
-                    id="companyId"
-                    name="companyId"
-                    value={companyId}
-                    placeholder="회사아이디를 입력하세요."
-                    onChange={handleInputs}
+                    onSelect={(option) => setCompanySort(option.value)}
+                    width={"100px"}
                   />
                 </InputWrapper>
                 <InputWrapper>
-                  <label htmlFor="companyName">회사이름</label>
-                  <CompanyListInput
-                    type="text"
-                    id="companyName"
-                    name="companyName"
-                    value={companyName}
-                    placeholder="회사이름을 입력하세요."
-                    onChange={handleInputs}
+                  <label>검색구분</label>
+                  <SelectBox
+                    options={[
+                      { value: "companyName", label: "회사명" },
+                      { value: "companyId", label: "회사ID" },
+                      { value: "businessNumber", label: "사업자번호" },
+                      { value: "companyNumber", label: "대표번호" },
+                    ]}
+                    selected={searchSort}
+                    onSelect={(option) => setSearchSort(option.value)}
+                    width={"120px"}
                   />
-                </InputWrapper>
-              </div>
-              <div>
-                <InputWrapper>
-                  <label htmlFor="companyNumber">회사번호</label>
                   <CompanyListInput
-                    type="text"
-                    id="companyNumber"
-                    name="companyNumber"
-                    value={companyNumber}
-                    placeholder="회사번호를 입력하세요."
-                    onChange={handleInputs}
-                  />
-                </InputWrapper>
-                <InputWrapper>
-                  <label htmlFor="businessNumber">사업자번호</label>
-                  <CompanyListInput
-                    type="text"
-                    id="businessNumber"
-                    name="businessNumber"
-                    value={businessNumber}
-                    placeholder="사업자번호를 입력하세요."
-                    onChange={handleInputs}
+                    placeholder="검색어를 입력해주세요."
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
                   />
                 </InputWrapper>
                 <SearchBtnContainer>
@@ -160,7 +112,6 @@ const SearchBtnContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: 32px;
 
   & > button {
     width: 50px;
@@ -211,6 +162,7 @@ const CompanyListInput = styled(TextInput)`
   height: 32px;
   border-radius: 0;
   padding-left: 8px;
+  margin-left: 8px;
   font-size: 14px;
 `;
 
@@ -221,12 +173,13 @@ const InputWrapper = styled.div`
 
 const CompanyListTop = styled.div`
   width: 100%;
-  height: 240px;
+  height: 200px;
   padding: 42px 0 42px 80px;
+  display: flex;
+  align-items: center;
 
   & > form {
     width: 100%;
-    height: 100%;
 
     & > p {
       font-size: 20px;
@@ -242,12 +195,12 @@ const CompanyListTop = styled.div`
         height: 32px;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 24px;
       }
 
       label {
         display: inline-block;
-        width: 90px;
+        width: 80px;
       }
     }
   }

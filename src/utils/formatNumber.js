@@ -20,6 +20,7 @@ export const formatCompanyNumber = (number) => {
 };
 
 export const formatbusinessNumber = (number) => {
+  if (!number) return "";
   return number.length === 10
     ? number.replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3") // 10자리
     : number.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"); // 11자리
