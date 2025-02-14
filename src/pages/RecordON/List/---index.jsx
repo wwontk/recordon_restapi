@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { TextInput } from "../../../components/Common/Input/TextInput";
 import Refresh from "../../../assets/img/etc/refresh-ccw.svg";
 import SelectBox from "../../../components/Common/Input/SelectBox";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CompanyListContent from "../../../components/Content/CompanyListContent";
 import Tooltip from "../../../components/Common/Tooltip";
 import { searchCompany } from "../../../api/companyList/companyListInfo";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const List = () => {
-  const [companies, setCompanies] = useState([]);
   const [companySort, setCompanySort] = useState(0);
   const [searchSort, setSearchSort] = useState("companyName");
   const [keyword, setKeyword] = useState("");
@@ -22,65 +22,50 @@ const List = () => {
     setTimeout(() => setIsRotating(false), 500);
   };
 
-  const [page, setPage] = useState(0);
-  const [moreData, setMoreData] = useState(true);
+  const observerTarget = useRef(null);
 
-  const searchCompanies = () => {
-    setMoreData(true);
-    const result = searchCompany({
+  const fetchCompanies = async ({ pageParam = 0 }) => {
+    const response = await searchCompany({
       discd: 0,
-      [searchSort]: keyword,
-      page: page,
+      page: pageParam,
     });
-    result.then((res) => {
-      if (res.data.content && page === 0) {
-        if (res.data.last) setMoreData(false);
-        setCompanies(res.data.content);
-      } else if (res.data.content && page !== 0) {
-        setCompanies((prev) => prev.concat(res.data.content));
-        if (res.data.last) setMoreData(false);
-      } else if (!res.data.content && page === 0) setCompanies([]);
-      else {
-        setCompanies((prev) => [...prev]);
-        setMoreData(false);
-      }
-    });
+
+    return {
+      content: response.data.content,
+      nextPage: response.data.last ? null : pageParam + 1, // 마지막 페이지 확인
+    };
   };
+
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ["companies"],
+    queryFn: fetchCompanies,
+    getNextPageParam: (lastPage) => lastPage.nextPage, // 다음 페이지 param 설정
+  });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+    }
+
+    return () => {
+      if (observerTarget.current) {
+        observer.unobserve(observerTarget.current);
+      }
+    };
+  }, [hasNextPage, fetchNextPage]);
 
   const handleSumbit = (e) => {
     e.preventDefault();
-
-    const result = searchCompany({
-      discd: 0,
-      [searchSort]: keyword,
-      sales: companySort,
-    });
-    result.then((res) => {
-      setCompanies(res.data.content);
-    });
   };
-
-  const observer = useRef();
-
-  const containerRef = useCallback(
-    (node) => {
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && moreData)
-          setTimeout(() => setPage((prev) => prev + 1), 800);
-      });
-      if (node) observer.current.observe(node);
-    },
-    [moreData]
-  );
-
-  useEffect(() => {
-    if (companies.length > 0) searchCompanies();
-  }, [page]);
-
-  useEffect(() => {
-    searchCompanies();
-  }, []);
 
   return (
     <>
@@ -138,8 +123,11 @@ const List = () => {
             </div>
           </form>
         </CompanyListTop>
-
-        <CompanyListContent data={companies} target={containerRef} />
+        {console.log(data?.pages.flatMap((page) => page.content))}
+        <CompanyListContent
+          data={data?.pages.flatMap((page) => page.content) || []}
+          observerTarget={observerTarget}
+        />
       </CompanyListContainer>
     </>
   );
@@ -217,7 +205,7 @@ const InputWrapper = styled.div`
 const CompanyListTop = styled.div`
   width: 100%;
   height: 200px;
-  padding: 42px 0 42px 80px;
+  padding: 42px 0 42px 40px;
   display: flex;
   align-items: center;
 

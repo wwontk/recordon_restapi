@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 
 // TODO: 데이터 무한스크롤 구현
 
-const CompanyListContent = ({ data }) => {
+const CompanyListContent = ({ data, target }) => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const menuRef = useRef(null);
   const navigate = useNavigate();
@@ -42,6 +42,7 @@ const CompanyListContent = ({ data }) => {
       <table>
         <thead>
           <tr>
+            <th>NO</th>
             <th>회사ID</th>
             <th>회사이름</th>
             <th>대표번호</th>
@@ -53,6 +54,7 @@ const CompanyListContent = ({ data }) => {
         <tbody className="scrollBar" ref={scrollRef}>
           {data.map((list, idx) => (
             <tr key={list.companyId}>
+              <td>{idx + 1}</td>
               <td>{list.companyId}</td>
               <td>{list.companyName}</td>
               <td>{formatCompanyNumber(list.companyNumber)}</td>
@@ -92,13 +94,18 @@ const CompanyListContent = ({ data }) => {
                       >
                         상세조회
                       </li>
-                      <li>삭제</li>
+                      <li>해지</li>
                     </DropdownMenu>
                   )}
                 </div>
               </td>
             </tr>
           ))}
+          <tr ref={target} style={{ height: "10px" }}>
+            <td colSpan="7" style={{ textAlign: "center" }}>
+              Loading...
+            </td>
+          </tr>
         </tbody>
       </table>
     </ContentContainer>
@@ -129,6 +136,7 @@ CompanyListContent.propTypes = {
       ]),
     })
   ).isRequired,
+  observerCallback: PropTypes.func,
 };
 
 const ContentContainer = styled.div`
@@ -136,13 +144,14 @@ const ContentContainer = styled.div`
   height: calc(100% - 200px);
   max-height: calc(100% - 200px);
   background-color: #f8f8f8;
-  padding: 20px 80px 0;
+  padding: 20px 40px;
 
   & > table {
-    min-width: 1100px;
+    width: 100%;
     height: 100%;
     display: grid;
     grid-template-rows: 32px;
+    font-size: 12px;
 
     th {
       color: #8d8d8d;
@@ -157,6 +166,7 @@ const ContentContainer = styled.div`
     }
     thead {
       user-select: none;
+      font-size: 14px;
       & > tr {
         height: 22px;
         display: table;
@@ -168,13 +178,13 @@ const ContentContainer = styled.div`
       position: relative;
       display: block;
       width: calc(100% + 4px);
-      height: 580px;
+      height: 600px;
       overflow-y: auto;
       background: #fff;
       border: 1px solid #d0d0d0;
 
       & > tr {
-        height: 40px;
+        height: 50px;
         display: table;
         table-layout: fixed;
         width: 100%;
@@ -182,31 +192,37 @@ const ContentContainer = styled.div`
           border-bottom: 1px solid #d0d0d0;
         }
       }
-      & > tr:last-child {
-        border-bottom: none;
-      }
+      // & > tr:last-child {
+      //   border-bottom: none;
+      // }
     }
     tr th:first-child,
     tr td:first-child {
-      width: 100px;
+      width: 40px;
+      padding: 0 2px;
+      text-align: center;
     }
     tr th:nth-child(2),
     tr td:nth-child(2) {
-      width: 250px;
-      overflow: hidden;
-      white-space: nowrap;
+      width: 70px;
     }
     tr th:nth-child(3),
     tr td:nth-child(3) {
-      width: 180px;
+      width: 200px;
+      overflow: hidden;
+      white-space: nowrap;
     }
     tr th:nth-child(4),
     tr td:nth-child(4) {
-      width: 180px;
+      width: 130px;
     }
     tr th:nth-child(5),
     tr td:nth-child(5) {
-      width: 200px;
+      width: 130px;
+    }
+    tr th:nth-child(6),
+    tr td:nth-child(6) {
+      width: 160px;
     }
     tr td:last-child {
       height: 100%;
@@ -265,7 +281,7 @@ const DropdownMenu = styled.ul`
   border: 1px solid #d0d0d0;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   list-style: none;
-  width: 100px;
+  width: 80px;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -275,7 +291,7 @@ const DropdownMenu = styled.ul`
   }
 
   li {
-    height: 40px;
+    height: 30px;
     cursor: pointer;
     transition: background 0.2s ease;
     display: flex;
