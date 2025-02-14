@@ -9,6 +9,7 @@ import {
 } from "../../../utils/formatNumber";
 import closeCircle from "../../../assets/img/etc/x-circle.png";
 import { Tooltip } from "react-tooltip";
+import CompanyNameCell from "./CompanyNameCell";
 
 const Register = () => {
   const [searchSort, setSearchSort] = useState("companyName");
@@ -90,7 +91,10 @@ const Register = () => {
                   <tr key={comp.companyId} onClick={() => setSeleceted(comp)}>
                     <td>{comp.companyId}</td>
                     {/* TODO: hover시 풀네임 확인가능하도록 */}
-                    <td>{comp.companyName}</td>
+                    {/* <td>
+                      <div>{comp.companyName}</div>
+                    </td> */}
+                    <CompanyNameCell name={comp.companyName} />
                     <td>{formatCompanyNumber(comp.companyNumber)}</td>
                     <td>
                       <p
@@ -110,6 +114,11 @@ const Register = () => {
             >
               국세청에 등록되지 않은 사업자번호 입니다.
             </Tooltip>
+            <Tooltip
+              id="nameTooltip"
+              place="top"
+              className="businessNoTooltip"
+            />
           </IQ200CompanyList>
           <RegisterInputContent selected={selected} />
         </RegisterContent>
@@ -263,6 +272,12 @@ const IQ200CompanyList = styled.div`
         }
 
         & > td {
+          & > div {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
           & > p {
             &.businessNo {
               color: red;
