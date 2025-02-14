@@ -146,7 +146,6 @@ const SearchInputDiv = styled.div`
 const RegisterContainer = styled.div`
   width: 100%;
   height: 100%;
-  font-family: "42dot Sans", serif;
 `;
 
 const RegisterTop = styled.div`
@@ -196,7 +195,6 @@ const IQ200CompanyList = styled.div`
         color: white;
         border: none;
         border-radius: 2px;
-        font-family: "42dot Sans", serif;
         font-size: 14px;
         cursor: pointer;
       }
@@ -313,7 +311,6 @@ const IQ200SearchInput = styled.input`
   height: 100%;
   border: none;
   flex: 1;
-  font-family: "42dot Sans", serif;
 
   &:focus {
     outline: none;

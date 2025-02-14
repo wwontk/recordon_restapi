@@ -89,7 +89,6 @@ const UserIdInput = styled(TextInput)`
   border-color: #bcbcbc;
   border-radius: 2px;
   margin-bottom: 12px;
-  font-family: "42dot Sans", serif;
   font-size: 16px;
 `;
 
@@ -102,7 +101,6 @@ const LoginBtn = styled.button`
   border: none;
   border-radius: 2px;
   color: white;
-  font-family: "42dot Sans", serif;
   font-size: 16px;
   cursor: pointer;
   margin-top: 40px;

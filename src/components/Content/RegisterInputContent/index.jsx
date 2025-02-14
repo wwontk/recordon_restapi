@@ -181,7 +181,6 @@ const RegisterInputContainer = styled.div`
       background-color: #4e4e4e;
       color: white;
       border-radius: 2px;
-      font-family: "42dot Sans", serif;
       font-size: 14px;
       margin-top: 40px;
       cursor: pointer;

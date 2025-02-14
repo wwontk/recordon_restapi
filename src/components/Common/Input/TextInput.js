@@ -6,11 +6,9 @@ export const TextInput = styled.input`
   border-radius: 2px;
   outline: none;
   transition: border-color 0.3s;
-  font-family: "42dot Sans", serif;
   font-size: 16px;
 
   &::placeholder {
-    font-family: "42dot Sans", serif;
     font-size: 14px;
   }
 

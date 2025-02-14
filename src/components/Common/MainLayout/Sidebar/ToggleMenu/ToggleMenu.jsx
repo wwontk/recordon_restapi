@@ -17,7 +17,6 @@ const ToggleMenuItem = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 8px;
-  font-family: "42dot Sans", serif;
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s ease;
@@ -38,7 +37,6 @@ const SubMenuContainer = styled.div`
   gap: 4px;
   flex-direction: column;
   align-items: end;
-  font-family: "42dot Sans", serif;
 
   max-height: ${({ $isOpen }) => ($isOpen ? "200px" : "0px")};
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};

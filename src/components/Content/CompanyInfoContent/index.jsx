@@ -165,7 +165,6 @@ const ContentContainer = styled.div`
       border: 1px solid #ce296f;
       color: #ce296f;
       cursor: pointer;
-      font-family: "42dot Sans", serif;
       font-size: 16px;
       border-radius: 2px;
     }
@@ -177,6 +176,5 @@ const InfoInput = styled(TextInput)`
   height: 30px;
   padding-left: 12px;
   border-radius: 0;
-  font-family: "42dot Sans", serif;
   font-size: 16px;
 `;

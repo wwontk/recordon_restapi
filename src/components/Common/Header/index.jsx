@@ -46,7 +46,6 @@ const UserInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
-  font-family: "42dot Sans", serif;
 
   img {
     border-radius: 4px;

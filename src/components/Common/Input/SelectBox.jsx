@@ -19,7 +19,6 @@ const SelectButton = styled.button.attrs({ type: "button" })`
   color: black;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  font-family: "42dot Sans", serif;
   font-size: 14px;
   padding: 0 8px;
 
