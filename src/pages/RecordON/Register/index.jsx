@@ -90,10 +90,6 @@ const Register = () => {
                 {iq200CompList.map((comp) => (
                   <tr key={comp.companyId} onClick={() => setSeleceted(comp)}>
                     <td>{comp.companyId}</td>
-                    {/* TODO: hover시 풀네임 확인가능하도록 */}
-                    {/* <td>
-                      <div>{comp.companyName}</div>
-                    </td> */}
                     <CompanyNameCell name={comp.companyName} />
                     <td>{formatCompanyNumber(comp.companyNumber)}</td>
                     <td>

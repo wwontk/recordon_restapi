@@ -14,12 +14,7 @@ const RegisterInputContent = ({ selected }) => {
   const [registerCheck, setRegisterCheck] = useState(false);
 
   useEffect(() => {
-    if (
-      selected.businessNumber === null ||
-      selected.businessNumber === "" ||
-      selected.bnCheck === "FAIL"
-    )
-      setRegisterCheck(false);
+    if (selected.bnCheck !== "OK") setRegisterCheck(false);
     else setRegisterCheck(true);
   }, [selected]);
 
