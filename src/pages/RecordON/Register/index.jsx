@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import SelectBox from "../../../components/Common/Input/SelectBox";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import RegisterInputContent from "../../../components/Content/RegisterInputContent";
 import { searchIQ200CompDetail } from "../../../api/companyList/registerCompany";
 import {
@@ -27,11 +27,51 @@ const Register = () => {
         return;
       }
     }
-
-    const param = { discd: 0, [searchSort]: searchInput };
-    const result = searchIQ200CompDetail(param);
-    result.then((res) => setIq200CompList(res.data.content));
+    pageNumber === 0 ? searchIq200Companies() : setPageNumber(0);
   };
+
+  const searchIq200Companies = (page) => {
+    setMoreData(true);
+    const result = searchIQ200CompDetail({
+      discd: 0,
+      page: page ? page : pageNumber,
+      [searchSort]: searchInput,
+    });
+    result.then((res) => {
+      if (res.data.content && pageNumber === 0) {
+        if (res.data.last) setMoreData(false);
+        setIq200CompList(res.data.content);
+      } else if (res.data.content && pageNumber !== 0) {
+        setIq200CompList((prev) => prev.concat(res.data.content));
+        if (res.data.last) setMoreData(false);
+      } else if (!res.data.content && pageNumber === 0) setIq200CompList([]);
+      else {
+        setIq200CompList((prev) => [...prev]);
+        setMoreData(false);
+      }
+    });
+  };
+
+  const [pageNumber, setPageNumber] = useState(0);
+  const [moreData, setMoreData] = useState(true);
+  const observer = useRef(null);
+
+  const containerRef = useCallback(
+    (node) => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && moreData) {
+          setTimeout(() => setPageNumber((prev) => prev + 1), 800);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [moreData]
+  );
+
+  useEffect(() => {
+    if (iq200CompList.length > 0) searchIq200Companies();
+  }, [pageNumber]);
 
   return (
     <>
@@ -101,6 +141,9 @@ const Register = () => {
                     </td>
                   </tr>
                 ))}
+                {iq200CompList.length < 10 ? null : (
+                  <tr ref={containerRef}></tr>
+                )}
               </tbody>
             </table>
             <Tooltip
