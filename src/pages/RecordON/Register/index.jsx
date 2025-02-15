@@ -142,7 +142,13 @@ const Register = () => {
                   </tr>
                 ))}
                 {iq200CompList.length < 10 ? null : (
-                  <tr ref={containerRef}></tr>
+                  <Observer ref={containerRef}>
+                    <td colSpan={"4"}>
+                      {moreData
+                        ? "목록을 불러오는 중 입니다."
+                        : "목록을 전부 불러왔습니다."}
+                    </td>
+                  </Observer>
                 )}
               </tbody>
             </table>
@@ -167,6 +173,19 @@ const Register = () => {
 };
 
 export default Register;
+
+const Observer = styled.tr`
+  height: 20px !important;
+  background-color: #e6e6e6;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  & > td {
+    width: auto !important;
+    height: 20px !important;
+  }
+`;
 
 const SearchInputDiv = styled.div`
   width: 320px;
