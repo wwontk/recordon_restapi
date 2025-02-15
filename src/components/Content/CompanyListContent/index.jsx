@@ -101,11 +101,13 @@ const CompanyListContent = ({ data, target }) => {
               </td>
             </tr>
           ))}
-          <tr ref={target} style={{ height: "10px" }}>
-            <td colSpan="7" style={{ textAlign: "center" }}>
-              Loading...
-            </td>
-          </tr>
+          {data.length < 20 ? null : (
+            <tr ref={target} style={{ height: "10px" }}>
+              <td colSpan="7" style={{ textAlign: "center" }}>
+                Loading...
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </ContentContainer>
@@ -136,7 +138,7 @@ CompanyListContent.propTypes = {
       ]),
     })
   ).isRequired,
-  observerCallback: PropTypes.func,
+  target: PropTypes.func.isRequired,
 };
 
 const ContentContainer = styled.div`

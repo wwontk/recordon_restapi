@@ -22,24 +22,45 @@ const List = () => {
     setTimeout(() => setIsRotating(false), 500);
   };
 
-  const [page, setPage] = useState(0);
-  const [moreData, setMoreData] = useState(true);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    pageNumber === 0 ? searchCompanies() : setPageNumber(0);
+  };
 
-  const searchCompanies = () => {
+  // 무한스크롤
+  const [pageNumber, setPageNumber] = useState(0);
+  const [moreData, setMoreData] = useState(true);
+  const observer = useRef(null);
+
+  const containerRef = useCallback(
+    (node) => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && moreData) {
+          console.log(entries[0].isIntersecting);
+          setTimeout(() => setPageNumber((prev) => prev + 1), 800);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [moreData]
+  );
+
+  const searchCompanies = (page) => {
     setMoreData(true);
     const result = searchCompany({
       discd: 0,
+      page: page ? page : pageNumber,
       [searchSort]: keyword,
-      page: page,
     });
     result.then((res) => {
-      if (res.data.content && page === 0) {
+      if (res.data.content && pageNumber === 0) {
         if (res.data.last) setMoreData(false);
         setCompanies(res.data.content);
-      } else if (res.data.content && page !== 0) {
+      } else if (res.data.content && pageNumber !== 0) {
         setCompanies((prev) => prev.concat(res.data.content));
         if (res.data.last) setMoreData(false);
-      } else if (!res.data.content && page === 0) setCompanies([]);
+      } else if (!res.data.content && pageNumber === 0) setCompanies([]);
       else {
         setCompanies((prev) => [...prev]);
         setMoreData(false);
@@ -47,36 +68,11 @@ const List = () => {
     });
   };
 
-  const handleSumbit = (e) => {
-    e.preventDefault();
-
-    const result = searchCompany({
-      discd: 0,
-      [searchSort]: keyword,
-      sales: companySort,
-    });
-    result.then((res) => {
-      setCompanies(res.data.content);
-    });
-  };
-
-  const observer = useRef();
-
-  const containerRef = useCallback(
-    (node) => {
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && moreData)
-          setTimeout(() => setPage((prev) => prev + 1), 800);
-      });
-      if (node) observer.current.observe(node);
-    },
-    [moreData]
-  );
-
   useEffect(() => {
     if (companies.length > 0) searchCompanies();
-  }, [page]);
+  }, [pageNumber]);
+
+  console.log("page: ", pageNumber);
 
   useEffect(() => {
     searchCompanies();
@@ -86,7 +82,7 @@ const List = () => {
     <>
       <CompanyListContainer>
         <CompanyListTop>
-          <form onSubmit={handleSumbit}>
+          <form onSubmit={handleSubmit}>
             <p>리스트 목록</p>
             <div>
               <div>
