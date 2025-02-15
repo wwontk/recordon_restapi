@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 
 // TODO: 데이터 무한스크롤 구현
 
-const CompanyListContent = ({ data, target }) => {
+const CompanyListContent = ({ data, target, moreData }) => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const menuRef = useRef(null);
   const navigate = useNavigate();
@@ -102,11 +102,13 @@ const CompanyListContent = ({ data, target }) => {
             </tr>
           ))}
           {data.length < 20 ? null : (
-            <tr ref={target} style={{ height: "10px" }}>
-              <td colSpan="7" style={{ textAlign: "center" }}>
-                Loading...
+            <Observer ref={target}>
+              <td colSpan="7">
+                {moreData
+                  ? "목록을 불러오는 중 입니다."
+                  : "데이터를 모두 불러왔습니다."}
               </td>
-            </tr>
+            </Observer>
           )}
         </tbody>
       </table>
@@ -115,6 +117,20 @@ const CompanyListContent = ({ data, target }) => {
 };
 
 export default CompanyListContent;
+
+const Observer = styled.tr`
+  height: 20px !important;
+  background-color: #e6e6e6;
+  border-bottom: none !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  & > td {
+    width: auto !important;
+    height: 16px !important;
+  }
+`;
 
 CompanyListContent.propTypes = {
   data: PropTypes.arrayOf(
@@ -139,6 +155,7 @@ CompanyListContent.propTypes = {
     })
   ).isRequired,
   target: PropTypes.func.isRequired,
+  moreData: PropTypes.bool,
 };
 
 const ContentContainer = styled.div`

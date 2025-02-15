@@ -37,7 +37,6 @@ const List = () => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && moreData) {
-          console.log(entries[0].isIntersecting);
           setTimeout(() => setPageNumber((prev) => prev + 1), 800);
         }
       });
@@ -71,8 +70,6 @@ const List = () => {
   useEffect(() => {
     if (companies.length > 0) searchCompanies();
   }, [pageNumber]);
-
-  console.log("page: ", pageNumber);
 
   useEffect(() => {
     searchCompanies();
@@ -135,7 +132,11 @@ const List = () => {
           </form>
         </CompanyListTop>
 
-        <CompanyListContent data={companies} target={containerRef} />
+        <CompanyListContent
+          data={companies}
+          target={containerRef}
+          moreData={moreData}
+        />
       </CompanyListContainer>
     </>
   );
