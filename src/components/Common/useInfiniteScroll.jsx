@@ -1,5 +1,6 @@
 import { useRef, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const InfiniteScroll = ({ hasMore, onLoadMore }) => {
   const observer = useRef(null);
@@ -23,7 +24,17 @@ const InfiniteScroll = ({ hasMore, onLoadMore }) => {
     if (targetRef.current) handleObserver(targetRef.current);
   }, [handleObserver]);
 
-  return <div ref={targetRef} style={{ height: "10px", width: "10px" }} />;
+  return (
+    <>
+      <Target ref={targetRef}>
+        <td colSpan="7">
+          {hasMore
+            ? "목록을 불러오는 중 입니다."
+            : "데이터를 모두 불러왔습니다."}
+        </td>
+      </Target>
+    </>
+  );
 };
 
 InfiniteScroll.propTypes = {
@@ -32,3 +43,17 @@ InfiniteScroll.propTypes = {
 };
 
 export default InfiniteScroll;
+
+const Target = styled.tr`
+  height: 20px !important;
+  background-color: #e6e6e6;
+  border-bottom: none !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  & > td {
+    width: auto !important;
+    height: 16px !important;
+  }
+`;

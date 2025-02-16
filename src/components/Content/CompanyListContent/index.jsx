@@ -103,18 +103,7 @@ const CompanyListContent = ({ data, onLoadMore, moreData }) => {
             </tr>
           ))}
           {data.length < 20 ? null : (
-            // <Observer ref={target}>
-            //   <td colSpan="7">
-            //     {moreData
-            //       ? "목록을 불러오는 중 입니다."
-            //       : "데이터를 모두 불러왔습니다."}
-            //   </td>
-            // </Observer>
-            <tr>
-              <td>
-                <InfiniteScroll onLoadMore={onLoadMore} hasMore={moreData} />
-              </td>
-            </tr>
+            <InfiniteScroll onLoadMore={onLoadMore} hasMore={moreData} />
           )}
         </tbody>
       </table>
@@ -123,20 +112,6 @@ const CompanyListContent = ({ data, onLoadMore, moreData }) => {
 };
 
 export default CompanyListContent;
-
-const Observer = styled.tr`
-  height: 20px !important;
-  background-color: #e6e6e6;
-  border-bottom: none !important;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-
-  & > td {
-    width: auto !important;
-    height: 16px !important;
-  }
-`;
 
 CompanyListContent.propTypes = {
   data: PropTypes.arrayOf(
