@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { TextInput } from "../../../components/Common/Input/TextInput";
 import Refresh from "../../../assets/img/etc/refresh-ccw.svg";
 import SelectBox from "../../../components/Common/Input/SelectBox";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import CompanyListContent from "../../../components/Content/CompanyListContent";
 import Tooltip from "../../../components/Common/Tooltip";
 import { searchCompany } from "../../../api/companyList/companyListInfo";
@@ -30,20 +30,6 @@ const List = () => {
   // 무한스크롤
   const [pageNumber, setPageNumber] = useState(0);
   const [moreData, setMoreData] = useState(true);
-  const observer = useRef(null);
-
-  const containerRef = useCallback(
-    (node) => {
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && moreData) {
-          setTimeout(() => setPageNumber((prev) => prev + 1), 800);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [moreData]
-  );
 
   const searchCompanies = (page) => {
     setMoreData(true);
@@ -134,7 +120,7 @@ const List = () => {
 
         <CompanyListContent
           data={companies}
-          target={containerRef}
+          onLoadMore={() => setPageNumber((prev) => prev + 1)}
           moreData={moreData}
         />
       </CompanyListContainer>

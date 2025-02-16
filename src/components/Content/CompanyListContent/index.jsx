@@ -9,10 +9,11 @@ import {
   formatCompanyNumber,
 } from "../../../utils/formatNumber";
 import PropTypes from "prop-types";
+import InfiniteScroll from "../../Common/useInfiniteScroll";
 
 // TODO: 데이터 무한스크롤 구현
 
-const CompanyListContent = ({ data, target, moreData }) => {
+const CompanyListContent = ({ data, onLoadMore, moreData }) => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const menuRef = useRef(null);
   const navigate = useNavigate();
@@ -102,13 +103,18 @@ const CompanyListContent = ({ data, target, moreData }) => {
             </tr>
           ))}
           {data.length < 20 ? null : (
-            <Observer ref={target}>
-              <td colSpan="7">
-                {moreData
-                  ? "목록을 불러오는 중 입니다."
-                  : "데이터를 모두 불러왔습니다."}
+            // <Observer ref={target}>
+            //   <td colSpan="7">
+            //     {moreData
+            //       ? "목록을 불러오는 중 입니다."
+            //       : "데이터를 모두 불러왔습니다."}
+            //   </td>
+            // </Observer>
+            <tr>
+              <td>
+                <InfiniteScroll onLoadMore={onLoadMore} hasMore={moreData} />
               </td>
-            </Observer>
+            </tr>
           )}
         </tbody>
       </table>
@@ -154,7 +160,7 @@ CompanyListContent.propTypes = {
       ]),
     })
   ).isRequired,
-  target: PropTypes.func.isRequired,
+  onLoadMore: PropTypes.func.isRequired,
   moreData: PropTypes.bool,
 };
 
