@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import SelectBox from "../../../components/Common/Input/SelectBox";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import RegisterInputContent from "../../../components/Content/RegisterInputContent";
 import { searchIQ200CompDetail } from "../../../api/companyList/registerCompany";
 import {
@@ -10,6 +10,7 @@ import {
 import closeCircle from "../../../assets/img/etc/x-circle.png";
 import { Tooltip } from "react-tooltip";
 import CompanyNameCell from "./CompanyNameCell";
+import InfiniteScroll from "../../../components/Common/useInfiniteScroll";
 
 const Register = () => {
   const [searchSort, setSearchSort] = useState("companyName");
@@ -54,20 +55,6 @@ const Register = () => {
 
   const [pageNumber, setPageNumber] = useState(0);
   const [moreData, setMoreData] = useState(true);
-  const observer = useRef(null);
-
-  const containerRef = useCallback(
-    (node) => {
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && moreData) {
-          setTimeout(() => setPageNumber((prev) => prev + 1), 800);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [moreData]
-  );
 
   useEffect(() => {
     if (iq200CompList.length > 0) searchIq200Companies();
@@ -142,13 +129,10 @@ const Register = () => {
                   </tr>
                 ))}
                 {iq200CompList.length < 10 ? null : (
-                  <Observer ref={containerRef}>
-                    <td colSpan={"4"}>
-                      {moreData
-                        ? "목록을 불러오는 중 입니다."
-                        : "목록을 전부 불러왔습니다."}
-                    </td>
-                  </Observer>
+                  <InfiniteScroll
+                    hasMore={moreData}
+                    onLoadMore={() => setPageNumber((prev) => prev + 1)}
+                  />
                 )}
               </tbody>
             </table>
@@ -173,19 +157,6 @@ const Register = () => {
 };
 
 export default Register;
-
-const Observer = styled.tr`
-  height: 20px !important;
-  background-color: #e6e6e6;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-
-  & > td {
-    width: auto !important;
-    height: 20px !important;
-  }
-`;
 
 const SearchInputDiv = styled.div`
   width: 320px;
