@@ -22,7 +22,7 @@ const Login = () => {
       const result = loginUser({ admin_id: id, admin_pwd: password });
       result
         .then((res) => {
-          setCookie("access-token", res.data.token, { path: "/" });
+          setCookie("access-token", res.data.accessToken, { path: "/" });
           setAuthenticated(true);
           setUserInfo({ userId: res.data.admin_id });
           navigate("/recordon/list", { state: { from: "/recordon/list" } });
