@@ -10,7 +10,7 @@ import {
 import closeCircle from "../../../assets/img/etc/x-circle.png";
 import { Tooltip } from "react-tooltip";
 import CompanyNameCell from "./CompanyNameCell";
-import InfiniteScroll from "../../../components/Common/useInfiniteScroll";
+import InfiniteScroll from "../../../components/Common/InfiniteScroll/useInfiniteScroll";
 
 const Register = () => {
   const [searchSort, setSearchSort] = useState("companyName");

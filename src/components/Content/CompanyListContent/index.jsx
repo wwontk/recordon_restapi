@@ -9,7 +9,7 @@ import {
   formatCompanyNumber,
 } from "../../../utils/formatNumber";
 import PropTypes from "prop-types";
-import InfiniteScroll from "../../Common/useInfiniteScroll";
+import InfiniteScroll from "../../Common/InfiniteScroll/useInfiniteScroll";
 
 const CompanyListContent = ({ data, onLoadMore, moreData }) => {
   const [selectedCompany, setSelectedCompany] = useState("");

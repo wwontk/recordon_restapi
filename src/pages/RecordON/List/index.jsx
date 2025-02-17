@@ -2,10 +2,13 @@ import styled from "styled-components";
 import { TextInput } from "../../../components/Common/Input/TextInput";
 import Refresh from "../../../assets/img/etc/refresh-ccw.svg";
 import SelectBox from "../../../components/Common/Input/SelectBox";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CompanyListContent from "../../../components/Content/CompanyListContent";
 import Tooltip from "../../../components/Common/Tooltip";
 import { searchCompany } from "../../../api/companyList/companyListInfo";
+import CalendarIcon from "../../../assets/img/etc/calendar.png";
+import Calendar from "../../../components/Common/Calendar/Calendar";
+import { format } from "date-fns";
 
 // TODO: 기간 설정 (캘린더)
 
@@ -29,6 +32,28 @@ const List = () => {
     e.preventDefault();
     pageNumber === 0 ? searchCompanies() : setPageNumber(0);
   };
+
+  // calendar
+  const [CalendarOpen, setCalendarOpen] = useState(false);
+  const calendarRef = useRef();
+
+  const [dateRange, setDateRange] = useState({
+    startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+    endDate: new Date(),
+  });
+
+  const [selectDate, setSelectDate] = useState(
+    format(dateRange.startDate, "yyyy.MM.dd") +
+      " - " +
+      format(dateRange.endDate, "yyyy.MM.dd")
+  );
+  useEffect(() => {
+    setSelectDate(
+      format(dateRange.startDate, "yyyy.MM.dd") +
+        " - " +
+        format(dateRange.endDate, "yyyy.MM.dd")
+    );
+  }, [dateRange]);
 
   const [pageNumber, setPageNumber] = useState(0);
   const [moreData, setMoreData] = useState(true);
@@ -103,6 +128,19 @@ const List = () => {
               <div>
                 <InputWrapper>
                   <label>기간</label>
+                  <div className="calendar-container">
+                    <CalendarInput type="text" readOnly value={selectDate} />
+                    <button onClick={() => setCalendarOpen((prev) => !prev)}>
+                      <img src={CalendarIcon} alt="calendarBtn" />
+                    </button>
+                    {CalendarOpen && (
+                      <Calendar
+                        calendarref={calendarRef}
+                        dateRange={dateRange}
+                        setDateRange={setDateRange}
+                      />
+                    )}
+                  </div>
                 </InputWrapper>
               </div>
               <div>
@@ -210,18 +248,52 @@ const RefreshIcon = styled.span`
   }
 `;
 
+const CalendarInput = styled(TextInput)`
+  width: 180px;
+  height: 28px;
+  border-radius: 0;
+  font-size: 14px;
+  text-align: center;
+
+  &:focus {
+    border-color: #ccc;
+  }
+
+  & + button {
+    width: 28px;
+    height: 28px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-left: 4px;
+    cursor: pointer;
+
+    & > img {
+      width: 16px;
+      height: 16px;
+      filter: invert(61%) sepia(7%) saturate(12%) hue-rotate(38deg)
+        brightness(88%) contrast(84%);
+    }
+  }
+`;
+
 const CompanyListInput = styled(TextInput)`
   width: 240px;
   height: 28px;
   border-radius: 0;
   padding-left: 8px;
-  margin-left: 8px;
+  margin-left: 4px;
   font-size: 14px;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
+
+  .calendar-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const CompanyListTop = styled.div`
