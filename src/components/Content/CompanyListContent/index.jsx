@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoreIcon from "../../../assets/img/etc/more-vertical.png";
-import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/ko";
 import {
@@ -11,10 +10,15 @@ import {
 import PropTypes from "prop-types";
 import InfiniteScroll from "../../Common/InfiniteScroll/useInfiniteScroll";
 
-const CompanyListContent = ({ data, onLoadMore, moreData }) => {
+const CompanyListContent = ({
+  data,
+  onLoadMore,
+  moreData,
+  setCompanyDetailOpen,
+  setCompanyDetailInfo,
+}) => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const menuRef = useRef(null);
-  const navigate = useNavigate();
 
   const scrollRef = useRef();
   const [moreFuncTop, setMoreFuncTop] = useState(false);
@@ -70,11 +74,12 @@ const CompanyListContent = ({ data, onLoadMore, moreData }) => {
                     <img
                       src={MoreIcon}
                       alt="more"
-                      onClick={() =>
+                      onClick={() => {
                         setSelectedCompany((prev) =>
                           prev === list.companyId ? "" : list.companyId
-                        )
-                      }
+                        );
+                        setCompanyDetailInfo(list);
+                      }}
                     />
                   </MoreBtn>
                   {selectedCompany === list.companyId && (
@@ -88,7 +93,8 @@ const CompanyListContent = ({ data, onLoadMore, moreData }) => {
                     >
                       <li
                         onClick={() => {
-                          navigate(`/recordon/list/${list.corpIdx}`);
+                          setCompanyDetailOpen(true);
+                          setSelectedCompany("");
                         }}
                       >
                         상세조회
@@ -135,6 +141,8 @@ CompanyListContent.propTypes = {
   ).isRequired,
   onLoadMore: PropTypes.func.isRequired,
   moreData: PropTypes.bool,
+  setCompanyDetailOpen: PropTypes.func,
+  setCompanyDetailInfo: PropTypes.func,
 };
 
 const ContentContainer = styled.div`

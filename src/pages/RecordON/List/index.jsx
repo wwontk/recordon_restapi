@@ -9,6 +9,9 @@ import { searchCompany } from "../../../api/companyList/companyListInfo";
 import CalendarIcon from "../../../assets/img/etc/calendar.png";
 import Calendar from "../../../components/Common/Calendar/Calendar";
 import { format } from "date-fns";
+import CompanyDetailContent from "../../../components/Content/CompanyDetailContent";
+
+// TODO: 재조회시 스크롤 top으로
 
 const List = () => {
   const [companies, setCompanies] = useState([]);
@@ -119,6 +122,9 @@ const List = () => {
   useEffect(() => {
     searchCompanies();
   }, []);
+
+  const [companyDetailOpen, setCompanyDetailOpen] = useState(false);
+  const [companyDetailInfo, setCompanyDetailInfo] = useState({});
 
   return (
     <>
@@ -234,7 +240,15 @@ const List = () => {
           data={companies}
           onLoadMore={() => setPageNumber((prev) => prev + 1)}
           moreData={moreData}
+          setCompanyDetailOpen={setCompanyDetailOpen}
+          setCompanyDetailInfo={setCompanyDetailInfo}
         />
+        {companyDetailOpen && (
+          <CompanyDetailContent
+            setCompanyDetailOpen={setCompanyDetailOpen}
+            detail={companyDetailInfo}
+          />
+        )}
       </CompanyListContainer>
     </>
   );
@@ -245,6 +259,7 @@ export default List;
 const CompanyListContainer = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
 `;
 
 const SearchBtnContainer = styled.div`
