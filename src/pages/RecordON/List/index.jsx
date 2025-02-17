@@ -168,6 +168,7 @@ const List = () => {
                     <button
                       onClick={() => setCalendarOpen((prev) => !prev)}
                       ref={calendarBtnRef}
+                      type="button"
                     >
                       <img src={CalendarIcon} alt="calendarBtn" />
                     </button>
