@@ -7,10 +7,13 @@ import CompanyListContent from "../../../components/Content/CompanyListContent";
 import Tooltip from "../../../components/Common/Tooltip";
 import { searchCompany } from "../../../api/companyList/companyListInfo";
 
+// TODO: 기간 설정 (캘린더)
+
 const List = () => {
   const [companies, setCompanies] = useState([]);
   const [companySort, setCompanySort] = useState(0);
   const [searchSort, setSearchSort] = useState("companyName");
+  const [discdSort, setDiscdSort] = useState(0);
   const [keyword, setKeyword] = useState("");
 
   const [isRotating, setIsRotating] = useState(false);
@@ -27,16 +30,17 @@ const List = () => {
     pageNumber === 0 ? searchCompanies() : setPageNumber(0);
   };
 
-  // 무한스크롤
   const [pageNumber, setPageNumber] = useState(0);
   const [moreData, setMoreData] = useState(true);
 
+  // TODO: discd (사용구분) 설정
   const searchCompanies = (page) => {
     setMoreData(true);
     const result = searchCompany({
       discd: 0,
-      page: page ? page : pageNumber,
+      companySort: companySort,
       [searchSort]: keyword,
+      page: page ? page : pageNumber,
     });
     result.then((res) => {
       if (res.data.content && pageNumber === 0) {
@@ -83,6 +87,26 @@ const List = () => {
                   />
                 </InputWrapper>
                 <InputWrapper>
+                  <label>사용구분</label>
+                  <SelectBox
+                    options={[
+                      { value: 0, label: "전체" },
+                      { value: 1, label: "사용" },
+                      { value: 2, label: "미사용" },
+                    ]}
+                    selected={discdSort}
+                    onSelect={(option) => setDiscdSort(option.value)}
+                    width={"100px"}
+                  />
+                </InputWrapper>
+              </div>
+              <div>
+                <InputWrapper>
+                  <label>기간</label>
+                </InputWrapper>
+              </div>
+              <div>
+                <InputWrapper>
                   <label>검색구분</label>
                   <SelectBox
                     options={[
@@ -92,7 +116,10 @@ const List = () => {
                       { value: "companyNumber", label: "대표번호" },
                     ]}
                     selected={searchSort}
-                    onSelect={(option) => setSearchSort(option.value)}
+                    onSelect={(option) => {
+                      setSearchSort(option.value);
+                      setKeyword("");
+                    }}
                     width={"120px"}
                   />
                   <CompanyListInput
@@ -185,7 +212,7 @@ const RefreshIcon = styled.span`
 
 const CompanyListInput = styled(TextInput)`
   width: 240px;
-  height: 32px;
+  height: 28px;
   border-radius: 0;
   padding-left: 8px;
   margin-left: 8px;
@@ -218,7 +245,7 @@ const CompanyListTop = styled.div`
       gap: 4px;
 
       & > div {
-        height: 32px;
+        height: 28px;
         display: flex;
         align-items: center;
         gap: 24px;

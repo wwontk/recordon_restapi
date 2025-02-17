@@ -11,8 +11,6 @@ import {
 import PropTypes from "prop-types";
 import InfiniteScroll from "../../Common/useInfiniteScroll";
 
-// TODO: 데이터 무한스크롤 구현
-
 const CompanyListContent = ({ data, onLoadMore, moreData }) => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const menuRef = useRef(null);

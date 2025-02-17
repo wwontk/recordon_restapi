@@ -10,7 +10,7 @@ const SelectContainer = styled.div`
 
 const SelectButton = styled.button.attrs({ type: "button" })`
   width: ${({ $width }) => $width || "120px"};
-  height: 32px;
+  height: 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
