@@ -9,7 +9,7 @@ import {
   formatCompanyNumber,
 } from "../../../utils/formatNumber";
 import PropTypes from "prop-types";
-import InfiniteScroll from "../../Common/useInfiniteScroll";
+import InfiniteScroll from "../../Common/InfiniteScroll/useInfiniteScroll";
 
 const CompanyListContent = ({ data, onLoadMore, moreData }) => {
   const [selectedCompany, setSelectedCompany] = useState("");
@@ -139,8 +139,8 @@ CompanyListContent.propTypes = {
 
 const ContentContainer = styled.div`
   width: 100%;
-  height: calc(100% - 200px);
-  max-height: calc(100% - 200px);
+  height: calc(100% - 240px);
+  max-height: calc(100% - 240px);
   background-color: #f8f8f8;
   padding: 20px 40px;
 
@@ -176,7 +176,7 @@ const ContentContainer = styled.div`
       position: relative;
       display: block;
       width: calc(100% + 4px);
-      height: 600px;
+      height: 580px;
       overflow-y: auto;
       background: #fff;
       border: 1px solid #d0d0d0;

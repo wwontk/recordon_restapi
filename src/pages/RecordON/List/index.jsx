@@ -2,12 +2,13 @@ import styled from "styled-components";
 import { TextInput } from "../../../components/Common/Input/TextInput";
 import Refresh from "../../../assets/img/etc/refresh-ccw.svg";
 import SelectBox from "../../../components/Common/Input/SelectBox";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CompanyListContent from "../../../components/Content/CompanyListContent";
 import Tooltip from "../../../components/Common/Tooltip";
 import { searchCompany } from "../../../api/companyList/companyListInfo";
-
-// TODO: 기간 설정 (캘린더)
+import CalendarIcon from "../../../assets/img/etc/calendar.png";
+import Calendar from "../../../components/Common/Calendar/Calendar";
+import { format } from "date-fns";
 
 const List = () => {
   const [companies, setCompanies] = useState([]);
@@ -16,19 +17,52 @@ const List = () => {
   const [discdSort, setDiscdSort] = useState(0);
   const [keyword, setKeyword] = useState("");
 
-  const [isRotating, setIsRotating] = useState(false);
-  const handleRefresh = () => {
-    setCompanySort(0);
-    setSearchSort("companyName");
-    setKeyword("");
-    setIsRotating(true);
-    setTimeout(() => setIsRotating(false), 500);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     pageNumber === 0 ? searchCompanies() : setPageNumber(0);
   };
+
+  // calendar
+  const [CalendarOpen, setCalendarOpen] = useState(false);
+  const calendarRef = useRef();
+  const calendarBtnRef = useRef();
+
+  const [allDate, setAllDate] = useState(true);
+  const [dateRange, setDateRange] = useState({
+    startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+    endDate: new Date(),
+  });
+
+  const [selectDate, setSelectDate] = useState(
+    format(dateRange.startDate, "yyyy.MM.dd") +
+      " - " +
+      format(dateRange.endDate, "yyyy.MM.dd")
+  );
+  useEffect(() => {
+    if (CalendarOpen) setAllDate(false);
+    setSelectDate(
+      format(dateRange.startDate, "yyyy.MM.dd") +
+        " - " +
+        format(dateRange.endDate, "yyyy.MM.dd")
+    );
+  }, [dateRange]);
+
+  const closeCalendar = (event) => {
+    if (
+      calendarRef.current &&
+      !calendarRef.current.contains(event.target) &&
+      calendarBtnRef.current &&
+      !calendarBtnRef.current.contains(event.target)
+    ) {
+      setCalendarOpen(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", closeCalendar);
+    return () => {
+      document.removeEventListener("mousedown", closeCalendar);
+    };
+  }, [CalendarOpen]);
 
   const [pageNumber, setPageNumber] = useState(0);
   const [moreData, setMoreData] = useState(true);
@@ -37,9 +71,15 @@ const List = () => {
   const searchCompanies = (page) => {
     setMoreData(true);
     const result = searchCompany({
-      discd: 0,
-      companySort: companySort,
+      discd: discdSort,
+      sales: companySort,
       [searchSort]: keyword,
+      startDate: allDate
+        ? ""
+        : format(dateRange.startDate, "yyyy-MM-dd'T'00:00:00"),
+      endDate: allDate
+        ? ""
+        : format(dateRange.endDate, "yyyy-MM-dd'T'23:59:59"),
       page: page ? page : pageNumber,
     });
     result.then((res) => {
@@ -55,6 +95,21 @@ const List = () => {
         setMoreData(false);
       }
     });
+  };
+
+  const [isRotating, setIsRotating] = useState(false);
+  const handleRefresh = () => {
+    setCompanySort(0);
+    setSearchSort("companyName");
+    setKeyword("");
+    setDiscdSort(0);
+    setAllDate(true);
+    setDateRange({
+      startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+      endDate: new Date(),
+    });
+    setIsRotating(true);
+    setTimeout(() => setIsRotating(false), 500);
   };
 
   useEffect(() => {
@@ -103,6 +158,35 @@ const List = () => {
               <div>
                 <InputWrapper>
                   <label>기간</label>
+                  <div className="calendar-container">
+                    <CalendarInput
+                      type="text"
+                      readOnly
+                      value={selectDate}
+                      disabled={allDate}
+                    />
+                    <button
+                      onClick={() => setCalendarOpen((prev) => !prev)}
+                      ref={calendarBtnRef}
+                    >
+                      <img src={CalendarIcon} alt="calendarBtn" />
+                    </button>
+                    <input
+                      type="checkbox"
+                      name="allDate"
+                      id="allDate"
+                      checked={allDate}
+                      onChange={() => setAllDate(!allDate)}
+                    />
+                    <label htmlFor="allDate">전체기간</label>
+                    {CalendarOpen && (
+                      <Calendar
+                        calendarref={calendarRef}
+                        dateRange={dateRange}
+                        setDateRange={setDateRange}
+                      />
+                    )}
+                  </div>
                 </InputWrapper>
               </div>
               <div>
@@ -210,23 +294,68 @@ const RefreshIcon = styled.span`
   }
 `;
 
+const CalendarInput = styled(TextInput)`
+  width: 180px;
+  height: 28px;
+  border-radius: 0;
+  font-size: 14px;
+  text-align: center;
+  padding: 0 8px;
+
+  &:focus {
+    border-color: #ccc;
+  }
+
+  & + button {
+    width: 28px;
+    height: 28px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-left: 4px;
+    cursor: pointer;
+
+    & > img {
+      width: 16px;
+      height: 16px;
+      filter: invert(61%) sepia(7%) saturate(12%) hue-rotate(38deg)
+        brightness(88%) contrast(84%);
+    }
+  }
+`;
+
 const CompanyListInput = styled(TextInput)`
   width: 240px;
   height: 28px;
   border-radius: 0;
   padding-left: 8px;
-  margin-left: 8px;
+  margin-left: 4px;
   font-size: 14px;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
+
+  .calendar-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    & > label {
+      width: auto;
+      font-size: 14px;
+      margin-left: 4px;
+    }
+
+    & > input[type="checkbox"] {
+      margin-left: 20px;
+    }
+  }
 `;
 
 const CompanyListTop = styled.div`
   width: 100%;
-  height: 200px;
+  height: 240px;
   padding: 42px 0 42px 80px;
   display: flex;
   align-items: center;
