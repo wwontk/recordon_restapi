@@ -17,16 +17,6 @@ const List = () => {
   const [discdSort, setDiscdSort] = useState(0);
   const [keyword, setKeyword] = useState("");
 
-  const [isRotating, setIsRotating] = useState(false);
-  const handleRefresh = () => {
-    setCompanySort(0);
-    setSearchSort("companyName");
-    setKeyword("");
-    setDiscdSort(0);
-    setIsRotating(true);
-    setTimeout(() => setIsRotating(false), 500);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     pageNumber === 0 ? searchCompanies() : setPageNumber(0);
@@ -37,6 +27,7 @@ const List = () => {
   const calendarRef = useRef();
   const calendarBtnRef = useRef();
 
+  const [allDate, setAllDate] = useState(true);
   const [dateRange, setDateRange] = useState({
     startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     endDate: new Date(),
@@ -48,6 +39,7 @@ const List = () => {
       format(dateRange.endDate, "yyyy.MM.dd")
   );
   useEffect(() => {
+    if (CalendarOpen) setAllDate(false);
     setSelectDate(
       format(dateRange.startDate, "yyyy.MM.dd") +
         " - " +
@@ -79,9 +71,15 @@ const List = () => {
   const searchCompanies = (page) => {
     setMoreData(true);
     const result = searchCompany({
-      discd: 0,
-      companySort: companySort,
+      discd: discdSort,
+      sales: companySort,
       [searchSort]: keyword,
+      startDate: allDate
+        ? ""
+        : format(dateRange.startDate, "yyyy-MM-dd'T'00:00:00"),
+      endDate: allDate
+        ? ""
+        : format(dateRange.endDate, "yyyy-MM-dd'T'23:59:59"),
       page: page ? page : pageNumber,
     });
     result.then((res) => {
@@ -97,6 +95,21 @@ const List = () => {
         setMoreData(false);
       }
     });
+  };
+
+  const [isRotating, setIsRotating] = useState(false);
+  const handleRefresh = () => {
+    setCompanySort(0);
+    setSearchSort("companyName");
+    setKeyword("");
+    setDiscdSort(0);
+    setAllDate(true);
+    setDateRange({
+      startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+      endDate: new Date(),
+    });
+    setIsRotating(true);
+    setTimeout(() => setIsRotating(false), 500);
   };
 
   useEffect(() => {
@@ -146,13 +159,26 @@ const List = () => {
                 <InputWrapper>
                   <label>기간</label>
                   <div className="calendar-container">
-                    <CalendarInput type="text" readOnly value={selectDate} />
+                    <CalendarInput
+                      type="text"
+                      readOnly
+                      value={selectDate}
+                      disabled={allDate}
+                    />
                     <button
                       onClick={() => setCalendarOpen((prev) => !prev)}
                       ref={calendarBtnRef}
                     >
                       <img src={CalendarIcon} alt="calendarBtn" />
                     </button>
+                    <input
+                      type="checkbox"
+                      name="allDate"
+                      id="allDate"
+                      checked={allDate}
+                      onChange={() => setAllDate(!allDate)}
+                    />
+                    <label htmlFor="allDate">전체기간</label>
                     {CalendarOpen && (
                       <Calendar
                         calendarref={calendarRef}
@@ -274,6 +300,7 @@ const CalendarInput = styled(TextInput)`
   border-radius: 0;
   font-size: 14px;
   text-align: center;
+  padding: 0 8px;
 
   &:focus {
     border-color: #ccc;
@@ -313,12 +340,22 @@ const InputWrapper = styled.div`
     position: relative;
     display: flex;
     align-items: center;
+
+    & > label {
+      width: auto;
+      font-size: 14px;
+      margin-left: 4px;
+    }
+
+    & > input[type="checkbox"] {
+      margin-left: 20px;
+    }
   }
 `;
 
 const CompanyListTop = styled.div`
   width: 100%;
-  height: 200px;
+  height: 240px;
   padding: 42px 0 42px 80px;
   display: flex;
   align-items: center;
