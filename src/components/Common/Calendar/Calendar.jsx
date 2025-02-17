@@ -47,9 +47,9 @@ export default Calendar;
 Calendar.propTypes = {
   calendarref: PropTypes.object,
   dateRange: PropTypes.shape({
-    startDate: PropTypes.instanceOf(Date),
-    endDate: PropTypes.instanceOf,
-  }),
+    startDate: PropTypes.instanceOf(Date).isRequired,
+    endDate: PropTypes.instanceOf(Date).isRequired,
+  }).isRequired,
   setDateRange: PropTypes.func,
 };
 

@@ -36,6 +36,7 @@ const List = () => {
   // calendar
   const [CalendarOpen, setCalendarOpen] = useState(false);
   const calendarRef = useRef();
+  const calendarBtnRef = useRef();
 
   const [dateRange, setDateRange] = useState({
     startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
@@ -54,6 +55,23 @@ const List = () => {
         format(dateRange.endDate, "yyyy.MM.dd")
     );
   }, [dateRange]);
+
+  const closeCalendar = (event) => {
+    if (
+      calendarRef.current &&
+      !calendarRef.current.contains(event.target) &&
+      calendarBtnRef.current &&
+      !calendarBtnRef.current.contains(event.target)
+    ) {
+      setCalendarOpen(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", closeCalendar);
+    return () => {
+      document.removeEventListener("mousedown", closeCalendar);
+    };
+  }, [CalendarOpen]);
 
   const [pageNumber, setPageNumber] = useState(0);
   const [moreData, setMoreData] = useState(true);
@@ -130,7 +148,10 @@ const List = () => {
                   <label>기간</label>
                   <div className="calendar-container">
                     <CalendarInput type="text" readOnly value={selectDate} />
-                    <button onClick={() => setCalendarOpen((prev) => !prev)}>
+                    <button
+                      onClick={() => setCalendarOpen((prev) => !prev)}
+                      ref={calendarBtnRef}
+                    >
                       <img src={CalendarIcon} alt="calendarBtn" />
                     </button>
                     {CalendarOpen && (
