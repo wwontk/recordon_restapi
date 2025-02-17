@@ -10,8 +10,6 @@ import CalendarIcon from "../../../assets/img/etc/calendar.png";
 import Calendar from "../../../components/Common/Calendar/Calendar";
 import { format } from "date-fns";
 
-// TODO: 기간 설정 (캘린더)
-
 const List = () => {
   const [companies, setCompanies] = useState([]);
   const [companySort, setCompanySort] = useState(0);
@@ -24,6 +22,7 @@ const List = () => {
     setCompanySort(0);
     setSearchSort("companyName");
     setKeyword("");
+    setDiscdSort(0);
     setIsRotating(true);
     setTimeout(() => setIsRotating(false), 500);
   };
