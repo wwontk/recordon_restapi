@@ -52,13 +52,20 @@ const CompanyListContent = ({
             <th>사업자번호</th>
             <th>영업점</th>
             <th>등록일</th>
+            <th>등록자</th>
+            <th>최종수정일</th>
+            <th>최종수정자</th>
+            <th>사용여부</th>
           </tr>
         </thead>
         <tbody className="scrollBar" ref={scrollRef}>
           {data.map((list, idx) => (
             <tr key={list.companyId}>
               <td>{idx + 1}</td>
-              <td>{list.companyId}</td>
+              <td>
+                <p>{list.companyId}</p>
+                {list.sales === 1 && <span></span>}
+              </td>
               <td>{list.companyName}</td>
               <td>{formatCompanyNumber(list.companyNumber)}</td>
               <td>{formatbusinessNumber(list.businessNumber)}</td>
@@ -67,8 +74,12 @@ const CompanyListContent = ({
                   ? ""
                   : list.salesCompanyName}
               </td>
+              <td>{moment(list.regDate).format("YYYY.MM.DD")}</td>
+              <td>{list.regUserId}</td>
+              <td>{moment(list.updateDate).format("YYYY.MM.DD")}</td>
+              <td>{list.updateUserId}</td>
               <td>
-                <p>{moment(list.regDate).format("YYYY.MM.DD")}</p>
+                <p>{list.discd === 0 ? "사용" : "미사용"}</p>
                 <div ref={selectedCompany === list.companyId ? menuRef : null}>
                   <MoreBtn $isActive={selectedCompany === list.companyId}>
                     <img
@@ -211,6 +222,17 @@ const ContentContainer = styled.div`
     tr th:nth-child(2),
     tr td:nth-child(2) {
       width: 70px;
+      position: relative;
+      & > span {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background-color: #42b8c8;
+        border-radius: 50px;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+      }
     }
     tr th:nth-child(3),
     tr td:nth-child(3) {
@@ -229,6 +251,22 @@ const ContentContainer = styled.div`
     tr th:nth-child(6),
     tr td:nth-child(6) {
       width: 160px;
+    }
+    tr th:nth-child(7),
+    tr td:nth-child(7) {
+      width: 100px;
+    }
+    tr th:nth-child(8),
+    tr td:nth-child(8) {
+      width: 120px;
+    }
+    tr th:nth-child(9),
+    tr td:nth-child(9) {
+      width: 100px;
+    }
+    tr th:nth-child(10),
+    tr td:nth-child(10) {
+      width: 120px;
     }
     tr td:last-child {
       height: 100%;
