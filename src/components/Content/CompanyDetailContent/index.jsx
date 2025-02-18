@@ -6,8 +6,10 @@ import {
   formatCompanyNumber,
 } from "../../../utils/formatNumber";
 import { format } from "date-fns";
+import PropTypes from "prop-types";
 
-const CompanyDetailContent = (props) => {
+const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
+  // TODO: 새로고침시 팝업 닫힘 해결
   return (
     <>
       <CompanyDetailContainer>
@@ -15,7 +17,7 @@ const CompanyDetailContent = (props) => {
           <img
             src={backIcon}
             alt="back"
-            onClick={() => props.setCompanyDetailOpen(false)}
+            onClick={() => setCompanyDetailOpen(false)}
           />
           <p>상세 정보</p>
         </CompanyDetailTop>
@@ -25,7 +27,7 @@ const CompanyDetailContent = (props) => {
               <label>회사명</label>
               <CompanyDetailInput
                 type="text"
-                value={props.detail.companyName}
+                value={detail.companyName}
                 disabled
               />
             </div>
@@ -33,7 +35,7 @@ const CompanyDetailContent = (props) => {
               <label>회사ID</label>
               <CompanyDetailInput
                 type="text"
-                value={props.detail.companyId}
+                value={detail.companyId}
                 disabled
               />
             </div>
@@ -41,7 +43,7 @@ const CompanyDetailContent = (props) => {
               <label>회사번호</label>
               <CompanyDetailInput
                 type="text"
-                value={formatCompanyNumber(props.detail.companyNumber)}
+                value={formatCompanyNumber(detail.companyNumber)}
                 disabled
               />
             </div>
@@ -49,7 +51,7 @@ const CompanyDetailContent = (props) => {
               <label>사업자번호</label>
               <CompanyDetailInput
                 type="text"
-                value={formatbusinessNumber(props.detail.businessNumber)}
+                value={formatbusinessNumber(detail.businessNumber)}
                 disabled
               />
             </div>
@@ -57,7 +59,7 @@ const CompanyDetailContent = (props) => {
               <label>영업점</label>
               <CompanyDetailInput
                 type="text"
-                value={props.detail.salesCompanyName}
+                value={detail.salesCompanyName}
                 disabled
               />
             </div>
@@ -65,13 +67,13 @@ const CompanyDetailContent = (props) => {
               <label>등록일</label>
               <CompanyDetailInput
                 type="text"
-                value={format(props.detail.regDate, "yyyy-MM-dd")}
+                value={format(detail.regDate, "yyyy-MM-dd")}
                 disabled
               />
               <label>등록자</label>
               <CompanyDetailInput
                 type="text"
-                value={props.detail.createdBy}
+                value={detail.regUserId}
                 disabled
               />
             </div>
@@ -79,13 +81,13 @@ const CompanyDetailContent = (props) => {
               <label>최종수정일</label>
               <CompanyDetailInput
                 type="text"
-                value={format(props.detail.updateDate, "yyyy-MM-dd")}
+                value={format(detail.updateDate, "yyyy-MM-dd")}
                 disabled
               />
               <label>최종수정자</label>
               <CompanyDetailInput
                 type="text"
-                value={props.detail.modifiedBy}
+                value={detail.updateUserId}
                 disabled
               />
             </div>
@@ -93,11 +95,26 @@ const CompanyDetailContent = (props) => {
               <label>사용여부</label>
               <CompanyDetailInput
                 type="text"
-                value={props.detail.discd === 0 ? "사용" : "미사용"}
+                value={detail.discd === 0 ? "사용" : "미사용"}
                 disabled
               />
             </div>
             <span></span>
+            <div>
+              <label>API 인증키 활성화 여부</label>
+              <CompanyDetailInput type="text" disabled />
+            </div>
+            <div>
+              <label>API 인증키 등록일</label>
+              <CompanyDetailInput type="text" disabled />
+              <label>API 인증키 만료일</label>
+              <CompanyDetailInput type="text" disabled />
+            </div>
+            <span></span>
+            <div>
+              <label>RecordON PC 인증</label>
+              <CompanyDetailInput type="text" disabled />
+            </div>
           </div>
         </CompanyDetailInfo>
       </CompanyDetailContainer>
@@ -106,6 +123,25 @@ const CompanyDetailContent = (props) => {
 };
 
 export default CompanyDetailContent;
+
+CompanyDetailContent.propTypes = {
+  detail: PropTypes.shape({
+    corpIdx: PropTypes.number,
+    companyId: PropTypes.number,
+    salesresp: PropTypes.number,
+    salesCompanyName: PropTypes.string,
+    companyName: PropTypes.string,
+    companyNumber: PropTypes.string,
+    businessNumber: PropTypes.string,
+    sales: PropTypes.number,
+    discd: PropTypes.number,
+    regDate: PropTypes.string,
+    updateDate: PropTypes.string,
+    regUserId: PropTypes.string,
+    updateUserId: PropTypes.string,
+  }).isRequired,
+  setCompanyDetailOpen: PropTypes.func,
+};
 
 const CompanyDetailContainer = styled.div`
   position: absolute;
@@ -150,7 +186,7 @@ const CompanyDetailInfo = styled.div`
       display: flex;
       align-items: center;
       & > label {
-        width: 100px;
+        width: 160px;
       }
     }
 
