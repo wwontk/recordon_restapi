@@ -93,40 +93,44 @@ const List = () => {
         : format(dateRange.endDate, "yyyy-MM-dd'T'23:59:59"),
       page: page ? page : pageNumber,
     });
-    result.then((res) => {
-      if (res.data.companies.content && pageNumber === 0) {
-        if (res.data.companies.last) setMoreData(false);
-        setCompanies(res.data.companies.content);
-        setCounts({
-          total: res.data.totalCount,
-          solution: res.data.solution,
-          cust: res.data.customer,
-        });
-      } else if (res.data.companies.content && pageNumber !== 0) {
-        setCompanies((prev) => prev.concat(res.data.companies.content));
-        setCounts({
-          total: res.data.totalCount,
-          solution: res.data.solution,
-          cust: res.data.customer,
-        });
-        if (res.data.companies.last) setMoreData(false);
-      } else if (!res.data.companies.content && pageNumber === 0) {
-        setCompanies([]);
-        setCounts({
-          total: res.data.totalCount,
-          solution: res.data.solution,
-          cust: res.data.customer,
-        });
-      } else {
-        setCompanies((prev) => [...prev]);
-        setCounts({
-          total: res.data.totalCount,
-          solution: res.data.solution,
-          cust: res.data.customer,
-        });
-        setMoreData(false);
-      }
-    });
+    result
+      .then((res) => {
+        if (res.data.companies.content && pageNumber === 0) {
+          if (res.data.companies.last) setMoreData(false);
+          setCompanies(res.data.companies.content);
+          setCounts({
+            total: res.data.totalCount,
+            solution: res.data.solution,
+            cust: res.data.customer,
+          });
+        } else if (res.data.companies.content && pageNumber !== 0) {
+          setCompanies((prev) => prev.concat(res.data.companies.content));
+          setCounts({
+            total: res.data.totalCount,
+            solution: res.data.solution,
+            cust: res.data.customer,
+          });
+          if (res.data.companies.last) setMoreData(false);
+        } else if (!res.data.companies.content && pageNumber === 0) {
+          setCompanies([]);
+          setCounts({
+            total: res.data.totalCount,
+            solution: res.data.solution,
+            cust: res.data.customer,
+          });
+        } else {
+          setCompanies((prev) => [...prev]);
+          setCounts({
+            total: res.data.totalCount,
+            solution: res.data.solution,
+            cust: res.data.customer,
+          });
+          setMoreData(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err + " RecordON 회사 리스트 조회 실패");
+      });
   };
 
   const [isRotating, setIsRotating] = useState(false);
@@ -161,10 +165,15 @@ const List = () => {
 
     if (isDelete) {
       const result = deleteCompany(compIdx);
-      result.then((res) => {
-        console.log("해지 처리 되었습니다.", res);
-        pageNumber === 0 ? searchCompanies() : setPageNumber(0);
-      });
+      result
+        .then((res) => {
+          console.log("해지 처리 되었습니다.", res);
+          pageNumber === 0 ? searchCompanies() : setPageNumber(0);
+        })
+        .catch((err) => {
+          console.log(err + " 해지 실패");
+          alert("해지를 실패하였습니다.");
+        });
     } else {
       return;
     }

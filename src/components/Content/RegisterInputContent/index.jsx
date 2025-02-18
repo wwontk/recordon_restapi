@@ -25,31 +25,32 @@ const RegisterInputContent = ({ selected }) => {
     if (isRegister) {
       setIsLoading(true);
       try {
-        const result = await registerCompany({
-          companyId: 92281,
-          companyPassword: "",
-          salesresp: 9988,
-          companyName: "테스트Comp",
-          companyNumber: "07011112222",
-          businessNumber: "0001299709",
-          sales: 1,
-          discd: 0,
-        });
-
         // const result = await registerCompany({
-        //   companyId: selected.companyId,
+        //   companyId: 92282,
         //   companyPassword: "",
-        //   salesresp: selected.salesresp,
-        //   companyName: selected.companyName,
-        //   companyNumber: selected.companyNumber,
-        //   businessNumber: selected.businessNumber,
-        //   sales: selected.sales,
+        //   salesresp: 2,
+        //   companyName: "TEST",
+        //   companyNumber: "07011112222",
+        //   businessNumber: "1112233221",
+        //   sales: 1,
         //   discd: 0,
         // });
 
-        result.then((res) => console.log(res));
+        const result = await registerCompany({
+          companyId: selected.companyId,
+          companyPassword: "",
+          salesresp: selected.salesresp,
+          companyName: selected.companyName,
+          companyNumber: selected.companyNumber,
+          businessNumber: selected.businessNumber,
+          sales: selected.sales,
+          discd: 0,
+        });
+
+        result.then((res) => console.log("회사 등록 성공: ", res));
       } catch (error) {
-        console.error("등록 실패:", error);
+        console.error("RecordON 회사 등록 실패:", error);
+        alert("회사 등록에 실패하였습니다.");
       } finally {
         setIsLoading(false);
       }

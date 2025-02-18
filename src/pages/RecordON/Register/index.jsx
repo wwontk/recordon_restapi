@@ -38,19 +38,23 @@ const Register = () => {
       page: page ? page : pageNumber,
       [searchSort]: searchInput,
     });
-    result.then((res) => {
-      if (res.data.content && pageNumber === 0) {
-        if (res.data.last) setMoreData(false);
-        setIq200CompList(res.data.content);
-      } else if (res.data.content && pageNumber !== 0) {
-        setIq200CompList((prev) => prev.concat(res.data.content));
-        if (res.data.last) setMoreData(false);
-      } else if (!res.data.content && pageNumber === 0) setIq200CompList([]);
-      else {
-        setIq200CompList((prev) => [...prev]);
-        setMoreData(false);
-      }
-    });
+    result
+      .then((res) => {
+        if (res.data.content && pageNumber === 0) {
+          if (res.data.last) setMoreData(false);
+          setIq200CompList(res.data.content);
+        } else if (res.data.content && pageNumber !== 0) {
+          setIq200CompList((prev) => prev.concat(res.data.content));
+          if (res.data.last) setMoreData(false);
+        } else if (!res.data.content && pageNumber === 0) setIq200CompList([]);
+        else {
+          setIq200CompList((prev) => [...prev]);
+          setMoreData(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err + " IQ200 회사 리스트 조회 실패");
+      });
   };
 
   const [pageNumber, setPageNumber] = useState(0);
