@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import SelectBox from "../../../components/Common/Input/SelectBox";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import RegisterInputContent from "../../../components/Content/RegisterInputContent";
 import { searchIQ200CompDetail } from "../../../api/companyList/registerCompany";
 import {
@@ -60,6 +60,12 @@ const Register = () => {
     if (iq200CompList.length > 0) searchIq200Companies();
   }, [pageNumber]);
 
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    if (pageNumber === 0) scrollRef.current.scrollTop = 0;
+  }, [pageNumber]);
+
   return (
     <>
       <RegisterContainer>
@@ -113,7 +119,7 @@ const Register = () => {
                   <th>사업자번호</th>
                 </tr>
               </thead>
-              <tbody className="scrollBar">
+              <tbody className="scrollBar" ref={scrollRef}>
                 {iq200CompList.map((comp) => (
                   <tr key={comp.companyId} onClick={() => setSeleceted(comp)}>
                     <td>{comp.companyId}</td>
@@ -128,7 +134,7 @@ const Register = () => {
                     </td>
                   </tr>
                 ))}
-                {iq200CompList.length < 10 ? null : (
+                {iq200CompList.length < 20 ? null : (
                   <InfiniteScroll
                     hasMore={moreData}
                     onLoadMore={() => setPageNumber((prev) => prev + 1)}
