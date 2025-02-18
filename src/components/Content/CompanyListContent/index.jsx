@@ -13,6 +13,7 @@ import InfiniteScroll from "../../Common/InfiniteScroll/useInfiniteScroll";
 const CompanyListContent = ({
   pageNumber,
   data,
+  count,
   onLoadMore,
   moreData,
   setCompanyDetailOpen,
@@ -45,6 +46,17 @@ const CompanyListContent = ({
 
   return (
     <ContentContainer>
+      <div>
+        <p>
+          전체: <span>{count.total}</span>
+        </p>
+        <p>
+          솔루션사: <span>{count.solution}</span>
+        </p>
+        <p>
+          고객사: <span>{count.cust}</span>
+        </p>
+      </div>
       <table>
         <thead>
           <tr>
@@ -159,6 +171,11 @@ CompanyListContent.propTypes = {
       ]),
     })
   ).isRequired,
+  count: PropTypes.shape({
+    total: PropTypes.number,
+    solution: PropTypes.number,
+    cust: PropTypes.number,
+  }),
   onLoadMore: PropTypes.func.isRequired,
   moreData: PropTypes.bool,
   setCompanyDetailOpen: PropTypes.func,
@@ -171,7 +188,30 @@ const ContentContainer = styled.div`
   height: calc(100% - 240px);
   max-height: calc(100% - 240px);
   background-color: #f8f8f8;
-  padding: 20px 40px;
+  padding: 40px 40px 20px;
+  position: relative;
+
+  & > div {
+    position: absolute;
+    top: 8px;
+    right: 40px;
+
+    background-color: #fff;
+    border-radius: 50px;
+    border: 1px solid #42b8c8;
+    padding: 4px 8px;
+    color: #8d8d8d;
+
+    display: flex;
+    gap: 12px;
+
+    font-size: 12px;
+
+    span {
+      color: #42b8c8;
+      font-weight: 700;
+    }
+  }
 
   & > table {
     width: 100%;
@@ -205,7 +245,7 @@ const ContentContainer = styled.div`
       position: relative;
       display: block;
       width: calc(100% + 4px);
-      height: 580px;
+      height: 560px;
       overflow-y: auto;
       background: #fff;
       border: 1px solid #d0d0d0;

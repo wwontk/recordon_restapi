@@ -18,6 +18,11 @@ import CompanyDetailContent from "../../../components/Content/CompanyDetailConte
 
 const List = () => {
   const [companies, setCompanies] = useState([]);
+  const [counts, setCounts] = useState({
+    total: 0,
+    solution: 0,
+    cust: 0,
+  });
   const [companySort, setCompanySort] = useState(0);
   const [searchSort, setSearchSort] = useState("companyName");
   const [discdSort, setDiscdSort] = useState(0);
@@ -92,13 +97,33 @@ const List = () => {
       if (res.data.companies.content && pageNumber === 0) {
         if (res.data.companies.last) setMoreData(false);
         setCompanies(res.data.companies.content);
+        setCounts({
+          total: res.data.totalCount,
+          solution: res.data.solution,
+          cust: res.data.customer,
+        });
       } else if (res.data.companies.content && pageNumber !== 0) {
         setCompanies((prev) => prev.concat(res.data.companies.content));
+        setCounts({
+          total: res.data.totalCount,
+          solution: res.data.solution,
+          cust: res.data.customer,
+        });
         if (res.data.companies.last) setMoreData(false);
-      } else if (!res.data.companies.content && pageNumber === 0)
+      } else if (!res.data.companies.content && pageNumber === 0) {
         setCompanies([]);
-      else {
+        setCounts({
+          total: res.data.totalCount,
+          solution: res.data.solution,
+          cust: res.data.customer,
+        });
+      } else {
         setCompanies((prev) => [...prev]);
+        setCounts({
+          total: res.data.totalCount,
+          solution: res.data.solution,
+          cust: res.data.customer,
+        });
         setMoreData(false);
       }
     });
@@ -258,6 +283,7 @@ const List = () => {
         <CompanyListContent
           pageNumber={pageNumber}
           data={companies}
+          count={counts}
           onLoadMore={() => setPageNumber((prev) => prev + 1)}
           moreData={moreData}
           setCompanyDetailOpen={setCompanyDetailOpen}
