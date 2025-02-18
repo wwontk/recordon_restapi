@@ -16,6 +16,7 @@ const CompanyListContent = ({
   moreData,
   setCompanyDetailOpen,
   setCompanyDetailInfo,
+  handleDeleteCompany,
 }) => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const menuRef = useRef(null);
@@ -110,7 +111,9 @@ const CompanyListContent = ({
                       >
                         상세조회
                       </li>
-                      <li>해지</li>
+                      <li onClick={() => handleDeleteCompany(list.corpIdx)}>
+                        해지
+                      </li>
                     </DropdownMenu>
                   )}
                 </div>
@@ -154,6 +157,7 @@ CompanyListContent.propTypes = {
   moreData: PropTypes.bool,
   setCompanyDetailOpen: PropTypes.func,
   setCompanyDetailInfo: PropTypes.func,
+  handleDeleteCompany: PropTypes.func,
 };
 
 const ContentContainer = styled.div`

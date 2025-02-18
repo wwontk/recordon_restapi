@@ -22,7 +22,7 @@ export const updateCompanyDetail = (companyId, data) => {
   return axiosInstance.put(`/company/${companyId}`, JSON.stringify(data));
 };
 
-// 회사 삭제
+// 회사 삭제 (해지)
 export const deleteCompany = (companyId) => {
   return axiosInstance.delete(`/company/${companyId}`);
 };

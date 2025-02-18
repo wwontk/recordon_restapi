@@ -5,7 +5,10 @@ import SelectBox from "../../../components/Common/Input/SelectBox";
 import { useEffect, useRef, useState } from "react";
 import CompanyListContent from "../../../components/Content/CompanyListContent";
 import Tooltip from "../../../components/Common/Tooltip";
-import { searchCompany } from "../../../api/companyList/companyListInfo";
+import {
+  deleteCompany,
+  searchCompany,
+} from "../../../api/companyList/companyListInfo";
 import CalendarIcon from "../../../assets/img/etc/calendar.png";
 import Calendar from "../../../components/Common/Calendar/Calendar";
 import { format } from "date-fns";
@@ -126,6 +129,21 @@ const List = () => {
   const [companyDetailOpen, setCompanyDetailOpen] = useState(false);
   const [companyDetailInfo, setCompanyDetailInfo] = useState({});
 
+  // *** RecordON 회사 REST API 해지 *** //
+  const handleDeleteCompany = (compIdx) => {
+    const isDelete = confirm("해지하시겠습니까?");
+
+    if (isDelete) {
+      const result = deleteCompany(compIdx);
+      result.then((res) => {
+        console.log("해지 처리 되었습니다.", res);
+        pageNumber === 0 ? searchCompanies() : setPageNumber(0);
+      });
+    } else {
+      return;
+    }
+  };
+
   return (
     <>
       <CompanyListContainer>
@@ -151,9 +169,9 @@ const List = () => {
                   <label>사용구분</label>
                   <SelectBox
                     options={[
-                      { value: 0, label: "전체" },
-                      { value: 1, label: "사용" },
-                      { value: 2, label: "미사용" },
+                      { value: "", label: "전체" },
+                      { value: 0, label: "사용" },
+                      { value: 1, label: "미사용" },
                     ]}
                     selected={discdSort}
                     onSelect={(option) => setDiscdSort(option.value)}
@@ -242,6 +260,7 @@ const List = () => {
           moreData={moreData}
           setCompanyDetailOpen={setCompanyDetailOpen}
           setCompanyDetailInfo={setCompanyDetailInfo}
+          handleDeleteCompany={handleDeleteCompany}
         />
         {companyDetailOpen && (
           <CompanyDetailContent
