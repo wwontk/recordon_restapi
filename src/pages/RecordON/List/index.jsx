@@ -255,6 +255,7 @@ const List = () => {
         </CompanyListTop>
 
         <CompanyListContent
+          pageNumber={pageNumber}
           data={companies}
           onLoadMore={() => setPageNumber((prev) => prev + 1)}
           moreData={moreData}

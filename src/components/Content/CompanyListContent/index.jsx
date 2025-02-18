@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import InfiniteScroll from "../../Common/InfiniteScroll/useInfiniteScroll";
 
 const CompanyListContent = ({
+  pageNumber,
   data,
   onLoadMore,
   moreData,
@@ -37,6 +38,7 @@ const CompanyListContent = ({
   }, []);
 
   useEffect(() => {
+    if (pageNumber === 0) scrollRef.current.scrollTop = 0;
     if (scrollRef.current.clientHeight < data.length * 40) setMoreFuncTop(true);
     else setMoreFuncTop(false);
   }, [data]);
@@ -132,6 +134,7 @@ const CompanyListContent = ({
 export default CompanyListContent;
 
 CompanyListContent.propTypes = {
+  pageNumber: PropTypes.number,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       companyId: PropTypes.number.isRequired,
