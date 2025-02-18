@@ -119,7 +119,12 @@ const Register = () => {
                   <th>사업자번호</th>
                 </tr>
               </thead>
-              <tbody className="scrollBar" ref={scrollRef}>
+              <tbody
+                className={`scrollBar ${
+                  iq200CompList.length < 15 ? "" : "long-list"
+                }`}
+                ref={scrollRef}
+              >
                 {iq200CompList.map((comp) => (
                   <tr key={comp.companyId} onClick={() => setSeleceted(comp)}>
                     <td>{comp.companyId}</td>
@@ -287,7 +292,7 @@ const IQ200CompanyList = styled.div`
       height: 100%;
       overflow-y: auto;
       background: #fff;
-      border-bottom: none;
+      border-bottom: 1px solid #d0d0d0;
       & > tr {
         height: 40px;
         display: table;
@@ -298,6 +303,10 @@ const IQ200CompanyList = styled.div`
 
         & {
           border-bottom: 1px solid #d0d0d0;
+        }
+
+        &.long-list {
+          border-bottom: none;
         }
 
         &:hover {
