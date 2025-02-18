@@ -59,6 +59,7 @@ const RegisterInputContent = ({ selected }) => {
   const getPlaceholder = (selected) => {
     if (Object.keys(selected).length === 0) return "사업자번호를 입력해주세요.";
     if (selected.bnCheck === "OK") return "";
+    if (selected.bnCheck === "03") return "폐업 처리된 사업자번호 입니다.";
     if (
       (selected.bnCheck === "FAIL" && selected.businessNumber === "") ||
       selected.businessNumber === null
@@ -148,13 +149,13 @@ RegisterInputContent.propTypes = {
       PropTypes.string,
       PropTypes.oneOf([null]),
     ]),
-    companyId: PropTypes.number.isRequired,
-    companyName: PropTypes.string.isRequired,
-    companyNumber: PropTypes.string.isRequired,
-    sales: PropTypes.number.isRequired,
-    salesCompanyName: PropTypes.string.isRequired,
-    salesresp: PropTypes.number.isRequired,
-  }).isRequired,
+    companyId: PropTypes.number,
+    companyName: PropTypes.string,
+    companyNumber: PropTypes.string,
+    sales: PropTypes.number,
+    salesCompanyName: PropTypes.string,
+    salesresp: PropTypes.number,
+  }),
 };
 
 const RegisterInputContainer = styled.div`

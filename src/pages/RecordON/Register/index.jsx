@@ -132,7 +132,13 @@ const Register = () => {
                     <td>{formatCompanyNumber(comp.companyNumber)}</td>
                     <td>
                       <p
-                        className={comp.bnCheck === "FAIL" ? "businessNo" : ""}
+                        className={
+                          comp.bnCheck === "FAIL"
+                            ? "noRegister"
+                            : comp.bnCheck == "03"
+                            ? "closedDown"
+                            : ""
+                        }
                       >
                         {formatbusinessNumber(comp.businessNumber)}
                       </p>
@@ -148,11 +154,18 @@ const Register = () => {
               </tbody>
             </table>
             <Tooltip
-              anchorSelect=".businessNo"
+              anchorSelect=".noRegister"
               place="top"
               className="businessNoTooltip"
             >
               국세청에 등록되지 않은 사업자번호 입니다.
+            </Tooltip>
+            <Tooltip
+              anchorSelect=".closedDown"
+              place="top"
+              className="businessNoTooltip"
+            >
+              폐업 처리된 사업자번호 입니다.
             </Tooltip>
             <Tooltip
               id="nameTooltip"
@@ -321,7 +334,8 @@ const IQ200CompanyList = styled.div`
           }
 
           & > p {
-            &.businessNo {
+            &.noRegister,
+            &.closedDown {
               color: red;
             }
           }
