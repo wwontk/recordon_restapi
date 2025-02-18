@@ -89,13 +89,14 @@ const List = () => {
       page: page ? page : pageNumber,
     });
     result.then((res) => {
-      if (res.data.content && pageNumber === 0) {
-        if (res.data.last) setMoreData(false);
-        setCompanies(res.data.content);
-      } else if (res.data.content && pageNumber !== 0) {
-        setCompanies((prev) => prev.concat(res.data.content));
-        if (res.data.last) setMoreData(false);
-      } else if (!res.data.content && pageNumber === 0) setCompanies([]);
+      if (res.data.companies.content && pageNumber === 0) {
+        if (res.data.companies.last) setMoreData(false);
+        setCompanies(res.data.companies.content);
+      } else if (res.data.companies.content && pageNumber !== 0) {
+        setCompanies((prev) => prev.concat(res.data.companies.content));
+        if (res.data.companies.last) setMoreData(false);
+      } else if (!res.data.companies.content && pageNumber === 0)
+        setCompanies([]);
       else {
         setCompanies((prev) => [...prev]);
         setMoreData(false);
