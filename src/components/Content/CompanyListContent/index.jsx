@@ -61,7 +61,10 @@ const CompanyListContent = ({
             <th>사용여부</th>
           </tr>
         </thead>
-        <tbody className="scrollBar" ref={scrollRef}>
+        <tbody
+          className={`scrollBar ${data.length > 12 ? "long-list" : ""}`}
+          ref={scrollRef}
+        >
           {data.map((list, idx) => (
             <tr key={list.companyId}>
               <td>{idx + 1}</td>
@@ -216,9 +219,12 @@ const ContentContainer = styled.div`
           border-bottom: 1px solid #d0d0d0;
         }
       }
-      // & > tr:last-child {
-      //   border-bottom: none;
-      // }
+
+      &.long-list {
+        & > tr:last-child {
+          border-bottom: none;
+        }
+      }
     }
     tr th:first-child,
     tr td:first-child {
