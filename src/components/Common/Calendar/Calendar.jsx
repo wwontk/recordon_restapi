@@ -1,6 +1,15 @@
+import {
+  addDays,
+  addMonths,
+  endOfMonth,
+  endOfWeek,
+  startOfMonth,
+  startOfWeek,
+} from "date-fns";
+import { ko } from "date-fns/locale";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { DateRangePicker } from "react-date-range";
+import { createStaticRanges, DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import styled from "styled-components";
@@ -24,6 +33,44 @@ const Calendar = (props) => {
     });
   }, [state]);
 
+  const staticRanges = createStaticRanges([
+    {
+      label: "오늘",
+      range: () => ({
+        startDate: new Date(),
+        endDate: new Date(),
+      }),
+    },
+    {
+      label: "이번주",
+      range: () => ({
+        startDate: startOfWeek(new Date()),
+        endDate: new Date(),
+      }),
+    },
+    {
+      label: "지난주",
+      range: () => ({
+        startDate: startOfWeek(addDays(new Date(), -7)),
+        endDate: endOfWeek(addDays(new Date(), -7)),
+      }),
+    },
+    {
+      label: "이번달",
+      range: () => ({
+        startDate: startOfMonth(new Date()),
+        endDate: new Date(),
+      }),
+    },
+    {
+      label: "지난달",
+      range: () => ({
+        startDate: startOfMonth(addMonths(new Date(), -1)),
+        endDate: endOfMonth(addMonths(new Date(), -1)),
+      }),
+    },
+  ]);
+
   return (
     <>
       <CalendarContainer ref={props.calendarref}>
@@ -36,6 +83,10 @@ const Calendar = (props) => {
           inputRanges={[]}
           showDateDisplay={false}
           direction="horizontal"
+          locale={ko}
+          rangeColors={["#42b8c8"]}
+          maxDate={new Date()}
+          staticRanges={staticRanges}
         />
       </CalendarContainer>
     </>
@@ -58,4 +109,12 @@ const CalendarContainer = styled.div`
   top: 30px;
   z-index: 10;
   border: 1px solid #ccc;
+
+  .rdrDefinedRangesWrapper {
+    width: 90px;
+  }
+
+  .rdrCalendarWrapper {
+    width: 280px;
+  }
 `;
