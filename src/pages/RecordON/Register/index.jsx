@@ -11,6 +11,7 @@ import closeCircle from "../../../assets/img/etc/x-circle.png";
 import { Tooltip } from "react-tooltip";
 import CompanyNameCell from "./CompanyNameCell";
 import InfiniteScroll from "../../../components/Common/InfiniteScroll/useInfiniteScroll";
+import LoadingSpinnerBack from "../../../components/Common/LoadingSpinner/LoadingSpinnerBack";
 
 const Register = () => {
   const [searchSort, setSearchSort] = useState("companyName");
@@ -18,6 +19,8 @@ const Register = () => {
 
   const [iq200CompList, setIq200CompList] = useState([]);
   const [selected, setSeleceted] = useState({});
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -183,7 +186,11 @@ const Register = () => {
               className="businessNoTooltip"
             />
           </IQ200CompanyList>
-          <RegisterInputContent selected={selected} />
+          <RegisterInputContent
+            selected={selected}
+            setIsLoading={setIsLoading}
+          />
+          {isLoading && <LoadingSpinnerBack />}
         </RegisterContent>
       </RegisterContainer>
     </>
@@ -240,6 +247,7 @@ const RegisterContent = styled.div`
   width: 100%;
   height: calc(100% - 100px);
   display: flex;
+  position: relative;
 `;
 
 const IQ200CompanyList = styled.div`

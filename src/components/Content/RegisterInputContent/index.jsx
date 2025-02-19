@@ -3,14 +3,8 @@ import { TextInput } from "../../Common/Input/TextInput";
 import PropTypes from "prop-types";
 import { registerCompany } from "../../../api/companyList/registerCompany";
 import { useEffect, useState } from "react";
-import LoadingSpinnerBack from "../../Common/LoadingSpinner/LoadingSpinnerBack";
 
-// TODO: 모든 api 연동시 에러 캐치 필요
-
-const RegisterInputContent = ({ selected }) => {
-  // LoadingSpinner
-  const [isLoading, setIsLoading] = useState(false);
-
+const RegisterInputContent = ({ selected, setIsLoading }) => {
   const [registerCheck, setRegisterCheck] = useState(false);
 
   useEffect(() => {
@@ -135,7 +129,6 @@ const RegisterInputContent = ({ selected }) => {
           </div>
           <button disabled={!registerCheck}>등록</button>
         </form>
-        {isLoading && <LoadingSpinnerBack />}
       </RegisterInputContainer>
     </>
   );
@@ -157,6 +150,7 @@ RegisterInputContent.propTypes = {
     salesCompanyName: PropTypes.string,
     salesresp: PropTypes.number,
   }),
+  setIsLoading: PropTypes.func,
 };
 
 const RegisterInputContainer = styled.div`

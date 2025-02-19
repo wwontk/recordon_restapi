@@ -9,6 +9,7 @@ import {
 } from "../../../utils/formatNumber";
 import PropTypes from "prop-types";
 import InfiniteScroll from "../../Common/InfiniteScroll/useInfiniteScroll";
+import LoadingSpinnerBack from "../../Common/LoadingSpinner/LoadingSpinnerBack";
 
 const CompanyListContent = ({
   pageNumber,
@@ -19,6 +20,7 @@ const CompanyListContent = ({
   setCompanyDetailOpen,
   setCompanyDetailInfo,
   handleDeleteCompany,
+  isLoading,
 }) => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const menuRef = useRef(null);
@@ -131,7 +133,12 @@ const CompanyListContent = ({
                         >
                           상세조회
                         </li>
-                        <li onClick={() => handleDeleteCompany(list.corpIdx)}>
+                        <li
+                          onClick={() => {
+                            handleDeleteCompany(list.corpIdx);
+                            setSelectedCompany("");
+                          }}
+                        >
                           해지
                         </li>
                       </DropdownMenu>
@@ -150,6 +157,7 @@ const CompanyListContent = ({
           )}
         </tbody>
       </table>
+      {isLoading && <LoadingSpinnerBack />}
     </ContentContainer>
   );
 };
@@ -189,6 +197,7 @@ CompanyListContent.propTypes = {
   setCompanyDetailOpen: PropTypes.func,
   setCompanyDetailInfo: PropTypes.func,
   handleDeleteCompany: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 const ContentContainer = styled.div`
@@ -199,7 +208,7 @@ const ContentContainer = styled.div`
   padding: 40px 40px 20px;
   position: relative;
 
-  & > div {
+  > :first-child {
     position: absolute;
     top: 8px;
     right: 40px;

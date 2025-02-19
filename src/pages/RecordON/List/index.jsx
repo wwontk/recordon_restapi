@@ -78,6 +78,8 @@ const List = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [moreData, setMoreData] = useState(true);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   // TODO: discd (사용구분) 설정
   const searchCompanies = (page) => {
     setMoreData(true);
@@ -164,6 +166,7 @@ const List = () => {
     const isDelete = confirm("해지하시겠습니까?");
 
     if (isDelete) {
+      setIsLoading(true);
       const result = deleteCompany(compIdx);
       result
         .then((res) => {
@@ -173,7 +176,8 @@ const List = () => {
         .catch((err) => {
           console.log(err + " 해지 실패");
           alert("해지를 실패하였습니다.");
-        });
+        })
+        .finally(() => setIsLoading(false));
     } else {
       return;
     }
@@ -282,7 +286,7 @@ const List = () => {
                       <img src={Refresh} alt="refresh" />
                     </RefreshIcon>
                   </Tooltip>
-                  <button>검색</button>
+                  <button disabled={isLoading}>검색</button>
                 </SearchBtnContainer>
               </div>
             </div>
@@ -298,6 +302,7 @@ const List = () => {
           setCompanyDetailOpen={setCompanyDetailOpen}
           setCompanyDetailInfo={setCompanyDetailInfo}
           handleDeleteCompany={handleDeleteCompany}
+          isLoading={isLoading}
         />
         {companyDetailOpen && (
           <CompanyDetailContent
