@@ -401,7 +401,7 @@ const DropdownMenu = styled.ul`
   flex-direction: column;
 
   &.top-data {
-    top: -85px;
+    top: -65px;
   }
 
   li {
