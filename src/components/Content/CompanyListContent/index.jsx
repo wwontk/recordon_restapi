@@ -202,16 +202,16 @@ CompanyListContent.propTypes = {
 
 const ContentContainer = styled.div`
   width: 100%;
-  height: calc(100% - 240px);
-  max-height: calc(100% - 240px);
+  height: calc(100% - 220px);
+  max-height: calc(100% - 220px);
   background-color: #f8f8f8;
-  padding: 40px 40px 20px;
+  padding: 50px 40px 20px;
   position: relative;
 
   > :first-child {
     position: absolute;
-    top: 8px;
-    right: 40px;
+    top: 14px;
+    left: 40px;
 
     background-color: #fff;
     border-radius: 50px;
@@ -262,7 +262,7 @@ const ContentContainer = styled.div`
       position: relative;
       display: block;
       width: calc(100% + 4px);
-      height: 560px;
+      height: 570px;
       overflow-y: auto;
       background: #fff;
       border: 1px solid #d0d0d0;

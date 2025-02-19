@@ -329,8 +329,8 @@ const SearchBtnContainer = styled.div`
   gap: 8px;
 
   & > button {
-    width: 50px;
-    height: 28px;
+    width: 44px;
+    height: 24px;
     background-color: #666;
     border: none;
     border-radius: 2px;
@@ -344,16 +344,16 @@ const RefreshIcon = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   background-color: #fff;
   border: 1px solid #c9c9c9;
   border-radius: 2px;
   cursor: pointer;
 
   & > img {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     transform: scaleX(-1);
     filter: invert(72%) sepia(1%) saturate(2410%) hue-rotate(19deg)
       brightness(92%) contrast(89%);
@@ -373,7 +373,7 @@ const RefreshIcon = styled.span`
 
 const CalendarInput = styled(TextInput)`
   width: 180px;
-  height: 28px;
+  height: 24px;
   border-radius: 0;
   font-size: 14px;
   text-align: center;
@@ -384,16 +384,16 @@ const CalendarInput = styled(TextInput)`
   }
 
   & + button {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     background-color: #fff;
     border: 1px solid #ccc;
     margin-left: 4px;
     cursor: pointer;
 
     & > img {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       filter: invert(61%) sepia(7%) saturate(12%) hue-rotate(38deg)
         brightness(88%) contrast(84%);
     }
@@ -402,16 +402,24 @@ const CalendarInput = styled(TextInput)`
 
 const CompanyListInput = styled(TextInput)`
   width: 240px;
-  height: 28px;
+  height: 24px;
   border-radius: 0;
   padding-left: 8px;
   margin-left: 4px;
-  font-size: 14px;
+  font-size: 12px;
+
+  &::placeholder {
+    font-size: 12px;
+  }
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
+
+  & > label {
+    font-size: 14px;
+  }
 
   .calendar-container {
     position: relative;
@@ -426,13 +434,14 @@ const InputWrapper = styled.div`
 
     & > input[type="checkbox"] {
       margin-left: 20px;
+      background-color: #ccc;
     }
   }
 `;
 
 const CompanyListTop = styled.div`
   width: 100%;
-  height: 240px;
+  height: 220px;
   padding: 42px 0 42px 80px;
   display: flex;
   align-items: center;
@@ -441,7 +450,7 @@ const CompanyListTop = styled.div`
     width: 100%;
 
     & > p {
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 30px;
     }
 
@@ -451,7 +460,7 @@ const CompanyListTop = styled.div`
       gap: 4px;
 
       & > div {
-        height: 28px;
+        height: 24px;
         display: flex;
         align-items: center;
         gap: 24px;
@@ -459,7 +468,7 @@ const CompanyListTop = styled.div`
 
       label {
         display: inline-block;
-        width: 80px;
+        width: 70px;
       }
     }
   }

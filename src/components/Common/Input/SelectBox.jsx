@@ -10,7 +10,7 @@ const SelectContainer = styled.div`
 
 const SelectButton = styled.button.attrs({ type: "button" })`
   width: ${({ $width }) => $width || "120px"};
-  height: 28px;
+  height: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,7 +19,7 @@ const SelectButton = styled.button.attrs({ type: "button" })`
   color: black;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  font-size: 14px;
+  font-size: 12px;
   padding: 0 8px;
 
   & > img {
