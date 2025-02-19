@@ -201,7 +201,7 @@ const List = () => {
                     ]}
                     selected={companySort}
                     onSelect={(option) => setCompanySort(option.value)}
-                    width={"100px"}
+                    width={"80px"}
                   />
                 </InputWrapper>
                 <InputWrapper>
@@ -214,7 +214,7 @@ const List = () => {
                     ]}
                     selected={discdSort}
                     onSelect={(option) => setDiscdSort(option.value)}
-                    width={"100px"}
+                    width={"80px"}
                   />
                 </InputWrapper>
               </div>
@@ -268,7 +268,7 @@ const List = () => {
                       setSearchSort(option.value);
                       setKeyword("");
                     }}
-                    width={"120px"}
+                    width={"100px"}
                   />
                   <CompanyListInput
                     placeholder="검색어를 입력해주세요."
@@ -372,10 +372,10 @@ const RefreshIcon = styled.span`
 `;
 
 const CalendarInput = styled(TextInput)`
-  width: 180px;
+  width: 160px;
   height: 24px;
   border-radius: 0;
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
   padding: 0 8px;
 

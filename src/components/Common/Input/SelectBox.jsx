@@ -60,6 +60,7 @@ const DropdownItem = styled.li`
   padding: 8px 8px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  font-size: 12px;
 
   &:hover {
     background-color: #f3f4f6;

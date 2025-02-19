@@ -106,7 +106,7 @@ Calendar.propTypes = {
 
 const CalendarContainer = styled.div`
   position: absolute;
-  top: 30px;
+  top: 25px;
   z-index: 10;
   border: 1px solid #ccc;
 
