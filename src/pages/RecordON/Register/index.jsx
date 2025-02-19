@@ -129,26 +129,32 @@ const Register = () => {
                 }`}
                 ref={scrollRef}
               >
-                {iq200CompList.map((comp) => (
-                  <tr key={comp.companyId} onClick={() => setSeleceted(comp)}>
-                    <td>{comp.companyId}</td>
-                    <CompanyNameCell name={comp.companyName} />
-                    <td>{formatCompanyNumber(comp.companyNumber)}</td>
-                    <td>
-                      <p
-                        className={
-                          comp.bnCheck === "FAIL"
-                            ? "noRegister"
-                            : comp.bnCheck == "03"
-                            ? "closedDown"
-                            : ""
-                        }
-                      >
-                        {formatbusinessNumber(comp.businessNumber)}
-                      </p>
-                    </td>
-                  </tr>
-                ))}
+                {iq200CompList.length > 0 ? (
+                  iq200CompList.map((comp) => (
+                    <tr key={comp.companyId} onClick={() => setSeleceted(comp)}>
+                      <td>{comp.companyId}</td>
+                      <CompanyNameCell name={comp.companyName} />
+                      <td>{formatCompanyNumber(comp.companyNumber)}</td>
+                      <td>
+                        <p
+                          className={
+                            comp.bnCheck === "FAIL"
+                              ? "noRegister"
+                              : comp.bnCheck == "03"
+                              ? "closedDown"
+                              : ""
+                          }
+                        >
+                          {formatbusinessNumber(comp.businessNumber)}
+                        </p>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <>
+                    <NoData>회사 목록이 존재하지 않습니다.</NoData>
+                  </>
+                )}
                 {iq200CompList.length < 20 ? null : (
                   <InfiniteScroll
                     hasMore={moreData}
@@ -185,6 +191,16 @@ const Register = () => {
 };
 
 export default Register;
+
+const NoData = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #d0d0d0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #8d8d8d;
+`;
 
 const SearchInputDiv = styled.div`
   width: 320px;

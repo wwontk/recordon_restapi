@@ -77,66 +77,74 @@ const CompanyListContent = ({
           className={`scrollBar ${data.length > 12 ? "long-list" : ""}`}
           ref={scrollRef}
         >
-          {data.map((list, idx) => (
-            <tr key={list.companyId}>
-              <td>{idx + 1}</td>
-              <td>
-                <p>{list.companyId}</p>
-                {list.sales === 1 && <span></span>}
-              </td>
-              <td>{list.companyName}</td>
-              <td>{formatCompanyNumber(list.companyNumber)}</td>
-              <td>{formatbusinessNumber(list.businessNumber)}</td>
-              <td>
-                {list.salesCompanyName === "없음" || list.salesresp === 0
-                  ? ""
-                  : list.salesCompanyName}
-              </td>
-              <td>{moment(list.regDate).format("YYYY.MM.DD")}</td>
-              <td>{list.regUserId}</td>
-              <td>{moment(list.updateDate).format("YYYY.MM.DD")}</td>
-              <td>{list.updateUserId}</td>
-              <td>
-                <p>{list.discd === 0 ? "사용" : "미사용"}</p>
-                <div ref={selectedCompany === list.companyId ? menuRef : null}>
-                  <MoreBtn $isActive={selectedCompany === list.companyId}>
-                    <img
-                      src={MoreIcon}
-                      alt="more"
-                      onClick={() => {
-                        setSelectedCompany((prev) =>
-                          prev === list.companyId ? "" : list.companyId
-                        );
-                        setCompanyDetailInfo(list);
-                      }}
-                    />
-                  </MoreBtn>
-                  {selectedCompany === list.companyId && (
-                    <DropdownMenu
-                      className={
-                        moreFuncTop &&
-                        (data.length - 1 === idx || data.length - 2 === idx)
-                          ? "top-data"
-                          : ""
-                      }
-                    >
-                      <li
+          {data.length > 0 ? (
+            data.map((list, idx) => (
+              <tr key={list.companyId}>
+                <td>{idx + 1}</td>
+                <td>
+                  <p>{list.companyId}</p>
+                  {list.sales === 1 && <span></span>}
+                </td>
+                <td>{list.companyName}</td>
+                <td>{formatCompanyNumber(list.companyNumber)}</td>
+                <td>{formatbusinessNumber(list.businessNumber)}</td>
+                <td>
+                  {list.salesCompanyName === "없음" || list.salesresp === 0
+                    ? ""
+                    : list.salesCompanyName}
+                </td>
+                <td>{moment(list.regDate).format("YYYY.MM.DD")}</td>
+                <td>{list.regUserId}</td>
+                <td>{moment(list.updateDate).format("YYYY.MM.DD")}</td>
+                <td>{list.updateUserId}</td>
+                <td>
+                  <p>{list.discd === 0 ? "사용" : "미사용"}</p>
+                  <div
+                    ref={selectedCompany === list.companyId ? menuRef : null}
+                  >
+                    <MoreBtn $isActive={selectedCompany === list.companyId}>
+                      <img
+                        src={MoreIcon}
+                        alt="more"
                         onClick={() => {
-                          setCompanyDetailOpen(true);
-                          setSelectedCompany("");
+                          setSelectedCompany((prev) =>
+                            prev === list.companyId ? "" : list.companyId
+                          );
+                          setCompanyDetailInfo(list);
                         }}
+                      />
+                    </MoreBtn>
+                    {selectedCompany === list.companyId && (
+                      <DropdownMenu
+                        className={
+                          moreFuncTop &&
+                          (data.length - 1 === idx || data.length - 2 === idx)
+                            ? "top-data"
+                            : ""
+                        }
                       >
-                        상세조회
-                      </li>
-                      <li onClick={() => handleDeleteCompany(list.corpIdx)}>
-                        해지
-                      </li>
-                    </DropdownMenu>
-                  )}
-                </div>
-              </td>
-            </tr>
-          ))}
+                        <li
+                          onClick={() => {
+                            setCompanyDetailOpen(true);
+                            setSelectedCompany("");
+                          }}
+                        >
+                          상세조회
+                        </li>
+                        <li onClick={() => handleDeleteCompany(list.corpIdx)}>
+                          해지
+                        </li>
+                      </DropdownMenu>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <>
+              <NoData>회사 목록이 존재하지 않습니다.</NoData>
+            </>
+          )}
           {data.length < 20 ? null : (
             <InfiniteScroll onLoadMore={onLoadMore} hasMore={moreData} />
           )}
@@ -399,4 +407,14 @@ const DropdownMenu = styled.ul`
       background: #f0f0f0;
     }
   }
+`;
+
+const NoData = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #d0d0d0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #8d8d8d;
 `;
