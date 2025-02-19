@@ -23,6 +23,7 @@ const Login = () => {
       result
         .then((res) => {
           setCookie("access-token", res.data.accessToken, { path: "/" });
+          setCookie("refresh-token", res.data.refreshToken, { path: "/" });
           setAuthenticated(true);
           setUserInfo({ userId: res.data.admin_id });
           navigate("/recordon/list", { state: { from: "/recordon/list" } });
