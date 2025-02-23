@@ -328,7 +328,7 @@ const ContentContainer = styled.div`
     }
     tr th:nth-child(8),
     tr td:nth-child(8) {
-      width: 120px;
+      width: 100px;
     }
     tr th:nth-child(9),
     tr td:nth-child(9) {
@@ -336,7 +336,7 @@ const ContentContainer = styled.div`
     }
     tr th:nth-child(10),
     tr td:nth-child(10) {
-      width: 120px;
+      width: 100px;
     }
     tr td:last-child {
       height: 100%;

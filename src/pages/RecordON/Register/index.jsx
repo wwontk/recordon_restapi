@@ -221,8 +221,8 @@ const SearchInputDiv = styled.div`
   margin-right: 20px;
 
   & > img {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     cursor: pointer;
   }
 `;
@@ -270,6 +270,7 @@ const IQ200CompanyList = styled.div`
       align-items: center;
 
       & > label {
+        font-size: 14px;
         width: 80px;
       }
 

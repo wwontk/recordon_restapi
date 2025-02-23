@@ -23,8 +23,8 @@ const SelectButton = styled.button.attrs({ type: "button" })`
   padding: 0 8px;
 
   & > img {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     transition: transform 0.3s ease;
     ${({ $isOpen }) => $isOpen && "transform: rotate(180deg);"}
   }
