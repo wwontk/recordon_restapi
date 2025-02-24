@@ -9,7 +9,7 @@ import {
 } from "../../../utils/formatNumber";
 import closeCircle from "../../../assets/img/etc/x-circle.png";
 import { Tooltip } from "react-tooltip";
-import CompanyNameCell from "./CompanyNameCell";
+import CompanyNameCell from "../../../components/Common/Tooltip/CompanyNameCell";
 import InfiniteScroll from "../../../components/Common/InfiniteScroll/useInfiniteScroll";
 import LoadingSpinnerBack from "../../../components/Common/LoadingSpinner/LoadingSpinnerBack";
 
