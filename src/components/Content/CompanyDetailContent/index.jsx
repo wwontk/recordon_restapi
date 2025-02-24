@@ -102,7 +102,11 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
             <span></span>
             <div>
               <label>API 인증키 활성화 여부</label>
-              <CompanyDetailInput type="text" disabled />
+              <CompanyDetailInput
+                type="text"
+                disabled
+                value={detail.authCheck ? detail.authCheck : ""}
+              />
             </div>
             <div>
               <label>API 인증키 등록일</label>
@@ -139,6 +143,7 @@ CompanyDetailContent.propTypes = {
     updateDate: PropTypes.string,
     regUserId: PropTypes.string,
     updateUserId: PropTypes.string,
+    authCheck: PropTypes.string,
   }).isRequired,
   setCompanyDetailOpen: PropTypes.func,
 };

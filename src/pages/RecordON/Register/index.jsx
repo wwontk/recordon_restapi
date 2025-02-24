@@ -73,6 +73,10 @@ const Register = () => {
     if (pageNumber === 0) scrollRef.current.scrollTop = 0;
   }, [pageNumber]);
 
+  useEffect(() => {
+    searchIq200Companies();
+  }, []);
+
   return (
     <>
       <RegisterContainer>

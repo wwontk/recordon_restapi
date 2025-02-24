@@ -10,6 +10,7 @@ import {
 import PropTypes from "prop-types";
 import InfiniteScroll from "../../Common/InfiniteScroll/useInfiniteScroll";
 import LoadingSpinnerBack from "../../Common/LoadingSpinner/LoadingSpinnerBack";
+import { searchCompanyDetail } from "../../../api/companyList/companyListInfo";
 
 const CompanyListContent = ({
   pageNumber,
@@ -46,6 +47,13 @@ const CompanyListContent = ({
     else setMoreFuncTop(false);
   }, [data]);
 
+  const handleGetCompanyInfo = (corpIdx) => {
+    const result = searchCompanyDetail(corpIdx);
+    result
+      .then((res) => setCompanyDetailInfo(res.data))
+      .catch((error) => console.log(error));
+  };
+
   return (
     <ContentContainer>
       <div>
@@ -73,6 +81,8 @@ const CompanyListContent = ({
             <th>최종수정일</th>
             <th>최종수정자</th>
             <th>사용여부</th>
+            <th>API 인증키 등록일</th>
+            <th>API 인증키 만료일</th>
           </tr>
         </thead>
         <tbody
@@ -99,8 +109,10 @@ const CompanyListContent = ({
                 <td>{list.regUserId}</td>
                 <td>{moment(list.updateDate).format("YYYY.MM.DD")}</td>
                 <td>{list.updateUserId}</td>
+                <td>{list.discd === 0 ? "사용" : "미사용"}</td>
+                <td></td>
                 <td>
-                  <p>{list.discd === 0 ? "사용" : "미사용"}</p>
+                  <p></p>
                   <div
                     ref={selectedCompany === list.companyId ? menuRef : null}
                   >
@@ -112,7 +124,7 @@ const CompanyListContent = ({
                           setSelectedCompany((prev) =>
                             prev === list.companyId ? "" : list.companyId
                           );
-                          setCompanyDetailInfo(list);
+                          handleGetCompanyInfo(list.corpIdx);
                         }}
                       />
                     </MoreBtn>
@@ -127,8 +139,8 @@ const CompanyListContent = ({
                       >
                         <li
                           onClick={() => {
-                            setCompanyDetailOpen(true);
                             setSelectedCompany("");
+                            setCompanyDetailOpen(true);
                           }}
                         >
                           상세조회
@@ -337,6 +349,14 @@ const ContentContainer = styled.div`
     tr th:nth-child(10),
     tr td:nth-child(10) {
       width: 100px;
+    }
+    tr th:nth-child(11),
+    tr td:nth-child(11) {
+      width: 80px;
+    }
+    tr th:nth-child(12),
+    tr td:nth-child(12) {
+      width: 150px;
     }
     tr td:last-child {
       height: 100%;
