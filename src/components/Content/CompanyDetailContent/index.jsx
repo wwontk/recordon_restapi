@@ -106,6 +106,16 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
                 disabled
                 value={detail.accessToken ? detail.accessToken : ""}
               />
+              <APICopyBtn
+                onClick={() => {
+                  if (detail.accessToken) {
+                    navigator.clipboard.writeText(detail.accessToken);
+                    alert("API 인증키가 복사되었습니다.");
+                  }
+                }}
+              >
+                인증키 복사
+              </APICopyBtn>
             </div>
             <div>
               <label>API 인증키 등록일</label>
@@ -230,4 +240,16 @@ const CompanyDetailInput = styled(TextInput)`
 
 const CompanyTokenInput = styled(CompanyDetailInput)`
   width: 660px;
+`;
+
+const APICopyBtn = styled.button`
+  padding: 2px 8px;
+  border: 1px solid #ccc;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ccc;
+  }
 `;
