@@ -110,9 +110,9 @@ const CompanyListContent = ({
                 <td>{moment(list.updateDate).format("YYYY.MM.DD")}</td>
                 <td>{list.updateUserId}</td>
                 <td>{list.discd === 0 ? "사용" : "미사용"}</td>
-                <td></td>
+                <td>{list.acctokenStartDate}</td>
                 <td>
-                  <p></p>
+                  <p>{list.acctokenEndDate}</p>
                   <div
                     ref={selectedCompany === list.companyId ? menuRef : null}
                   >
@@ -197,6 +197,8 @@ CompanyListContent.propTypes = {
         PropTypes.string,
         PropTypes.instanceOf(Date),
       ]),
+      acctokenStartDate: PropTypes.string,
+      acctokenEndDate: PropTypes.string,
     })
   ).isRequired,
   count: PropTypes.shape({
@@ -438,12 +440,12 @@ const DropdownMenu = styled.ul`
   }
 `;
 
-const NoData = styled.div`
+const NoData = styled.td`
   display: flex;
   justify-content: center;
-  padding: 16px 0;
+  padding: 12px 0 !important;
   border-bottom: 1px solid #d0d0d0;
-  font-size: 16px;
+  font-size: 14px !important;
   font-weight: 500;
-  color: #8d8d8d;
+  color: #8d8d8d !important;
 `;

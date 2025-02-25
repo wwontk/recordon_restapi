@@ -101,23 +101,31 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
             </div>
             <span></span>
             <div>
-              <label>API 인증키 활성화 여부</label>
+              <label>API 인증키</label>
+              <CompanyDetailInput type="text" disabled />
+            </div>
+            <div>
+              <label>API 인증키 등록일</label>
+              <CompanyDetailInput
+                type="text"
+                disabled
+                value={detail.acctokenStartDate ? detail.acctokenStartDate : ""}
+              />
+              <label>API 인증키 만료일</label>
+              <CompanyDetailInput
+                type="text"
+                disabled
+                value={detail.acctokenEndDate ? detail.acctokenEndDate : ""}
+              />
+            </div>
+            <span></span>
+            <div>
+              <label>RecordON PC 인증</label>
               <CompanyDetailInput
                 type="text"
                 disabled
                 value={detail.authCheck ? detail.authCheck : ""}
               />
-            </div>
-            <div>
-              <label>API 인증키 등록일</label>
-              <CompanyDetailInput type="text" disabled />
-              <label>API 인증키 만료일</label>
-              <CompanyDetailInput type="text" disabled />
-            </div>
-            <span></span>
-            <div>
-              <label>RecordON PC 인증</label>
-              <CompanyDetailInput type="text" disabled />
             </div>
           </div>
         </CompanyDetailInfo>
@@ -144,6 +152,8 @@ CompanyDetailContent.propTypes = {
     regUserId: PropTypes.string,
     updateUserId: PropTypes.string,
     authCheck: PropTypes.string,
+    acctokenStartDate: PropTypes.string,
+    acctokenEndDate: PropTypes.string,
   }).isRequired,
   setCompanyDetailOpen: PropTypes.func,
 };
