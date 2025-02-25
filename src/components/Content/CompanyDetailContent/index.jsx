@@ -9,7 +9,6 @@ import { format } from "date-fns";
 import PropTypes from "prop-types";
 
 const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
-  // TODO: 새로고침시 팝업 닫힘 해결
   return (
     <>
       <CompanyDetailContainer>
@@ -102,7 +101,11 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
             <span></span>
             <div>
               <label>API 인증키</label>
-              <CompanyDetailInput type="text" disabled />
+              <CompanyTokenInput
+                type="text"
+                disabled
+                value={detail.accessToken ? detail.accessToken : ""}
+              />
             </div>
             <div>
               <label>API 인증키 등록일</label>
@@ -120,7 +123,7 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
             </div>
             <span></span>
             <div>
-              <label>RecordON PC 인증</label>
+              <label>RecordON 서버 PC 인증</label>
               <CompanyDetailInput
                 type="text"
                 disabled
@@ -154,6 +157,7 @@ CompanyDetailContent.propTypes = {
     authCheck: PropTypes.string,
     acctokenStartDate: PropTypes.string,
     acctokenEndDate: PropTypes.string,
+    accessToken: PropTypes.string,
   }).isRequired,
   setCompanyDetailOpen: PropTypes.func,
 };
@@ -191,6 +195,7 @@ const CompanyDetailInfo = styled.div`
   width: 100%;
   height: calc(100% - 60px);
   padding: 24px 58px;
+  font-size: 14px;
 
   & > div {
     display: flex;
@@ -215,7 +220,14 @@ const CompanyDetailInfo = styled.div`
 `;
 
 const CompanyDetailInput = styled(TextInput)`
+  width: 240px;
+  height: 28px;
   border-radius: 0px;
-  margin-right: 16px;
+  margin-right: 20px;
   padding-left: 8px;
+  font-size: 14px;
+`;
+
+const CompanyTokenInput = styled(CompanyDetailInput)`
+  width: 660px;
 `;
