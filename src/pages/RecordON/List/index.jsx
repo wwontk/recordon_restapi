@@ -14,8 +14,6 @@ import Calendar from "../../../components/Common/Calendar/Calendar";
 import { format } from "date-fns";
 import CompanyDetailContent from "../../../components/Content/CompanyDetailContent";
 
-// TODO: 재조회시 스크롤 top으로
-
 const List = () => {
   const [companies, setCompanies] = useState([]);
   const [counts, setCounts] = useState({
@@ -80,7 +78,6 @@ const List = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // TODO: discd (사용구분) 설정
   const searchCompanies = (page) => {
     setMoreData(true);
     const result = searchCompany({
@@ -188,7 +185,7 @@ const List = () => {
       <CompanyListContainer>
         <CompanyListTop>
           <form onSubmit={handleSubmit}>
-            <p>리스트 목록</p>
+            <p>조회 리스트</p>
             <div>
               <div>
                 <InputWrapper>
