@@ -10,7 +10,7 @@ const SelectContainer = styled.div`
 
 const SelectButton = styled.button.attrs({ type: "button" })`
   width: ${({ $width }) => $width || "120px"};
-  height: 24px;
+  height: ${({ $height }) => $height || "24px"};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,7 +67,7 @@ const DropdownItem = styled.li`
   }
 `;
 
-const SelectBox = ({ options, selected, onSelect, width }) => {
+const SelectBox = ({ options, selected, onSelect, width, height }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -103,6 +103,7 @@ const SelectBox = ({ options, selected, onSelect, width }) => {
         onClick={() => setIsOpen((prev) => !prev)}
         $isOpen={isOpen}
         $width={width}
+        $height={height}
       >
         {selectedOption.label}
         <img src={dropdownArrow} alt="dropdown" />
@@ -132,4 +133,5 @@ SelectBox.propTypes = {
     .isRequired,
   onSelect: PropTypes.func,
   width: PropTypes.string,
+  height: PropTypes.string,
 };

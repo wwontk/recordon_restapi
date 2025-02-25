@@ -101,6 +101,7 @@ const Register = () => {
                     setSearchInput("");
                   }}
                   width={"240px"}
+                  height={"30px"}
                 />
               </div>
               <div>
@@ -124,6 +125,7 @@ const Register = () => {
             <table>
               <thead>
                 <tr>
+                  <th>NO</th>
                   <th>회사ID</th>
                   <th>회사명</th>
                   <th>대표번호</th>
@@ -137,8 +139,9 @@ const Register = () => {
                 ref={scrollRef}
               >
                 {iq200CompList.length > 0 ? (
-                  iq200CompList.map((comp) => (
+                  iq200CompList.map((comp, idx) => (
                     <tr key={comp.companyId} onClick={() => setSeleceted(comp)}>
+                      <td>{idx + 1}</td>
                       <td>{comp.companyId}</td>
                       <CompanyNameCell name={comp.companyName} />
                       <td>{formatCompanyNumber(comp.companyNumber)}</td>
@@ -206,9 +209,9 @@ export default Register;
 const NoData = styled.div`
   display: flex;
   justify-content: center;
-  padding: 16px 0;
+  padding: 12px 0;
   border-bottom: 1px solid #d0d0d0;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #8d8d8d;
 `;
@@ -243,7 +246,7 @@ const RegisterTop = styled.div`
   border-bottom: 1px solid #d3d3d3;
 
   & > p {
-    font-size: 20px;
+    font-size: 18px;
   }
 `;
 
@@ -297,6 +300,7 @@ const IQ200CompanyList = styled.div`
     background-color: #fff;
     text-align: center;
     table-layout: fixed;
+    border: 1px solid #d0d0d0;
 
     th {
       color: #8d8d8d;
@@ -307,7 +311,7 @@ const IQ200CompanyList = styled.div`
       background-color: #efefef;
       white-space: nowrap;
       overflow: hidden;
-      font-size: 14px;
+      font-size: 12px;
     }
     td {
       max-height: 50px;
@@ -315,7 +319,7 @@ const IQ200CompanyList = styled.div`
       padding: 0 8px;
       vertical-align: middle;
       line-height: 18px;
-      font-size: 14px;
+      font-size: 12px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -327,7 +331,7 @@ const IQ200CompanyList = styled.div`
         display: table;
         table-layout: fixed;
         width: 100%;
-        border-top: 1px solid #d0d0d0;
+        // border-top: 1px solid #d0d0d0;
         border-bottom: 1px solid #d0d0d0;
       }
     }
@@ -338,9 +342,9 @@ const IQ200CompanyList = styled.div`
       height: 100%;
       overflow-y: auto;
       background: #fff;
-      border-bottom: 1px solid #d0d0d0;
+      // border-bottom: 1px solid #d0d0d0;
       & > tr {
-        height: 40px;
+        height: 32px;
         display: table;
         table-layout: fixed;
         width: 100%;
@@ -377,15 +381,20 @@ const IQ200CompanyList = styled.div`
     }
     tr th:first-child,
     tr td:first-child {
-      width: 60px;
+      width: 40px;
       padding: 0 2px;
     }
     tr th:nth-child(2),
     tr td:nth-child(2) {
+      width: 60px;
+      padding: 0 2px;
+    }
+    tr th:nth-child(3),
+    tr td:nth-child(3) {
       width: 220px;
     }
-    tr th:nth-child(2),
-    tr td:nth-child(2) {
+    tr th:nth-child(4),
+    tr td:nth-child(4) {
       min-width: 120px;
       overflow: hidden;
       white-space: nowrap;
