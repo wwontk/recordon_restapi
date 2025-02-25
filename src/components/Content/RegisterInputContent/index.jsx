@@ -8,8 +8,10 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
   const [registerCheck, setRegisterCheck] = useState(false);
 
   useEffect(() => {
-    if (selected.businessNumber === "") setRegisterCheck(false);
+    if (selected.businessNumber === "" || selected.businessNumber === null)
+      setRegisterCheck(false);
     else setRegisterCheck(true);
+    if (Object.keys(selected).length === 0) setRegisterCheck(false);
   }, [selected]);
 
   const handleSubmit = async (e) => {
@@ -19,17 +21,6 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
     if (isRegister) {
       setIsLoading(true);
       try {
-        // const result = await registerCompany({
-        //   companyId: 92280,
-        //   companyPassword: "",
-        //   salesresp: 2,
-        //   companyName: "TEST2",
-        //   companyNumber: "07011112222",
-        //   businessNumber: "1112233473",
-        //   sales: 1,
-        //   discd: 0,
-        // });
-
         const result = await registerCompany({
           companyId: selected.companyId,
           companyPassword: "",
@@ -46,6 +37,10 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
         window.location.replace("/recordon/list");
       } catch (error) {
         console.error("RecordON 회사 등록 실패:", error);
+        if (error.response.data.error === "Conflict") {
+          alert("RecordON 회사 등록 실패: 이미 등록되어 있는 회사 입니다.");
+          return;
+        }
         alert("회사 등록에 실패하였습니다.");
       } finally {
         setIsLoading(false);
@@ -75,7 +70,7 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
               placeholder="회사ID를 입력해주세요."
               id="companyId"
               name="companyId"
-              value={selected.companyId}
+              value={selected.companyId ? selected.companyId : ""}
               disabled
             />
           </div>
@@ -86,7 +81,7 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
               placeholder="회사명을 입력해주세요."
               id="companyName"
               name="companyName"
-              value={selected.companyName}
+              value={selected.companyName ? selected.companyName : ""}
               disabled
             />
           </div>
@@ -97,7 +92,7 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
               placeholder="회사번호를 입력해주세요."
               id="companyNumber"
               name="companyNumber"
-              value={selected.companyNumber}
+              value={selected.companyNumber ? selected.companyNumber : ""}
               disabled
             />
           </div>
@@ -156,9 +151,10 @@ const RegisterInputContainer = styled.div`
   width: calc(100% - 500px);
   padding: 40px 80px 0 80px;
   position: relative;
+  font-size: 14px;
 
   & > form {
-    width: 360px;
+    width: 320px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -170,15 +166,16 @@ const RegisterInputContainer = styled.div`
     }
 
     & > button {
-      width: 100px;
+      width: 80px;
       height: 40px;
       border: none;
       background-color: #4e4e4e;
       color: white;
       border-radius: 2px;
       font-size: 14px;
-      margin-top: 40px;
+      margin-top: 20px;
       cursor: pointer;
+      transition: background-color 0.2s ease;
 
       &:disabled {
         background-color: rgba(78, 78, 78, 0.4);
@@ -189,9 +186,10 @@ const RegisterInputContainer = styled.div`
 `;
 
 const RegisterInput = styled(TextInput)`
-  height: 36px;
+  height: 32px;
   background-color: #f3fafa;
   padding-left: 8px;
+  font-size: 14px;
 
   &.businessNumber {
     &::placeholder {

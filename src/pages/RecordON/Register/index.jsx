@@ -32,6 +32,7 @@ const Register = () => {
       }
     }
     pageNumber === 0 ? searchIq200Companies() : setPageNumber(0);
+    setSeleceted({});
   };
 
   const searchIq200Companies = (page) => {
@@ -344,7 +345,7 @@ const IQ200CompanyList = styled.div`
       background: #fff;
       // border-bottom: 1px solid #d0d0d0;
       & > tr {
-        height: 32px;
+        height: 36px;
         display: table;
         table-layout: fixed;
         width: 100%;
