@@ -12,6 +12,7 @@ const Header = () => {
 
   const handleLogout = () => {
     removeCookie("access-token");
+    removeCookie("refresh-token");
     setAuthenticated(false);
     setUserInfo({});
     navigate("/login");
@@ -21,7 +22,7 @@ const Header = () => {
     <>
       <HeaderContainer>
         <UserInfo>
-          <p>{userInfo.userId} 님</p>
+          <p>{userInfo.userName} 님</p>
           <img src={logoutIcon} alt="logout" onClick={handleLogout} />
         </UserInfo>
       </HeaderContainer>

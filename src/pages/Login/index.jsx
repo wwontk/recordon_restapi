@@ -16,8 +16,6 @@ const Login = () => {
   const onSubmitLogin = (e) => {
     e.preventDefault();
 
-    // TODO: password sha256 암호화 시크릿키
-
     if (id !== "" && password !== "") {
       const result = loginUser({ admin_id: id, admin_pwd: password });
       result
@@ -25,7 +23,10 @@ const Login = () => {
           setCookie("access-token", res.data.accessToken, { path: "/" });
           setCookie("refresh-token", res.data.refreshToken, { path: "/" });
           setAuthenticated(true);
-          setUserInfo({ userId: res.data.admin_id });
+          setUserInfo({
+            userId: res.data.admin_id,
+            userName: res.data.admin_name,
+          });
           navigate("/recordon/list", { state: { from: "/recordon/list" } });
         })
         .catch((error) => {
