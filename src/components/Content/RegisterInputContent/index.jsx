@@ -8,7 +8,7 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
   const [registerCheck, setRegisterCheck] = useState(false);
 
   useEffect(() => {
-    if (selected.bnCheck !== "OK") setRegisterCheck(false);
+    if (selected.businessNumber === "") setRegisterCheck(false);
     else setRegisterCheck(true);
   }, [selected]);
 
@@ -20,12 +20,12 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
       setIsLoading(true);
       try {
         // const result = await registerCompany({
-        //   companyId: 92282,
+        //   companyId: 92280,
         //   companyPassword: "",
         //   salesresp: 2,
-        //   companyName: "TEST",
+        //   companyName: "TEST2",
         //   companyNumber: "07011112222",
-        //   businessNumber: "1112233221",
+        //   businessNumber: "1112233473",
         //   sales: 1,
         //   discd: 0,
         // });
@@ -41,7 +41,9 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
           discd: 0,
         });
 
-        result.then((res) => console.log("회사 등록 성공: ", res));
+        console.log("회사 등록 성공: ", result);
+        alert("회사 등록에 성공하였습니다.");
+        window.location.replace("/recordon/list");
       } catch (error) {
         console.error("RecordON 회사 등록 실패:", error);
         alert("회사 등록에 실패하였습니다.");
@@ -54,14 +56,11 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
   const getPlaceholder = (selected) => {
     if (Object.keys(selected).length === 0) return "사업자번호를 입력해주세요.";
     if (selected.bnCheck === "OK") return "";
-    if (selected.bnCheck === "03") return "폐업 처리된 사업자번호 입니다.";
     if (
       (selected.bnCheck === "FAIL" && selected.businessNumber === "") ||
       selected.businessNumber === null
     )
       return "IQ200에서 사업자번호를 등록해주세요.";
-    if (selected.bnCheck === "FAIL" && selected.businessNumber !== "")
-      return "국세청에 등록되지 않은 사업자번호 입니다.";
     return "";
   };
 
@@ -112,7 +111,7 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
               className={
                 Object.keys(selected).length === 0 ? "" : "businessNumber"
               }
-              value={selected.bnCheck === "OK" ? selected.businessNumber : ""}
+              value={selected.businessNumber ? selected.businessNumber : ""}
               disabled
             />
           </div>
