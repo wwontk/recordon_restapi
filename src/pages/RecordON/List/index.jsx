@@ -139,6 +139,23 @@ const List = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (searchSort === "companyName") {
+      if (keyword.length === 1) {
+        alert("2글자 이상 입력해주세요.");
+        return;
+      }
+    } else if (searchSort === "businessNumber") {
+      if (keyword.length < 6) {
+        alert("6글자 이상 입력해주세요.");
+        return;
+      }
+    } else if (searchSort === "companyNumber") {
+      if (keyword.length < 4) {
+        alert("4글자 이상 입력해주세요.");
+        return;
+      }
+    }
     pageNumber === 0 ? searchCompanies() : setPageNumber(0);
   };
 

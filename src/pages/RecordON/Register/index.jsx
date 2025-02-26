@@ -69,6 +69,16 @@ const Register = () => {
         alert("검색은 2글자 이상부터 가능합니다.");
         return;
       }
+    } else if (searchSort === "businessNumber") {
+      if (searchInput.length < 6) {
+        alert("6자리 이상 입력해주세요.");
+        return;
+      }
+    } else if (searchSort === "companyNumber") {
+      if (searchInput.length < 4) {
+        alert("4자리 이상 입력해주세요.");
+        return;
+      }
     }
     pageNumber === 0 ? searchIq200Companies() : setPageNumber(0);
     setSeleceted({});
