@@ -19,7 +19,7 @@ const Register = () => {
   const [searchInput, setSearchInput] = useState("");
 
   const [iq200CompList, setIq200CompList] = useState([]);
-  const [selected, setSeleceted] = useState({});
+  const [selected, setSelected] = useState({});
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -81,7 +81,7 @@ const Register = () => {
       }
     }
     pageNumber === 0 ? searchIq200Companies() : setPageNumber(0);
-    setSeleceted({});
+    setSelected({});
   };
 
   // ****** 재조회시 스크롤 Top으로 ****** //
@@ -154,7 +154,7 @@ const Register = () => {
               >
                 {iq200CompList.length > 0 ? (
                   iq200CompList.map((comp, idx) => (
-                    <tr key={comp.companyId} onClick={() => setSeleceted(comp)}>
+                    <tr key={comp.companyId} onClick={() => setSelected(comp)}>
                       <td>{idx + 1}</td>
                       <td>{comp.companyId}</td>
                       <CompanyNameCell name={comp.companyName} />
@@ -209,6 +209,7 @@ const Register = () => {
           </IQ200CompanyList>
           <RegisterInputContent
             selected={selected}
+            setSelected={setSelected}
             setIsLoading={setIsLoading}
           />
           {isLoading && <LoadingSpinnerBack />}

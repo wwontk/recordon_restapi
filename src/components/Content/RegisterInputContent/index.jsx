@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { registerCompany } from "../../../api/companyList/registerCompany";
 import { useEffect, useState } from "react";
 
-const RegisterInputContent = ({ selected, setIsLoading }) => {
+const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
   // ****** 사업자번호 placeholder 로직 ****** //
   const getPlaceholder = (selected) => {
     if (Object.keys(selected).length === 0) return "사업자번호를 입력해주세요.";
@@ -48,7 +48,13 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
 
         console.log("회사 등록 성공: ", result);
         alert("회사 등록에 성공하였습니다.");
-        window.location.replace("/recordon/list");
+        const isRegister = confirm("회사 등록을 계속 진행하시겠습니까?");
+        if (isRegister) {
+          setSelected({});
+          return;
+        } else {
+          window.location.replace("/recordon/list");
+        }
       } catch (error) {
         console.error("RecordON 회사 등록 실패:", error);
         if (error.response.data.error === "Conflict") {
@@ -147,6 +153,7 @@ RegisterInputContent.propTypes = {
     salesCompanyName: PropTypes.string,
     salesresp: PropTypes.number,
   }),
+  setSelected: PropTypes.func,
   setIsLoading: PropTypes.func,
 };
 
