@@ -5,6 +5,19 @@ import { registerCompany } from "../../../api/companyList/registerCompany";
 import { useEffect, useState } from "react";
 
 const RegisterInputContent = ({ selected, setIsLoading }) => {
+  // ****** 사업자번호 placeholder 로직 ****** //
+  const getPlaceholder = (selected) => {
+    if (Object.keys(selected).length === 0) return "사업자번호를 입력해주세요.";
+    if (selected.bnCheck === "OK") return "";
+    if (
+      (selected.bnCheck === "FAIL" && selected.businessNumber === "") ||
+      selected.businessNumber === null
+    )
+      return "IQ200에서 사업자번호를 등록해주세요.";
+    return "";
+  };
+
+  // ****** 등록버튼 활성화 ****** //
   const [registerCheck, setRegisterCheck] = useState(false);
 
   useEffect(() => {
@@ -14,6 +27,7 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
     if (Object.keys(selected).length === 0) setRegisterCheck(false);
   }, [selected]);
 
+  // ****** 회사 등록 API ****** //
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,17 +60,6 @@ const RegisterInputContent = ({ selected, setIsLoading }) => {
         setIsLoading(false);
       }
     } else return;
-  };
-
-  const getPlaceholder = (selected) => {
-    if (Object.keys(selected).length === 0) return "사업자번호를 입력해주세요.";
-    if (selected.bnCheck === "OK") return "";
-    if (
-      (selected.bnCheck === "FAIL" && selected.businessNumber === "") ||
-      selected.businessNumber === null
-    )
-      return "IQ200에서 사업자번호를 등록해주세요.";
-    return "";
   };
 
   return (

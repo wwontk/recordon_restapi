@@ -7,12 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { useAuthAction } from "../../store/store";
 
 const Login = () => {
+  // ****** 로그인 input ****** //
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const { setAuthenticated, setUserInfo } = useAuthAction();
 
   const navigate = useNavigate();
 
+  // ****** 로그인 API ****** //
   const onSubmitLogin = (e) => {
     e.preventDefault();
 

@@ -24,8 +24,9 @@ const CompanyListContent = ({
   isLoading,
 }) => {
   const [selectedCompany, setSelectedCompany] = useState("");
-  const menuRef = useRef(null);
 
+  // ****** 더보기(상세조회, 해지) 버튼 ****** //
+  const menuRef = useRef(null);
   const scrollRef = useRef();
   const [moreFuncTop, setMoreFuncTop] = useState(false);
 
@@ -47,6 +48,7 @@ const CompanyListContent = ({
     else setMoreFuncTop(false);
   }, [data]);
 
+  // ****** 회사 상세정보 조회 API ****** //
   const handleGetCompanyInfo = (corpIdx) => {
     const result = searchCompanyDetail(corpIdx);
     result

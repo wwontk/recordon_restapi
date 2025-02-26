@@ -14,6 +14,7 @@ import InfiniteScroll from "../../../components/Common/InfiniteScroll/useInfinit
 import LoadingSpinnerBack from "../../../components/Common/LoadingSpinner/LoadingSpinnerBack";
 
 const Register = () => {
+  // ****** iq200 회사 리스트 조회 input ****** //
   const [searchSort, setSearchSort] = useState("companyName");
   const [searchInput, setSearchInput] = useState("");
 
@@ -22,18 +23,9 @@ const Register = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (searchSort === "companyName") {
-      if (searchInput.length == 1) {
-        alert("검색은 2글자 이상부터 가능합니다.");
-        return;
-      }
-    }
-    pageNumber === 0 ? searchIq200Companies() : setPageNumber(0);
-    setSeleceted({});
-  };
+  // ****** iq200 회사 리스트 조회 API ****** //
+  const [pageNumber, setPageNumber] = useState(0);
+  const [moreData, setMoreData] = useState(true);
 
   const searchIq200Companies = (page) => {
     setMoreData(true);
@@ -61,22 +53,33 @@ const Register = () => {
       });
   };
 
-  const [pageNumber, setPageNumber] = useState(0);
-  const [moreData, setMoreData] = useState(true);
-
   useEffect(() => {
     if (iq200CompList.length > 0) searchIq200Companies();
-  }, [pageNumber]);
-
-  const scrollRef = useRef();
-
-  useEffect(() => {
-    if (pageNumber === 0) scrollRef.current.scrollTop = 0;
   }, [pageNumber]);
 
   useEffect(() => {
     searchIq200Companies();
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (searchSort === "companyName") {
+      if (searchInput.length == 1) {
+        alert("검색은 2글자 이상부터 가능합니다.");
+        return;
+      }
+    }
+    pageNumber === 0 ? searchIq200Companies() : setPageNumber(0);
+    setSeleceted({});
+  };
+
+  // ****** 재조회시 스크롤 Top으로 ****** //
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    if (pageNumber === 0) scrollRef.current.scrollTop = 0;
+  }, [pageNumber]);
 
   return (
     <>
@@ -206,34 +209,6 @@ const Register = () => {
 };
 
 export default Register;
-
-const NoData = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #d0d0d0;
-  font-size: 14px;
-  font-weight: 500;
-  color: #8d8d8d;
-`;
-
-const SearchInputDiv = styled.div`
-  width: 320px;
-  height: 30px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px;
-  margin-right: 20px;
-
-  & > img {
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-  }
-`;
 
 const RegisterContainer = styled.div`
   width: 100%;
@@ -412,6 +387,23 @@ const IQ200CompanyList = styled.div`
   }
 `;
 
+const SearchInputDiv = styled.div`
+  width: 320px;
+  height: 30px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  margin-right: 20px;
+
+  & > img {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+`;
+
 const IQ200SearchInput = styled.input`
   height: 100%;
   border: none;
@@ -420,4 +412,14 @@ const IQ200SearchInput = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+const NoData = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #d0d0d0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #8d8d8d;
 `;

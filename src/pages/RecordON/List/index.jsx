@@ -15,6 +15,7 @@ import { format } from "date-fns";
 import CompanyDetailContent from "../../../components/Content/CompanyDetailContent";
 
 const List = () => {
+  // ****** 회사 리스트 조회 input ******//
   const [companies, setCompanies] = useState([]);
   const [counts, setCounts] = useState({
     total: 0,
@@ -26,12 +27,7 @@ const List = () => {
   const [discdSort, setDiscdSort] = useState(0);
   const [keyword, setKeyword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    pageNumber === 0 ? searchCompanies() : setPageNumber(0);
-  };
-
-  // calendar
+  // ****** 기간 조회 Calendar ****** //
   const [CalendarOpen, setCalendarOpen] = useState(false);
   const calendarRef = useRef();
   const calendarBtnRef = useRef();
@@ -73,6 +69,7 @@ const List = () => {
     };
   }, [CalendarOpen]);
 
+  // ****** 회사 조회 API ****** //
   const [pageNumber, setPageNumber] = useState(0);
   const [moreData, setMoreData] = useState(true);
 
@@ -132,6 +129,20 @@ const List = () => {
       });
   };
 
+  useEffect(() => {
+    if (companies.length > 0) searchCompanies();
+  }, [pageNumber]);
+
+  useEffect(() => {
+    searchCompanies();
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    pageNumber === 0 ? searchCompanies() : setPageNumber(0);
+  };
+
+  // ****** 회사 리스트 조회 조건 초기화 ****** //
   const [isRotating, setIsRotating] = useState(false);
   const handleRefresh = () => {
     setCompanySort(0);
@@ -147,18 +158,7 @@ const List = () => {
     setTimeout(() => setIsRotating(false), 500);
   };
 
-  useEffect(() => {
-    if (companies.length > 0) searchCompanies();
-  }, [pageNumber]);
-
-  useEffect(() => {
-    searchCompanies();
-  }, []);
-
-  const [companyDetailOpen, setCompanyDetailOpen] = useState(false);
-  const [companyDetailInfo, setCompanyDetailInfo] = useState({});
-
-  // *** RecordON 회사 REST API 해지 *** //
+  // ****** RecordON 회사 REST API 해지 ****** //
   const handleDeleteCompany = (compIdx) => {
     const isDelete = confirm("해지하시겠습니까?");
 
@@ -179,6 +179,10 @@ const List = () => {
       return;
     }
   };
+
+  // ****** 회사 상세조회 Info ****** //
+  const [companyDetailOpen, setCompanyDetailOpen] = useState(false);
+  const [companyDetailInfo, setCompanyDetailInfo] = useState({});
 
   return (
     <>
@@ -320,50 +324,63 @@ const CompanyListContainer = styled.div`
   position: relative;
 `;
 
-const SearchBtnContainer = styled.div`
+const CompanyListTop = styled.div`
+  width: 100%;
+  height: 220px;
+  padding: 42px 0 42px 80px;
   display: flex;
   align-items: center;
-  gap: 8px;
 
-  & > button {
-    width: 44px;
-    height: 24px;
-    background-color: #666;
-    border: none;
-    border-radius: 2px;
-    color: white;
-    font-size: 12px;
-    cursor: pointer;
+  & > form {
+    width: 100%;
+
+    & > p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      & > div {
+        height: 24px;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+
+      label {
+        display: inline-block;
+        width: 70px;
+      }
+    }
   }
 `;
 
-const RefreshIcon = styled.span`
+const InputWrapper = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 24px;
-  height: 24px;
-  background-color: #fff;
-  border: 1px solid #c9c9c9;
-  border-radius: 2px;
-  cursor: pointer;
 
-  & > img {
-    width: 14px;
-    height: 14px;
-    transform: scaleX(-1);
-    filter: invert(72%) sepia(1%) saturate(2410%) hue-rotate(19deg)
-      brightness(92%) contrast(89%);
-    animation: ${({ $isRotating }) =>
-      $isRotating ? "rotate 0.5s linear" : "none"};
+  & > label {
+    font-size: 14px;
   }
 
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
+  .calendar-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    & > label {
+      width: auto;
+      font-size: 14px;
+      margin-left: 4px;
     }
-    to {
-      transform: rotate(360deg);
+
+    & > input[type="checkbox"] {
+      margin-left: 20px;
+      background-color: #ccc;
     }
   }
 `;
@@ -410,63 +427,50 @@ const CompanyListInput = styled(TextInput)`
   }
 `;
 
-const InputWrapper = styled.div`
+const SearchBtnContainer = styled.div`
   display: flex;
   align-items: center;
+  gap: 8px;
 
-  & > label {
-    font-size: 14px;
-  }
-
-  .calendar-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    & > label {
-      width: auto;
-      font-size: 14px;
-      margin-left: 4px;
-    }
-
-    & > input[type="checkbox"] {
-      margin-left: 20px;
-      background-color: #ccc;
-    }
+  & > button {
+    width: 44px;
+    height: 24px;
+    background-color: #666;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
   }
 `;
 
-const CompanyListTop = styled.div`
-  width: 100%;
-  height: 220px;
-  padding: 42px 0 42px 80px;
+const RefreshIcon = styled.span`
   display: flex;
+  justify-content: center;
   align-items: center;
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+  border: 1px solid #c9c9c9;
+  border-radius: 2px;
+  cursor: pointer;
 
-  & > form {
-    width: 100%;
+  & > img {
+    width: 14px;
+    height: 14px;
+    transform: scaleX(-1);
+    filter: invert(72%) sepia(1%) saturate(2410%) hue-rotate(19deg)
+      brightness(92%) contrast(89%);
+    animation: ${({ $isRotating }) =>
+      $isRotating ? "rotate 0.5s linear" : "none"};
+  }
 
-    & > p {
-      font-size: 18px;
-      margin-bottom: 30px;
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
     }
-
-    & > div {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-
-      & > div {
-        height: 24px;
-        display: flex;
-        align-items: center;
-        gap: 24px;
-      }
-
-      label {
-        display: inline-block;
-        width: 70px;
-      }
+    to {
+      transform: rotate(360deg);
     }
   }
 `;
