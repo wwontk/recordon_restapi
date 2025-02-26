@@ -78,17 +78,17 @@ const CompanyListContent = ({
             <th>대표번호</th>
             <th>사업자번호</th>
             <th>영업점</th>
+            <th>API 인증키 등록일</th>
+            <th>API 인증키 만료일</th>
+            <th>사용여부</th>
             <th>등록일</th>
             <th>등록자</th>
             <th>최종수정일</th>
             <th>최종수정자</th>
-            <th>사용여부</th>
-            <th>API 인증키 등록일</th>
-            <th>API 인증키 만료일</th>
           </tr>
         </thead>
         <tbody
-          className={`scrollBar ${data.length > 12 ? "long-list" : ""}`}
+          className={`scrollBar ${data.length > 11 ? "long-list" : ""}`}
           ref={scrollRef}
         >
           {data.length > 0 ? (
@@ -107,14 +107,16 @@ const CompanyListContent = ({
                     ? ""
                     : list.salesCompanyName}
                 </td>
+                <td>{list.acctokenStartDate}</td>
+                <td>{list.acctokenEndDate}</td>
+                <td className={list.discd !== 0 ? "not-used" : ""}>
+                  {list.discd === 0 ? "사용" : "미사용"}
+                </td>
                 <td>{moment(list.regDate).format("YYYY.MM.DD")}</td>
                 <td>{list.regUserId}</td>
                 <td>{moment(list.updateDate).format("YYYY.MM.DD")}</td>
-                <td>{list.updateUserId}</td>
-                <td>{list.discd === 0 ? "사용" : "미사용"}</td>
-                <td>{list.acctokenStartDate}</td>
                 <td>
-                  <p>{list.acctokenEndDate}</p>
+                  <p>{list.updateUserId}</p>
                   <div
                     ref={selectedCompany === list.companyId ? menuRef : null}
                   >
@@ -263,6 +265,10 @@ const ContentContainer = styled.div`
       padding: 0 10px;
       vertical-align: middle;
       line-height: 18px;
+
+      &.not-used {
+        color: #f93636;
+      }
     }
     thead {
       user-select: none;
@@ -336,19 +342,20 @@ const ContentContainer = styled.div`
     }
     tr th:nth-child(6),
     tr td:nth-child(6) {
-      width: 160px;
+      width: 155px;
     }
     tr th:nth-child(7),
     tr td:nth-child(7) {
-      width: 100px;
+      width: 150px;
     }
     tr th:nth-child(8),
     tr td:nth-child(8) {
-      width: 100px;
+      width: 150px;
     }
     tr th:nth-child(9),
     tr td:nth-child(9) {
-      width: 100px;
+      // width: 100px;
+      width: 80px;
     }
     tr th:nth-child(10),
     tr td:nth-child(10) {
@@ -356,11 +363,11 @@ const ContentContainer = styled.div`
     }
     tr th:nth-child(11),
     tr td:nth-child(11) {
-      width: 80px;
+      width: 100px;
     }
     tr th:nth-child(12),
     tr td:nth-child(12) {
-      width: 150px;
+      width: 100px;
     }
     tr td:last-child {
       height: 100%;
