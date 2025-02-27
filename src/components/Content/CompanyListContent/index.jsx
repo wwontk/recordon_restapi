@@ -134,12 +134,12 @@ const CompanyListContent = ({
                     </MoreBtn>
                     {selectedCompany === list.companyId && (
                       <DropdownMenu
-                        className={
+                        className={`${
                           moreFuncTop &&
                           (data.length - 1 === idx || data.length - 2 === idx)
                             ? "top-data"
                             : ""
-                        }
+                        } ${list.sales === 1 ? "solutionComp" : ""}`}
                       >
                         <li
                           onClick={() => {
@@ -147,8 +147,9 @@ const CompanyListContent = ({
                             setCompanyDetailOpen(true);
                           }}
                         >
-                          상세조회
+                          상세 조회
                         </li>
+                        {list.sales === 1 && <li>고객사 조회</li>}
                         <li
                           onClick={() => {
                             handleDeleteCompany(list.corpIdx);
@@ -433,6 +434,9 @@ const DropdownMenu = styled.ul`
 
   &.top-data {
     top: -65px;
+    &.solutionComp {
+      top: -95px;
+    }
   }
 
   li {

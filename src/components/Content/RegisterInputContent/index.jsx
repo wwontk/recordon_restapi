@@ -5,6 +5,8 @@ import { registerCompany } from "../../../api/companyList/registerCompany";
 import { useEffect, useState } from "react";
 
 const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
+  const [salesrespSort, setSalesrespSort] = useState(0);
+
   // ****** 사업자번호 placeholder 로직 ****** //
   const getPlaceholder = (selected) => {
     if (Object.keys(selected).length === 0) return "사업자번호를 입력해주세요.";
@@ -95,10 +97,10 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
             />
           </div>
           <div>
-            <label htmlFor="companyNumber">회사번호</label>
+            <label htmlFor="companyNumber">대표번호</label>
             <RegisterInput
               type="text"
-              placeholder="회사번호를 입력해주세요."
+              placeholder="대표번호를 입력해주세요."
               id="companyNumber"
               name="companyNumber"
               value={selected.companyNumber ? selected.companyNumber : ""}
@@ -125,10 +127,11 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
               type="text"
               placeholder="영업점을 입력해주세요."
               id="salesresp"
-              name="saleseresp"
+              name="salesresp"
               value={selected.salesCompanyName ? selected.salesCompanyName : ""}
               disabled
             />
+            <p>{selected.solutionStatus}</p>
           </div>
           <button disabled={!registerCheck}>등록</button>
         </form>
@@ -152,6 +155,7 @@ RegisterInputContent.propTypes = {
     sales: PropTypes.number,
     salesCompanyName: PropTypes.string,
     salesresp: PropTypes.number,
+    solutionStatus: PropTypes.string,
   }),
   setSelected: PropTypes.func,
   setIsLoading: PropTypes.func,
@@ -205,5 +209,9 @@ const RegisterInput = styled(TextInput)`
     &::placeholder {
       color: #e53030;
     }
+  }
+
+  + p {
+    font-size: 12px;
   }
 `;

@@ -15,6 +15,7 @@ import LoadingSpinnerBack from "../../../components/Common/LoadingSpinner/Loadin
 
 const Register = () => {
   // ****** iq200 회사 리스트 조회 input ****** //
+  const [salesSort, setSalesSort] = useState(0);
   const [searchSort, setSearchSort] = useState("companyName");
   const [searchInput, setSearchInput] = useState("");
 
@@ -101,6 +102,21 @@ const Register = () => {
           <IQ200CompanyList>
             <form onSubmit={handleSubmit}>
               <div>
+                <label>회사분류</label>
+                <SelectBox
+                  options={[
+                    { value: 0, label: "고객사" },
+                    { value: 1, label: "솔루션사" },
+                  ]}
+                  selected={salesSort}
+                  onSelect={(option) => {
+                    setSalesSort(option.value);
+                  }}
+                  width={"100px"}
+                  height={"30px"}
+                />
+              </div>
+              <div>
                 <label>검색구분</label>
                 <SelectBox
                   options={[
@@ -114,11 +130,9 @@ const Register = () => {
                     setSearchSort(option.value);
                     setSearchInput("");
                   }}
-                  width={"240px"}
+                  width={"100px"}
                   height={"30px"}
                 />
-              </div>
-              <div>
                 <SearchInputDiv>
                   <IQ200SearchInput
                     type="text"
@@ -257,7 +271,7 @@ const IQ200CompanyList = styled.div`
   & > form {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 
     & > div {
       display: flex;
@@ -399,7 +413,7 @@ const IQ200CompanyList = styled.div`
 `;
 
 const SearchInputDiv = styled.div`
-  width: 320px;
+  width: 240px;
   height: 30px;
   border: 1px solid #ccc;
   background-color: #fff;
@@ -407,11 +421,13 @@ const SearchInputDiv = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 8px;
+  margin-left: 4px;
   margin-right: 20px;
 
   & > img {
     width: 14px;
     height: 14px;
+    margin-left: 8px;
     cursor: pointer;
 `;
 

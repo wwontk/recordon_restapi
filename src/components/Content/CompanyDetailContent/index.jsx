@@ -39,7 +39,7 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
               />
             </div>
             <div>
-              <label>회사번호</label>
+              <label>대표번호</label>
               <CompanyDetailInput
                 type="text"
                 value={formatCompanyNumber(detail.companyNumber)}
