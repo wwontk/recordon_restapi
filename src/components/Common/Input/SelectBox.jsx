@@ -6,6 +6,7 @@ import dropdownArrow from "../../../assets/img/etc/chevron-down.png";
 const SelectContainer = styled.div`
   position: relative;
   display: inline-block;
+  width: ${({ $width }) => $width || "120px"};
 `;
 
 const SelectButton = styled.button.attrs({ type: "button" })`
@@ -33,7 +34,7 @@ const SelectButton = styled.button.attrs({ type: "button" })`
 const DropdownMenu = styled.ul`
   position: absolute;
   left: 0;
-  width: 100%;
+  width: ${({ $width }) => $width || "120px"};
   background-color: white;
   border: 1px solid #d1d5db;
   border-top: none;
@@ -98,7 +99,7 @@ const SelectBox = ({ options, selected, onSelect, width, height }) => {
   }, [isOpen]);
 
   return (
-    <SelectContainer ref={dropdownRef}>
+    <SelectContainer ref={dropdownRef} $width={width}>
       <SelectButton
         onClick={() => setIsOpen((prev) => !prev)}
         $isOpen={isOpen}
@@ -108,7 +109,7 @@ const SelectBox = ({ options, selected, onSelect, width, height }) => {
         {selectedOption.label}
         <img src={dropdownArrow} alt="dropdown" />
       </SelectButton>
-      <DropdownMenu $isOpen={isOpen}>
+      <DropdownMenu $isOpen={isOpen} $width={width}>
         {options.map((option, index) => (
           <DropdownItem key={index} onClick={() => handleSelect(option)}>
             {option.label}
