@@ -34,6 +34,7 @@ const Register = () => {
       discd: 0,
       page: page ? page : pageNumber,
       [searchSort]: searchInput,
+      sales: salesSort,
     });
     result
       .then((res) => {
@@ -113,7 +114,7 @@ const Register = () => {
                     setSalesSort(option.value);
                   }}
                   width={"100px"}
-                  height={"30px"}
+                  height={"24px"}
                 />
               </div>
               <div>
@@ -131,7 +132,7 @@ const Register = () => {
                     setSearchInput("");
                   }}
                   width={"100px"}
-                  height={"30px"}
+                  height={"24px"}
                 />
                 <SearchInputDiv>
                   <IQ200SearchInput
@@ -283,13 +284,13 @@ const IQ200CompanyList = styled.div`
       }
 
       & > button {
-        width: 60px;
-        height: 30px;
+        width: 50px;
+        height: 24px;
         background-color: #484848;
         color: white;
         border: none;
         border-radius: 2px;
-        font-size: 14px;
+        font-size: 12px;
         cursor: pointer;
       }
     }
@@ -414,7 +415,7 @@ const IQ200CompanyList = styled.div`
 
 const SearchInputDiv = styled.div`
   width: 240px;
-  height: 30px;
+  height: 24px;
   border: 1px solid #ccc;
   background-color: #fff;
   display: flex;
@@ -435,7 +436,7 @@ const IQ200SearchInput = styled.input`
   height: 100%;
   border: none;
   flex: 1;
-
+  font-size: 12px;
   &:focus {
     outline: none;
   }

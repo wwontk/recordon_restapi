@@ -14,3 +14,8 @@ export const searchIQ200CompanyList = () => {
 export const searchIQ200CompDetail = (option) => {
   return axiosInstance.get(`/iq200/company`, { params: option });
 };
+
+// iq200 회사 솔루션사, 고객사 구분 조회
+export const searchIQ200bySales = (option) => {
+  return axiosInstance.get(`/iq200/company`, { params: option });
+};
