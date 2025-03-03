@@ -42,7 +42,7 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
       }
       setIsLoading(true);
       try {
-        const result = registerCompany({
+        const result = await registerCompany({
           companyId: solutionInfo.companyId,
           companyPassword: "",
           salesresp: solutionInfo.salesresp,
@@ -51,16 +51,15 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
           businessNumber: solutionInfo.businessNumber,
           sales: solutionInfo.sales,
           discd: 0,
-        }).then(async () => {
-          const selectRes = await checkSolution({
-            companyId: selected.salesresp,
-          });
-          console.log("solutionCheck: " + selectRes.data.companyType);
-          setSolutionCheck(selectRes.data.companyType);
         });
 
+        const selectRes = await checkSolution({
+          companyId: selected.salesresp,
+        });
+        setSolutionCheck(selectRes.data.companyType);
+
         console.log("회사 등록 성공: ", result);
-        alert("회사 등록에 성공하였습니다.");
+        alert("솔루션사 등록에 성공하였습니다.");
       } catch (error) {
         console.error("RecordON 회사 등록 실패:", error);
         if (error.response.data.errorCode === 1001) {
