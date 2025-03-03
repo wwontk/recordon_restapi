@@ -1,11 +1,78 @@
 import styled from "styled-components";
 import { TextInput } from "../../Common/Input/TextInput";
 import PropTypes from "prop-types";
-import { registerCompany } from "../../../api/companyList/registerCompany";
+import {
+  checkSolution,
+  registerCompany,
+  searchIQ200CompDetail,
+} from "../../../api/companyList/registerCompany";
 import { useEffect, useState } from "react";
 
 const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
-  const [salesrespSort, setSalesrespSort] = useState(0);
+  // ****** 영업점 솔루션사 체크 ****** //
+  const [solutionCheck, setSolutionCheck] = useState(0);
+  const [solutionInfo, setSolutionInfo] = useState({});
+  useEffect(() => {
+    const fetchSolutionCheck = async () => {
+      const result = await checkSolution({ companyId: selected.salesresp });
+      setSolutionCheck(result.data.companyType);
+    };
+    const fetchSolutionInfo = async () => {
+      const result = await searchIQ200CompDetail({
+        companyId: selected.salesresp,
+      });
+      setSolutionInfo(result.data.content[0]);
+    };
+
+    if (selected.salesresp) {
+      fetchSolutionCheck();
+      fetchSolutionInfo();
+    }
+  }, [selected]);
+
+  // ****** 솔루션사 등록 ****** //
+  const RegisterSolution = async () => {
+    const isSolutionRegister = confirm(
+      `${solutionInfo.companyName}을(를) 등록하시겠습니까?`
+    );
+    if (isSolutionRegister) {
+      if (!solutionInfo.businessNumber) {
+        alert("해당 솔루션사의 사업자번호를 IQ200에서 등록해주세요.");
+        return;
+      }
+      setIsLoading(true);
+      try {
+        const result = registerCompany({
+          companyId: solutionInfo.companyId,
+          companyPassword: "",
+          salesresp: solutionInfo.salesresp,
+          companyName: solutionInfo.companyName,
+          companyNumber: solutionInfo.companyNumber,
+          businessNumber: solutionInfo.businessNumber,
+          sales: solutionInfo.sales,
+          discd: 0,
+        }).then(async () => {
+          const selectRes = await checkSolution({
+            companyId: selected.salesresp,
+          });
+          console.log("solutionCheck: " + selectRes.data.companyType);
+          setSolutionCheck(selectRes.data.companyType);
+        });
+
+        console.log("회사 등록 성공: ", result);
+        alert("회사 등록에 성공하였습니다.");
+      } catch (error) {
+        console.error("RecordON 회사 등록 실패:", error);
+        if (error.response.data.errorCode === 1001) {
+          alert("RecordON 회사 등록 실패: 사업자번호를 등록해주세요.");
+          return;
+        }
+        alert("회사 등록에 실패하였습니다.");
+      } finally {
+        setIsLoading(false);
+      }
+    } else return;
+  };
 
   // ****** 사업자번호 placeholder 로직 ****** //
   const getPlaceholder = (selected) => {
@@ -19,15 +86,22 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
     return "";
   };
 
+  // console.log("solutuincheck: ", solutionCheck);
+  // console.log("solutuininfo: ", solutionInfo);
   // ****** 등록버튼 활성화 ****** //
   const [registerCheck, setRegisterCheck] = useState(false);
-
   useEffect(() => {
-    if (selected.businessNumber === "" || selected.businessNumber === null)
+    if (
+      solutionCheck === 0 ||
+      selected.businessNumber === "" ||
+      selected.businessNumber === null ||
+      Object.keys(selected).length === 0
+    ) {
       setRegisterCheck(false);
-    else setRegisterCheck(true);
-    if (Object.keys(selected).length === 0) setRegisterCheck(false);
-  }, [selected]);
+    } else {
+      setRegisterCheck(true);
+    }
+  }, [selected, solutionCheck]);
 
   // ****** 회사 등록 API ****** //
   const handleSubmit = async (e) => {
@@ -50,8 +124,8 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
 
         console.log("회사 등록 성공: ", result);
         alert("회사 등록에 성공하였습니다.");
-        const isRegister = confirm("회사 등록을 계속 진행하시겠습니까?");
-        if (isRegister) {
+        const isContinue = confirm("회사 등록을 계속 진행하시겠습니까?");
+        if (isContinue) {
           setSelected({});
           return;
         } else {
@@ -131,7 +205,20 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
               value={selected.salesCompanyName ? selected.salesCompanyName : ""}
               disabled
             />
-            <p>{selected.solutionStatus}</p>
+            {Object.keys(selected).length !== 0 && (
+              <div className="salesrespRegister">
+                <p>
+                  {solutionCheck === 0
+                    ? "등록된 솔루션사가 아닙니다"
+                    : "등록된 솔루션사 입니다."}
+                </p>
+                {solutionCheck === 0 && (
+                  <button type="button" onClick={RegisterSolution}>
+                    솔루션사 등록하기
+                  </button>
+                )}
+              </div>
+            )}
           </div>
           <button disabled={!registerCheck}>등록</button>
         </form>
@@ -211,7 +298,26 @@ const RegisterInput = styled(TextInput)`
     }
   }
 
-  + p {
+  + .salesrespRegister {
+    height: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
     font-size: 12px;
+    color: #6d6d6d;
+    margin-top: 4px;
+
+    & button {
+      padding: 2px 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #6d6d6d;
+      border-radius: 50px;
+      font-size: 10px;
+
+      &:hover {
+        background-color: #d4d4d4;
+      }
+    }
   }
 `;
