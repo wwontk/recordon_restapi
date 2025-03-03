@@ -13,6 +13,7 @@ import CalendarIcon from "../../../assets/img/etc/calendar.png";
 import Calendar from "../../../components/Common/Calendar/Calendar";
 import { format } from "date-fns";
 import CompanyDetailContent from "../../../components/Content/CompanyDetailContent";
+import CloseIcon from "../../../assets/img/etc/x-circle.png";
 
 const List = () => {
   // ****** 회사 리스트 조회 input ******//
@@ -26,6 +27,7 @@ const List = () => {
   const [searchSort, setSearchSort] = useState("companyName");
   const [discdSort, setDiscdSort] = useState(0);
   const [keyword, setKeyword] = useState("");
+  const [solutionName, setSolutionName] = useState("");
 
   // ****** 기간 조회 Calendar ****** //
   const [CalendarOpen, setCalendarOpen] = useState(false);
@@ -88,6 +90,7 @@ const List = () => {
         ? ""
         : format(dateRange.endDate, "yyyy-MM-dd'T'23:59:59"),
       page: page ? page : pageNumber,
+      solutionName: solutionName,
     });
     result
       .then((res) => {
@@ -171,6 +174,7 @@ const List = () => {
       startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
       endDate: new Date(),
     });
+    setSolutionName("");
     setIsRotating(true);
     setTimeout(() => setIsRotating(false), 500);
   };
@@ -288,12 +292,37 @@ const List = () => {
                     }}
                     width={"100px"}
                   />
-                  <CompanyListInput
-                    placeholder="검색어를 입력해주세요."
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                    autoFocus
-                  />
+                  <div className="keywordInput">
+                    <input
+                      placeholder="검색어를 입력해주세요."
+                      value={keyword}
+                      onChange={(e) => setKeyword(e.target.value)}
+                      autoFocus
+                    />
+                    <img
+                      src={CloseIcon}
+                      alt="reset"
+                      onClick={() => setKeyword("")}
+                    />
+                  </div>
+                </InputWrapper>
+              </div>
+              <div>
+                <InputWrapper>
+                  <label>영업점</label>
+                  <div className="textInput">
+                    <input
+                      placeholder="영업점을 입력해주세요."
+                      className="salesInput"
+                      value={solutionName}
+                      onChange={(e) => setSolutionName(e.target.value)}
+                    />
+                    <img
+                      src={CloseIcon}
+                      alt="reset"
+                      onClick={() => setSolutionName("")}
+                    />
+                  </div>
                 </InputWrapper>
                 <SearchBtnContainer>
                   <Tooltip text="조건 초기화" position="top">
@@ -344,7 +373,7 @@ const CompanyListContainer = styled.div`
 const CompanyListTop = styled.div`
   width: 100%;
   height: 220px;
-  padding: 42px 0 42px 80px;
+  padding: 0 0 0 80px;
   display: flex;
   align-items: center;
 
@@ -400,6 +429,65 @@ const InputWrapper = styled.div`
       background-color: #ccc;
     }
   }
+
+  .keywordInput {
+    width: 240px;
+    height: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    margin-left: 4px;
+    padding: 0 8px;
+
+    & > input {
+      border: none;
+      font-size: 12px;
+      flex: 1;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    & > img {
+      width: 14px;
+      height: 14px;
+      margin-left: 8px;
+      cursor: pointer;
+      filter: invert(82%) sepia(8%) saturate(5%) hue-rotate(329deg)
+        brightness(93%) contrast(83%);
+    }
+  }
+
+  .textInput {
+    width: 344px;
+    height: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 0 8px;
+
+    & > input {
+      border: none;
+      font-size: 12px;
+      flex: 1;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    & > img {
+      width: 14px;
+      height: 14px;
+      margin-left: 8px;
+      cursor: pointer;
+      filter: invert(82%) sepia(8%) saturate(5%) hue-rotate(329deg)
+        brightness(93%) contrast(83%);
+    }
+  }
 `;
 
 const CalendarInput = styled(TextInput)`
@@ -428,19 +516,6 @@ const CalendarInput = styled(TextInput)`
       filter: invert(61%) sepia(7%) saturate(12%) hue-rotate(38deg)
         brightness(88%) contrast(84%);
     }
-  }
-`;
-
-const CompanyListInput = styled(TextInput)`
-  width: 240px;
-  height: 24px;
-  border-radius: 0;
-  padding-left: 8px;
-  margin-left: 4px;
-  font-size: 12px;
-
-  &::placeholder {
-    font-size: 12px;
   }
 `;
 

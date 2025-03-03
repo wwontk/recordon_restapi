@@ -149,7 +149,7 @@ const CompanyListContent = ({
                         >
                           상세 조회
                         </li>
-                        {list.sales === 1 && <li>고객사 조회</li>}
+                        {/* {list.sales === 1 && <li>고객사 조회</li>} */}
                         <li
                           onClick={() => {
                             handleDeleteCompany(list.corpIdx);
