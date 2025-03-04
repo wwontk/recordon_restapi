@@ -1,12 +1,6 @@
-import {
-  addDays,
-  addMonths,
-  endOfMonth,
-  endOfWeek,
-  startOfMonth,
-  startOfWeek,
-} from "date-fns";
+import { addDays, endOfWeek, startOfMonth, startOfWeek } from "date-fns";
 import { ko } from "date-fns/locale";
+import moment from "moment";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { createStaticRanges, DateRangePicker } from "react-date-range";
@@ -63,10 +57,16 @@ const Calendar = (props) => {
       }),
     },
     {
-      label: "지난달",
+      label: "이전달",
       range: () => ({
-        startDate: startOfMonth(addMonths(new Date(), -1)),
-        endDate: endOfMonth(addMonths(new Date(), -1)),
+        startDate: moment(state[0].startDate)
+          .subtract(1, "Month")
+          .startOf("Month")
+          .toDate(),
+        endDate: moment(state[0].startDate)
+          .subtract(1, "Month")
+          .endOf("Month")
+          .toDate(),
       }),
     },
   ]);
