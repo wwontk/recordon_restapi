@@ -78,8 +78,9 @@ const CompanyListContent = ({
             <th>대표번호</th>
             <th>사업자번호</th>
             <th>영업점</th>
-            <th>API 인증키 등록일</th>
-            <th>API 인증키 만료일</th>
+            <th>API 인증키 활성화</th>
+            <th>서버 PC 인증</th>
+            <th>최근 서버 PC 인증 시간</th>
             <th>사용여부</th>
             <th>등록일</th>
             <th>등록자</th>
@@ -107,8 +108,9 @@ const CompanyListContent = ({
                     ? ""
                     : list.salesCompanyName}
                 </td>
-                <td>{list.acctokenStartDate}</td>
-                <td>{list.acctokenEndDate}</td>
+                <td>{list.accessTokenCheck}</td>
+                <td>{list.authCheck}</td>
+                <td>{list.authLastDate}</td>
                 <td className={list.discd !== 0 ? "not-used" : ""}>
                   {list.discd === 0 ? "사용" : "미사용"}
                 </td>
@@ -253,13 +255,14 @@ const ContentContainer = styled.div`
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: 32px;
+    grid-template-rows: 28px;
     font-size: 12px;
 
     th {
       color: #8d8d8d;
       padding: 0 10px;
       text-align: left;
+      height: 30px;
     }
     td {
       color: #1e1e1e;
@@ -273,7 +276,7 @@ const ContentContainer = styled.div`
     }
     thead {
       user-select: none;
-      font-size: 14px;
+      font-size: 12px;
       & > tr {
         height: 22px;
         display: table;
@@ -347,20 +350,22 @@ const ContentContainer = styled.div`
     }
     tr th:nth-child(7),
     tr td:nth-child(7) {
-      width: 150px;
+      width: 110px;
     }
     tr th:nth-child(8),
     tr td:nth-child(8) {
-      width: 150px;
+      width: 100px;
     }
     tr th:nth-child(9),
     tr td:nth-child(9) {
       // width: 100px;
-      width: 80px;
+      width: 150px;
     }
+    ,
     tr th:nth-child(10),
     tr td:nth-child(10) {
-      width: 100px;
+      // width: 100px;
+      width: 80px;
     }
     tr th:nth-child(11),
     tr td:nth-child(11) {
@@ -368,6 +373,10 @@ const ContentContainer = styled.div`
     }
     tr th:nth-child(12),
     tr td:nth-child(12) {
+      width: 100px;
+    }
+    tr th:nth-child(13),
+    tr td:nth-child(13) {
       width: 100px;
     }
     tr td:last-child {

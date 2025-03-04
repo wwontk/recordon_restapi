@@ -100,6 +100,14 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
             </div>
             <span></span>
             <div>
+              <label>API 인증키 활성화</label>
+              <CompanyDetailInput
+                type="text"
+                disabled
+                value={detail.accessTokenCheck ? detail.accessTokenCheck : ""}
+              />
+            </div>
+            <div>
               <label>API 인증키</label>
               <CompanyTokenInput
                 type="text"
@@ -133,11 +141,17 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
             </div>
             <span></span>
             <div>
-              <label>RecordON 서버 PC 인증</label>
+              <label>서버 PC 인증</label>
               <CompanyDetailInput
                 type="text"
                 disabled
                 value={detail.authCheck ? detail.authCheck : ""}
+              />
+              <label>서버 PC 인증 최근 날짜</label>
+              <CompanyDetailInput
+                type="text"
+                disabled
+                value={detail.authLastDate ? detail.authLastDate : ""}
               />
             </div>
           </div>
@@ -168,6 +182,8 @@ CompanyDetailContent.propTypes = {
     acctokenStartDate: PropTypes.string,
     acctokenEndDate: PropTypes.string,
     accessToken: PropTypes.string,
+    authLastDate: PropTypes.string,
+    accessTokenCheck: PropTypes.string,
   }).isRequired,
   setCompanyDetailOpen: PropTypes.func,
 };
