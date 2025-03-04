@@ -189,6 +189,7 @@ const List = () => {
       result
         .then((res) => {
           console.log("해지 처리 되었습니다.", res);
+          alert("해지처리가 성공적으로 완료 되었습니다.");
           pageNumber === 0 ? searchCompanies() : setPageNumber(0);
         })
         .catch((err) => {
@@ -277,6 +278,24 @@ const List = () => {
               </div>
               <div>
                 <InputWrapper>
+                  <label>영업점</label>
+                  <div className="textInput">
+                    <input
+                      placeholder="영업점을 입력해주세요."
+                      className="salesInput"
+                      value={solutionName}
+                      onChange={(e) => setSolutionName(e.target.value)}
+                    />
+                    <img
+                      src={CloseIcon}
+                      alt="reset"
+                      onClick={() => setSolutionName("")}
+                    />
+                  </div>
+                </InputWrapper>
+              </div>
+              <div>
+                <InputWrapper>
                   <label>검색구분</label>
                   <SelectBox
                     options={[
@@ -303,24 +322,6 @@ const List = () => {
                       src={CloseIcon}
                       alt="reset"
                       onClick={() => setKeyword("")}
-                    />
-                  </div>
-                </InputWrapper>
-              </div>
-              <div>
-                <InputWrapper>
-                  <label>영업점</label>
-                  <div className="textInput">
-                    <input
-                      placeholder="영업점을 입력해주세요."
-                      className="salesInput"
-                      value={solutionName}
-                      onChange={(e) => setSolutionName(e.target.value)}
-                    />
-                    <img
-                      src={CloseIcon}
-                      alt="reset"
-                      onClick={() => setSolutionName("")}
                     />
                   </div>
                 </InputWrapper>
