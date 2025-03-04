@@ -309,13 +309,17 @@ const RegisterInput = styled(TextInput)`
 
     & button {
       padding: 2px 8px;
-      background-color: #f2f2f2;
-      border: 1px solid #6d6d6d;
+      background-color: #fff;
+      border: 1px solid #42b8c8;
       border-radius: 50px;
+      cursor: pointer;
       font-size: 10px;
+      color: #42b8c8;
+      transition: backgroun-color, color 0.5s ease;
 
       &:hover {
-        background-color: #d4d4d4;
+        background-color: #42b8c8;
+        color: #fff;
       }
     }
   }
