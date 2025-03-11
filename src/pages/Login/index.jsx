@@ -41,7 +41,7 @@ const Login = () => {
   return (
     <>
       <LoginContainer>
-        <p>비플 REST API</p>
+        <p>RecordON REST API</p>
         <LoginForm>
           <label className="blind" htmlFor="userId"></label>
           <UserIdInput
