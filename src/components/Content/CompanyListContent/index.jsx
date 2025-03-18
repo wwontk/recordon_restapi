@@ -114,9 +114,17 @@ const CompanyListContent = ({
                 <td className={list.discd !== 0 ? "not-used" : ""}>
                   {list.discd === 0 ? "사용" : "미사용"}
                 </td>
-                <td>{moment(list.regDate).format("YYYY.MM.DD")}</td>
+                <td>
+                  {list.regDate
+                    ? moment(list.regDate).format("YYYY.MM.DD")
+                    : ""}
+                </td>
                 <td>{list.regUserId}</td>
-                <td>{moment(list.updateDate).format("YYYY.MM.DD")}</td>
+                <td>
+                  {list.updateDate
+                    ? moment(list.updateDate).format("YYYY.MM.DD")
+                    : ""}
+                </td>
                 <td>
                   <p>{list.updateUserId}</p>
                   <div
