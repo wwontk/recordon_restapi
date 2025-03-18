@@ -132,8 +132,8 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
         }
       } catch (error) {
         console.error("RecordON 회사 등록 실패:", error);
-        if (error.response.data.error === "Conflict") {
-          alert("RecordON 회사 등록 실패: 이미 등록되어 있는 회사 입니다.");
+        if (error.response.data.errorCode === 1004) {
+          alert(error.response.data.message);
           return;
         }
         alert("회사 등록에 실패하였습니다.");
