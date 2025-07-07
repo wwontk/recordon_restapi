@@ -73,6 +73,10 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
     } else return;
   };
 
+  // 25.07.08 고객사 -> 솔루션사 전환 로직 추가
+  // ****** 솔루션사 전환 ****** //
+  const changeSolutionComp = () => {};
+
   // ****** 사업자번호 placeholder 로직 ****** //
   const getPlaceholder = (selected) => {
     if (Object.keys(selected).length === 0) return "사업자번호를 입력해주세요.";
@@ -85,8 +89,6 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
     return "";
   };
 
-  // console.log("solutuincheck: ", solutionCheck);
-  // console.log("solutuininfo: ", solutionInfo);
   // ****** 등록버튼 활성화 ****** //
   const [registerCheck, setRegisterCheck] = useState(false);
   useEffect(() => {
@@ -168,6 +170,20 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
               value={selected.companyName ? selected.companyName : ""}
               disabled
             />
+            {Object.keys(selected).length !== 0 && (
+              <div className="salesrespRegister">
+                <p>
+                  {selected.sales === 0
+                    ? "현재 선택된 회사는 고객사 입니다."
+                    : "현재 선택된 회사는 솔루션사 입니다."}
+                </p>
+                {selected.sales === 0 && (
+                  <button type="button" onClick={changeSolutionComp}>
+                    솔루션사 전환하기
+                  </button>
+                )}
+              </div>
+            )}
           </div>
           <div>
             <label htmlFor="companyNumber">대표번호</label>
