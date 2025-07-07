@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import dropdownArrow from "../../../../../assets/img/etc/chevron-down.png";
-import { useState } from "react";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
@@ -69,37 +68,31 @@ const SubMenuItem = styled(NavLink)`
   }
 `;
 
-const ToggleMenu = ({ item }) => {
-  const [isOpen, setIsOpen] = useState(true);
-
-  const toggleMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
-
+const ToggleMenu = ({ item, isOpen, onToggle, isCurrent }) => {
   return (
-    <>
-      <Container>
-        <ToggleMenuItem onClick={toggleMenu} $isOpen={isOpen}>
-          <p>{item.menuTitle}</p>
-          <img src={dropdownArrow} alt="toggle" />
-        </ToggleMenuItem>
-        <SubMenuContainer $isOpen={isOpen}>
-          {item.subMenu.map((sub) => (
-            <SubMenuItem
-              key={sub.path}
-              to={sub.path}
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              {sub.title}
-            </SubMenuItem>
-          ))}
-        </SubMenuContainer>
-      </Container>
-    </>
+    <Container>
+      <ToggleMenuItem
+        onClick={onToggle}
+        $isOpen={isOpen}
+        $isCurrent={isCurrent}
+      >
+        <p>{item.menuTitle}</p>
+        <img src={dropdownArrow} alt="toggle" />
+      </ToggleMenuItem>
+      <SubMenuContainer $isOpen={isOpen}>
+        {item.subMenu.map((sub) => (
+          <SubMenuItem
+            key={sub.path}
+            to={sub.path}
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            {sub.title}
+          </SubMenuItem>
+        ))}
+      </SubMenuContainer>
+    </Container>
   );
 };
-
-export default ToggleMenu;
 
 ToggleMenu.propTypes = {
   item: PropTypes.shape({
@@ -112,4 +105,9 @@ ToggleMenu.propTypes = {
       })
     ).isRequired,
   }).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  isCurrent: PropTypes.bool.isRequired,
+  onToggle: PropTypes.func.isRequired,
 };
+
+export default ToggleMenu;

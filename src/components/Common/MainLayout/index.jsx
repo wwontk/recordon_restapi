@@ -29,6 +29,7 @@ const Container = styled.div`
   > div:nth-child(2) {
     display: flex;
     height: 100%;
+    padding-top: 60px;
   }
 `;
 

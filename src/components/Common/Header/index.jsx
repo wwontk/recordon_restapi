@@ -41,6 +41,8 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: end;
   padding: 0px 24px;
+  position: fixed;
+  top: 0;
 `;
 
 const UserInfo = styled.div`

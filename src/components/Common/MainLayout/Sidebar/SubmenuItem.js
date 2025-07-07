@@ -13,4 +13,14 @@ export const MenuItem = [
       },
     ],
   },
+  {
+    menuTitle: "내번호알리미",
+    path: "/bizlettering",
+    subMenu: [
+      {
+        path: "/bizlettering/register",
+        title: "등록",
+      },
+    ],
+  },
 ];

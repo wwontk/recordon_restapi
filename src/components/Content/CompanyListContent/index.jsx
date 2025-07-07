@@ -262,9 +262,11 @@ const ContentContainer = styled.div`
   & > table {
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-rows: 28px;
+    display: flex;
+    flex-direction: column;
+    // grid-template-rows: 28px;
     font-size: 12px;
+    overflow-y: auto;
 
     th {
       color: #8d8d8d;
@@ -295,7 +297,7 @@ const ContentContainer = styled.div`
     tbody {
       position: relative;
       display: block;
-      width: calc(100% + 4px);
+      width: 100%;
       height: 570px;
       overflow-y: auto;
       background: #fff;
