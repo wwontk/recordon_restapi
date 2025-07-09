@@ -37,6 +37,12 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
                 value={detail.companyId}
                 disabled
               />
+              <label>PW</label>
+              <CompanyDetailInput
+                type="text"
+                // value={detail.regUserId}
+                disabled
+              />
             </div>
             <div>
               <label>대표번호</label>
@@ -66,7 +72,11 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
               <label>등록일</label>
               <CompanyDetailInput
                 type="text"
-                value={format(detail.regDate, "yyyy-MM-dd")}
+                value={
+                  detail.regDate
+                    ? format(detail.regDate, "yyyy-MM-dd HH:mm:ss")
+                    : ""
+                }
                 disabled
               />
               <label>등록자</label>
@@ -80,7 +90,11 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
               <label>최종수정일</label>
               <CompanyDetailInput
                 type="text"
-                value={format(detail.updateDate, "yyyy-MM-dd")}
+                value={
+                  detail.updateDate
+                    ? format(detail.updateDate, "yyyy-MM-dd HH:mm:ss")
+                    : ""
+                }
                 disabled
               />
               <label>최종수정자</label>
