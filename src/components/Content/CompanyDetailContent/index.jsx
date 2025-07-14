@@ -37,12 +37,26 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
                 value={detail.companyId}
                 disabled
               />
-              <label>PW</label>
-              <CompanyDetailInput
-                type="text"
-                // value={detail.regUserId}
-                disabled
-              />
+              {detail.sales === 1 && (
+                <>
+                  <label>PW</label>
+                  <CompanyDetailInput
+                    type="text"
+                    value={detail.corp_pwd}
+                    disabled
+                  />
+                  <APICopyBtn
+                    onClick={() => {
+                      if (detail.corp_pwd) {
+                        navigator.clipboard.writeText(detail.corp_pwd);
+                        alert("비밀번호가 복사되었습니다.");
+                      }
+                    }}
+                  >
+                    비밀번호 복사
+                  </APICopyBtn>
+                </>
+              )}
             </div>
             <div>
               <label>대표번호</label>
@@ -198,6 +212,7 @@ CompanyDetailContent.propTypes = {
     accessToken: PropTypes.string,
     authLastDate: PropTypes.string,
     accessTokenCheck: PropTypes.string,
+    corp_pwd: PropTypes.string,
   }).isRequired,
   setCompanyDetailOpen: PropTypes.func,
 };
