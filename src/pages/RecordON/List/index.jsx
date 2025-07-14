@@ -211,7 +211,7 @@ const List = () => {
       <CompanyListContainer>
         <CompanyListTop>
           <form onSubmit={handleSubmit}>
-            <p>조회 리스트</p>
+            <p>RecordON API 조회</p>
             <div>
               <div>
                 <InputWrapper>
