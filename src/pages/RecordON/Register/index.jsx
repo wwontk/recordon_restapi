@@ -226,6 +226,7 @@ const Register = () => {
             selected={selected}
             setSelected={setSelected}
             setIsLoading={setIsLoading}
+            reloadList={() => searchIq200Companies(0)}
           />
           {isLoading && <LoadingSpinnerBack />}
         </RegisterContent>

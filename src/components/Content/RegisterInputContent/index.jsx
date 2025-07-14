@@ -5,10 +5,17 @@ import {
   checkSolution,
   registerCompany,
   searchIQ200CompDetail,
+  toggleSales,
 } from "../../../api/companyList/registerCompany";
 import { useEffect, useState } from "react";
 
-const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
+const RegisterInputContent = ({
+  selected,
+  setSelected,
+  setIsLoading,
+  reloadList,
+}) => {
+  // console.log(selected);
   // ****** 영업점 솔루션사 체크 ****** //
   const [solutionCheck, setSolutionCheck] = useState(0);
   const [solutionInfo, setSolutionInfo] = useState({});
@@ -75,7 +82,51 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
 
   // 25.07.08 고객사 -> 솔루션사 전환 로직 추가
   // ****** 솔루션사 전환 ****** //
-  const changeSolutionComp = () => {};
+  const changeSolutionComp = async () => {
+    const isSolutionToggle = confirm(
+      `${selected.companyName}을(를) 솔루션사로 전환하시겠습니까?`
+    );
+    if (isSolutionToggle) {
+      try {
+        const result = toggleSales(selected.companyId);
+        result
+          .then(() => {
+            alert("솔루션사 전환에 성공하였습니다.");
+            setSelected({});
+            reloadList();
+          })
+          .catch((error) => {
+            alert("솔루션사 전환에 실패하였습니다.");
+            console.log(error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    } else return;
+  };
+
+  const changeCustomerComp = async () => {
+    const isCustomerToggle = confirm(
+      `${selected.companyName}을(를) 고객사로 전환하시겠습니까?`
+    );
+    if (isCustomerToggle) {
+      try {
+        const result = toggleSales(selected.companyId);
+        result
+          .then(() => {
+            alert("고객사 전환에 성공하였습니다.");
+            setSelected({});
+            reloadList();
+          })
+          .catch((error) => {
+            alert("고객사 전환에 실패하였습니다.");
+            console.log(error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    } else return;
+  };
 
   // ****** 사업자번호 placeholder 로직 ****** //
   const getPlaceholder = (selected) => {
@@ -177,9 +228,13 @@ const RegisterInputContent = ({ selected, setSelected, setIsLoading }) => {
                     ? "현재 선택된 회사는 고객사 입니다."
                     : "현재 선택된 회사는 솔루션사 입니다."}
                 </p>
-                {selected.sales === 0 && (
+                {selected.sales === 0 ? (
                   <button type="button" onClick={changeSolutionComp}>
                     솔루션사 전환하기
+                  </button>
+                ) : (
+                  <button type="button" onClick={changeCustomerComp}>
+                    고객사 전환하기
                   </button>
                 )}
               </div>
@@ -261,6 +316,7 @@ RegisterInputContent.propTypes = {
   }),
   setSelected: PropTypes.func,
   setIsLoading: PropTypes.func,
+  reloadList: PropTypes.func,
 };
 
 const RegisterInputContainer = styled.div`

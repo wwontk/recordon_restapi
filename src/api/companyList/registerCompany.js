@@ -24,3 +24,8 @@ export const searchIQ200bySales = (option) => {
 export const checkSolution = (option) => {
   return axiosInstance.get(`/company/check`, { params: option });
 };
+
+// iq200 회사 고객사 -> 솔루션사 전환
+export const toggleSales = (compId) => {
+  return axiosInstance.put(`/iq200/company/${compId}/sales-toggle`);
+};
