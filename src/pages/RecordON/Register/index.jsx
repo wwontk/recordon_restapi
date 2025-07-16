@@ -261,7 +261,7 @@ const RegisterContent = styled.div`
 `;
 
 const IQ200CompanyList = styled.div`
-  width: 900px;
+  width: 750px;
   height: 100%;
   background-color: #f8f8f8;
   padding: 40px 80px;
