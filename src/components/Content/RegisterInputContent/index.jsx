@@ -320,7 +320,7 @@ RegisterInputContent.propTypes = {
 };
 
 const RegisterInputContainer = styled.div`
-  width: calc(100% - 500px);
+  flex: 1;
   padding: 40px 80px 0 80px;
   position: relative;
   font-size: 14px;

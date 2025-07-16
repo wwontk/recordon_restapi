@@ -37,10 +37,12 @@ const CompanyDetailContent = ({ detail, setCompanyDetailOpen }) => {
                 value={detail.companyId}
                 disabled
               />
+            </div>
+            <div>
               {detail.sales === 1 && (
                 <>
                   <label>PW</label>
-                  <CompanyDetailInput
+                  <CompanyTokenInput
                     type="text"
                     value={detail.corp_pwd}
                     disabled
