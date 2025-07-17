@@ -1,14 +1,18 @@
 import styled from "styled-components";
 import Search from "../../assets/img/etc/search.png";
+import { useState } from "react";
+import SearchCompanyModal from "../../components/Content/SearchCompanyModal";
 
 const BizLettering = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <Container>
       <TitleHeader>
         <p>내번호알리미 이미지 등록 및 URL 생성</p>
       </TitleHeader>
       <CompanyInfo>
-        <SearchButton>
+        <SearchButton onClick={() => setIsModalOpen(true)}>
           <img src={Search} alt="" />
           <p>회사 검색</p>
         </SearchButton>
@@ -25,6 +29,9 @@ const BizLettering = () => {
       <LineRegister>
         <h3>회선별 내알 등록</h3>
       </LineRegister>
+      {isModalOpen && (
+        <SearchCompanyModal onClose={() => setIsModalOpen(false)} />
+      )}
     </Container>
   );
 };
@@ -36,6 +43,7 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  user-select: none;
 `;
 
 const TitleHeader = styled.div`
