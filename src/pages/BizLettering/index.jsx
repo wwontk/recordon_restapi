@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Search from "../../assets/img/etc/search.png";
 import { useState } from "react";
 import SearchCompanyModal from "../../components/Content/SearchCompanyModal";
+import CommonLettering from "../../components/Content/CommonLettering";
 // import { DataGrid } from "react-data-grid";
 
 const BizLettering = () => {
@@ -40,9 +41,10 @@ const BizLettering = () => {
           </div>
         </div>
       </CompanyInfo>
-      <CommmonRegister>
+      <CommonRegister>
         <h3>회사별 공통 내알 등록</h3>
-      </CommmonRegister>
+        {selected ? <CommonLettering /> : null}
+      </CommonRegister>
       <LineRegister>
         <h3>회선별 내알 등록</h3>
       </LineRegister>
@@ -114,11 +116,14 @@ const SearchButton = styled.button`
   color: #bfbfbf;
 `;
 
-const CommmonRegister = styled.div`
+const CommonRegister = styled.div`
   width: 100%;
   height: 150px;
   border-bottom: 1px solid #d3d3d3;
-  padding: 20px 0 0 40px;
+  padding: 20px 0 12px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   & > h3 {
     font-weight: 600;
