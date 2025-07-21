@@ -2,9 +2,11 @@ import styled from "styled-components";
 import Search from "../../assets/img/etc/search.png";
 import { useState } from "react";
 import SearchCompanyModal from "../../components/Content/SearchCompanyModal";
+// import { DataGrid } from "react-data-grid";
 
 const BizLettering = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setSelected] = useState(null);
 
   return (
     <Container>
@@ -19,7 +21,22 @@ const BizLettering = () => {
         <div>
           <h3>회사정보</h3>
           <div>
-            <p>선택된 회사가 없습니다.</p>
+            {selected ? (
+              <>
+                <SelectedInfo>
+                  <div>
+                    <label>회사명</label>
+                    <p>{selected.companyName}</p>
+                  </div>
+                  <div>
+                    <label>회사ID</label>
+                    <p>{selected.companyId}</p>
+                  </div>
+                </SelectedInfo>
+              </>
+            ) : (
+              <p>선택된 회사가 없습니다.</p>
+            )}
           </div>
         </div>
       </CompanyInfo>
@@ -30,7 +47,10 @@ const BizLettering = () => {
         <h3>회선별 내알 등록</h3>
       </LineRegister>
       {isModalOpen && (
-        <SearchCompanyModal onClose={() => setIsModalOpen(false)} />
+        <SearchCompanyModal
+          onClose={() => setIsModalOpen(false)}
+          setSelected={setSelected}
+        />
       )}
     </Container>
   );
@@ -74,7 +94,7 @@ const CompanyInfo = styled.div`
     }
     & > div {
       & > p {
-        font-size: 12px;
+        font-size: 14px;
       }
     }
   }
@@ -110,5 +130,20 @@ const LineRegister = styled.div`
   padding: 20px 40px;
   & > h3 {
     font-weight: 600;
+  }
+`;
+
+const SelectedInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  & > div {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+
+    & > label {
+      width: 100px;
+    }
   }
 `;
